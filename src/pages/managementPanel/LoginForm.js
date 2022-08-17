@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Container, InputLabel, Stack } from '@mui/material';
+//import common components
 import { CustomInput, InputAdornment, IconButton } from 'common/TextFieldLogin';
 import { CustomButton } from 'common/ButtonLogin';
-import { VisibilityOutlinedIcon } from '@mui/icons-material';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+// import icons
 import PersonIcon from '@mui/icons-material/Person';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+//import background
 import LoginBackground from 'assets/image/background/Login-Background.jpg';
 import 'styles/style.css';
 
@@ -76,7 +79,7 @@ function LoginForm() {
                 </Box>
 
 
-                <Link to='/'><CustomButton>ورود</CustomButton></Link>
+                <Link to='/management'><CustomButton>ورود</CustomButton></Link>
 
             </form>
         </Container>
