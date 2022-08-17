@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import BKamran from '../assets/fonts/BKamran.ttf';
+import BKamran from 'assets/fonts/BKamran/BKamran.ttf';
 
 export const theme = createTheme({
     palette: {

@@ -1,10 +1,8 @@
-
+import LoginForm from 'components/loginForm/LoginForm';
 
 function ManagementPanel() {
     return (
-        <div>
-            
-        </div>
+        <LoginForm />
     );
 }
 

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import logo from '../../assets/image/logo-1.svg';
+import LightTooltip from 'common/Tooltip';
+import logo from 'assets/image/logo/logo-1.svg';
 
 function NavbarLayout() {
     return (
@@ -17,17 +18,22 @@ function NavbarLayout() {
 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
-                    <Link to='/management' color="secondary">
-                        <ManageAccountsIcon sx={{ ml: 1, fontWeight: 300 }} />
+
+                    <Link to='/management' >
+                        <LightTooltip title="مدیریت">
+                            <ManageAccountsIcon color="secondary" sx={{ ml: 1, fontWeight: 300 }} />
+                        </LightTooltip >
                     </Link>
+
 
                     <Link
                         to='/cart'
                         size="large"
-                        color="secondary"
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
-                        <ShoppingCartRoundedIcon sx={{ mr: 2, fontWeight: 300 }} />
+                        <LightTooltip title="سبد خرید">
+                            <ShoppingCartRoundedIcon color="secondary" sx={{ mr: 2, fontWeight: 300 }} />
+                        </LightTooltip>
                     </Link>
                 </Box>
             </Toolbar>
