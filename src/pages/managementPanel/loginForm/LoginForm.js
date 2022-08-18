@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Container, InputLabel, Stack } from '@mui/material';
 //import common components
-import { CustomInput, InputAdornment, IconButton } from 'common/TextFieldLogin';
-import { CustomButton } from 'common/ButtonLogin';
+import { CustomInput, InputAdornment, IconButton } from 'pages/managementPanel/loginForm/TextFieldLogin';
+import { CustomButton } from 'pages/managementPanel/loginForm/ButtonLogin';
 // import icons
 import PersonIcon from '@mui/icons-material/Person';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';

@@ -1,8 +1,6 @@
 function Orders() {
     return (
-        <div>
-           
-        </div>
+       <></>
     );
 }
 

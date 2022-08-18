@@ -1,8 +1,6 @@
 function Quantity() {
     return (
-        <div>
-            
-        </div>
+        <></>
     );
 }
 
