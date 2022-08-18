@@ -1,62 +1,11 @@
-import * as React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { AppBar, Avatar, Container, Typography, Breadcrumbs, Chip, IconButton } from '@mui/material';
-import { emphasize, styled } from '@mui/material/styles';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import logo from 'assets/image/logo/logo-1.png';
-import backgroundImage from 'assets/image/background/Management-Background.jpg';
+import ManagementPanelLayout from "layout/managementLayout/management/ManagementPanelLayout";
 
-
-const StyledBreadcrumb = styled(Chip)(({ theme }) => {
-    const backgroundColor = theme.palette.mode === 'light' ? '#142633e0' : '#F4D5A9';
-    const color = theme.palette.mode === 'light' ? '#F4D5A9' : '#142633e0';
-    return {
-        backgroundColor,
-        color,
-        height: theme.spacing(4),
-        fontWeight: 700,
-        fontSize: '22px',
-        '&:hover, &:focus': {
-            backgroundColor: emphasize(backgroundColor, 0.06),
-        },
-        '&:active': {
-            boxShadow: theme.shadows[1],
-            backgroundColor: emphasize(backgroundColor, 0.12),
-        },
-    };
-});
-
-function handleClick(event) {
-    event.preventDefault();
-
-}
-
-export default function ManagementPanel() {
+function managementPanel() {
     return (
-        <Container maxWidth='xl' sx={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: '1366px 625px', height: '100vh', width: '100vw', backgroundRepeat: 'no-repeat' }}>
-
-            <AppBar position="fixed" elevation={0} sx={{ background: 'transparent' }}>
-                <div role="presentation" onClick={handleClick} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-
-                    <NavLink to='/' style={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar alt='logo' src={logo} sx={{ background: 'transparent' }} />
-                        <Typography color="secondary" variant='h4' component='h1'>مدیـریت فروشـگاه راشـــا</Typography>
-                    </NavLink>
-
-                    <Breadcrumbs sx={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <NavLink to='products'><StyledBreadcrumb label="کالاها" /></NavLink>
-                        <NavLink to='quantity'><StyledBreadcrumb label="موجودی و قیمت ها" /></NavLink>
-                        <NavLink to='orders'><StyledBreadcrumb label="سفارش ها" /></NavLink>
-                    </Breadcrumbs>
-
-                    <IconButton color="Error" >
-                        <HomeRoundedIcon />
-                    </IconButton>
-
-                    <Outlet />
-                </div>
-            </AppBar>
-        </Container>
-
+        <>
+        <ManagementPanelLayout />
+        </>
     );
 }
+
+export default managementPanel;

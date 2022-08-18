@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Container, InputLabel, Stack } from '@mui/material';
 //import common components
 import { CustomInput, InputAdornment, IconButton } from 'pages/managementPanel/loginForm/TextFieldLogin';
@@ -15,7 +15,7 @@ import 'styles/style.css';
 
 
 function LoginForm() {
-
+    let navigate = useNavigate();
     const [values, setValues] = useState({
         amount: '',
         password: '',
@@ -79,7 +79,7 @@ function LoginForm() {
                 </Box>
 
 
-                <Link to='/management'><CustomButton>ورود</CustomButton></Link>
+                <CustomButton onClick={() => navigate('products')}>ورود</CustomButton>
 
             </form>
         </Container>

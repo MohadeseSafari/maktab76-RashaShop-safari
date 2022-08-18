@@ -19,7 +19,7 @@ function NavbarLayout() {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
 
-                    <Link to='/login' >
+                    <Link to='/management' >
                         <LightTooltip title="مدیریت">
                             <ManageAccountsIcon color="secondary" sx={{ ml: 1, fontWeight: 300 }} />
                         </LightTooltip >
