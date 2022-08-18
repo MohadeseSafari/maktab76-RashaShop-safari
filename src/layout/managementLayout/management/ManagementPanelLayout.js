@@ -42,13 +42,13 @@ export default function ManagementPanelLayout() {
                         <Typography color="secondary" variant='h4' component='h1'>مدیـریت فروشـگاه راشـــا</Typography>
                     </NavLink>
 
-                    <Breadcrumbs sx={{ justifyContent: 'center', alignItems: 'center', ml: 10 }}>
+                    <Breadcrumbs sx={{ justifyContent: 'center', alignItems: 'center' }}>
                         <NavLink to='products'><StyledBreadcrumb label="کالاها" /></NavLink>
                         <NavLink to='quantity'><StyledBreadcrumb label="موجودی و قیمت ها" /></NavLink>
                         <NavLink to='orders'><StyledBreadcrumb label="سفارش ها" /></NavLink>
                     </Breadcrumbs>
 
-                    <IconButton color="Error" sx={{ ml: 5 }} >
+                    <IconButton color="Error"  >
                         <HomeRoundedIcon />
                     </IconButton>
 

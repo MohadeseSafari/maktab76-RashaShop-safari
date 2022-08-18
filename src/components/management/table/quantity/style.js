@@ -1,5 +1,4 @@
 import { styled } from '@mui/material/styles';
-
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -15,11 +14,12 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 export const tableStyle = {
     width: '100vw',
-    height: '100vh',
+    height: '90vh',
     position: 'absolute',
-    top: 0,
+    top: 55,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+   
 }
