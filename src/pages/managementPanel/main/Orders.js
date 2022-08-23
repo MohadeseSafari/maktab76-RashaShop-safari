@@ -1,10 +1,10 @@
-import QuantityTable from "components/management/table/quantity/QuantityTable";
+import OrdersTable from 'components/management/table/orders/OrdersTable'
 
 function Orders() {
     return (
 
-        <QuantityTable />
-        
+        <OrdersTable />
+
     )
 }
 
