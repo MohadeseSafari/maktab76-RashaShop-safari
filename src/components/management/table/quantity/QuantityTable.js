@@ -1,27 +1,23 @@
-import axios from 'axios';
+//import Redux
+import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { BASE_URL } from 'api/index';
+
 import { Typography, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TableRow, Paper } from '@mui/material';
 import { StyledTableCell, tableStyle } from 'components/management/table/quantity/style';
 import PaginationActions from 'components/management/pagination/PaginationActions';
 
+import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+
 export default function QuantityTable() {
-    const [products, setProducts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.products)
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [currentPage, setCurrentPage] = useState(0);
 
 
     useEffect(() => {
-        fetchProducts(0, 5, 0);
+        dispatch(fetchProducts())
     }, [])
-
-    const fetchProducts = async (start, end, increase) => {
-        return await axios.get(`${BASE_URL}/products?_start=${start}&_end=${end}`)
-            .then(response => {
-                setProducts(response.data)
-                setCurrentPage(currentPage + increase)
-            })
-    }
 
     return (
         <div style={tableStyle}>
@@ -46,14 +42,15 @@ export default function QuantityTable() {
                         ))}
                     </TableBody>
 
-                    <TableFooter>
+                    {/* <TableFooter>
                         <PaginationActions
-                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                            count={products.length}
+                            rowsPerPage={rowsPerPage}
                             colSpan={3}
                             products={products}
-                            count={products.length} rowsPerPage={rowsPerPage} currentPage={currentPage}
+                            currentPage={currentPage}
                             fetchProducts={fetchProducts} ActionsComponent={PaginationActions} />
-                    </TableFooter>
+                    </TableFooter> */}
 
                 </Table>
             </TableContainer>
