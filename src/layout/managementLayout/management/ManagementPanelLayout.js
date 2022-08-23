@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { AppBar, Avatar, Container, Typography, Breadcrumbs, Chip, IconButton } from '@mui/material';
 import { emphasize, styled } from '@mui/material/styles';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -31,6 +31,7 @@ function handleClick(event) {
 }
 
 export default function ManagementPanelLayout() {
+    const navigate = useNavigate()
     return (
         <Container maxWidth='xl' sx={{ display: 'flex' }}>
 
@@ -48,7 +49,7 @@ export default function ManagementPanelLayout() {
                         <NavLink to='orders'><StyledBreadcrumb label="سفارش ها" /></NavLink>
                     </Breadcrumbs>
 
-                    <IconButton color="Error"  >
+                    <IconButton color="Error" onClick={() => navigate('/')}  >
                         <HomeRoundedIcon />
                     </IconButton>
 

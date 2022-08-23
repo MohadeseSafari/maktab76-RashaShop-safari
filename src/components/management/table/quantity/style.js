@@ -16,7 +16,7 @@ export const tableStyle = {
     width: '100vw',
     height: '90vh',
     position: 'absolute',
-    top: 55,
+    top: 50,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

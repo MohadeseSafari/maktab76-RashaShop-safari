@@ -10,11 +10,12 @@ const darkblue = {
 };
 
 export const CustomButton = styled(ButtonUnstyled)(({ theme }) => `
-  width: 21.5rem;
+  width: 18rem;
   font-weight: bold;
   font-size: 1.45rem;
   font-family: ${theme.typography.fontFamily};
   background-color: ${theme.palette.mode === 'dark' ? red[600] : darkblue[800]};
+  background:'inherit' !important;
   padding: 10px 24px;
   border-radius: 18px;
   margin-top: 25px;
@@ -27,9 +28,7 @@ export const CustomButton = styled(ButtonUnstyled)(({ theme }) => `
     background-color: ${darkblue[900]};
   }
 
-  &.${buttonUnstyledClasses.active} {
-    background-color: ${darkblue[900]};
-  }
+ 
 
   &.${buttonUnstyledClasses.focusVisible} {
     box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);

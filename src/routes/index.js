@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Cart from 'pages/userPanel/Cart';
 import Home from 'pages/userPanel/Home';
 import LoginForm from 'pages/managementPanel/loginForm/LoginForm'
-import ManagementPanel from 'pages/managementPanel/ManagementPanel';
+import ManagementPanel from 'pages/managementPanel/managementPanel';
 import NoMatched from 'pages/errors/NoMatched';
 // import sub routes
 import Products from 'pages/managementPanel/main/Products';

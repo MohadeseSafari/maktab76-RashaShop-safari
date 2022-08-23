@@ -34,11 +34,11 @@ h1 {
   flex-direction: column;
   align-items: center;
   font-size: 45px;
-  overflow: hidden;
   color: #cf4d4d;
+ 
 }
 .start{
-  margin-top: 4rem;
+  margin-top: 2rem;
   line-height: 5rem;
 }
 

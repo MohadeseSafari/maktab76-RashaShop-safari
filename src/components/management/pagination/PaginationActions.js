@@ -4,9 +4,11 @@ import { Box, IconButton } from '@mui/material'
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
+const rowsPerPage = 5;
 export default function PaginationActions(props) {
     const theme = useTheme();
-    const { products, count, currentPage, rowsPerPage, fetchProducts } = props;
+
+    const { products, currentPage,fetchProducts } = props;
 
     const handleBackButtonClick = () => {
         fetchProducts((currentPage - 1) * 5, currentPage * 5, -1)
@@ -44,7 +46,7 @@ export default function PaginationActions(props) {
     } else {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', flexShrink: 0, ml: 2.5 }}>
-                <IconButton onClick={() => fetchProducts(5, 10, -1)}  aria-label="previous page" >
+                <IconButton onClick={() => fetchProducts(5, 10, -1)} aria-label="previous page" >
                     {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                 </IconButton>
 
