@@ -1,8 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 import BKamran from 'assets/fonts/BKamran/BKamran.ttf';
+import { faIR } from '@mui/material/locale';
 
 export const theme = createTheme({
-    direction: 'rtl',
+
     palette: {
         secondary: {
             light: '#8b3386',
@@ -50,4 +51,5 @@ export const theme = createTheme({
             },
         },
     },
-});
+}, faIR);
+

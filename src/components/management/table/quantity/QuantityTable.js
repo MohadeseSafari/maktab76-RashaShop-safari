@@ -1,59 +1,75 @@
 //import Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-
-import { Typography, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TableRow, Paper } from '@mui/material';
-import { StyledTableCell, tableStyle } from 'components/management/table/quantity/style';
-import PaginationActions from 'components/management/pagination/PaginationActions';
-
+import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, Box } from '@mui/material';
+import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+
 
 export default function QuantityTable() {
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.products)
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
-
+    const { products, currentPage, loading, totalCount } = useSelector((state) => state.products)
 
     useEffect(() => {
-        dispatch(fetchProducts())
-    }, [])
+        dispatch(fetchProducts({ currentPage: 1, limitPages: rowsPerPage }))
+    }, [rowsPerPage])
+
+
+    const handleChangePage = (event, newPage) => {
+        dispatch(fetchProducts({ currentPage: newPage + 1, limitPages: rowsPerPage }))
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+
+        // currentPage = 0;
+    };
 
     return (
         <div style={tableStyle}>
-            <Typography color="#537d97" variant='h4' sx={{ mb: 3, ml: 130 }}>مدیریت موجودی و کالاها</Typography>
-            <TableContainer component={Paper} sx={{ width: "40%" }}>
+
+            <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
+                <Typography color="#537d97" variant='h4' sx={{ mr: 110 }}>مدیریت موجودی و کالاها</Typography>
+                <SaveButton>ذخیره</SaveButton>
+            </Box>
+
+            <TableContainer component={Paper} sx={{ width: '50%' }} align='center' >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell style={{ width: 100 }} align="right">نام کالا</StyledTableCell>
-                            <StyledTableCell style={{ width: 60 }} align="center">قیمت</StyledTableCell>
-                            <StyledTableCell style={{ width: 60 }} align="center">موجودی</StyledTableCell>
+                            <StyledTableCell sx={{ width: '10%' }} align="right">ردیف</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="left">نام کالا</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="center">قیمت</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="center">موجودی</StyledTableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell style={{ width: 120, fontSize: 20 }} align="right">{product.id + 1}. {product.name}</TableCell>
-                                <TableCell style={{ width: 50, fontSize: 20 }} align="center">{product.price}</TableCell>
-                                <TableCell style={{ width: 50, fontSize: 20 }} align="center">{product.quantity}</TableCell>
-                            </TableRow>
+                        {products.map(({ id, name, price, quantity }) => (
+                            <StyledTableRow key={id}>
+                                <StyledTableCell sx={{ width: '10%' }} align="center">{id + 1} </StyledTableCell>
+                                <StyledTableCell sx={{ width: '30%' }} align="left"> {name}</StyledTableCell>
+                                <StyledTableCell sx={{ width: '30%' }} align="center">{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</StyledTableCell>
+                                <StyledTableCell sx={{ width: '30%' }} align="center">{quantity}</StyledTableCell>
+                            </StyledTableRow>
                         ))}
                     </TableBody>
-
-                    {/* <TableFooter>
-                        <PaginationActions
-                            count={products.length}
-                            rowsPerPage={rowsPerPage}
-                            colSpan={3}
-                            products={products}
-                            currentPage={currentPage}
-                            fetchProducts={fetchProducts} ActionsComponent={PaginationActions} />
-                    </TableFooter> */}
-
                 </Table>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} از ${count}`}
+                    count={totalCount}
+                    rowsPerPage={rowsPerPage}
+                    page={currentPage - 1}
+                    showFirstButton
+                    showLastButton
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+
             </TableContainer>
+
         </div>
     );
 }

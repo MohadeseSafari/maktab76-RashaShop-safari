@@ -35,7 +35,7 @@ export default function ManagementPanelLayout() {
     return (
         <Container maxWidth='xl' sx={{ display: 'flex' }}>
 
-            <AppBar position="fixed" elevation={0} sx={{ background: 'transparent' }}>
+            <AppBar position="absolute" elevation={0} sx={{ background: 'transparent' }}>
                 <div role="presentation" onClick={handleClick} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <NavLink to='/' style={{ display: 'flex', alignItems: 'center' }}>

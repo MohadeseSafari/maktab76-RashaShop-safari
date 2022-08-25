@@ -12,16 +12,14 @@ function NavbarLayout() {
             <Toolbar sx={{ justifyContent: 'space-between' }}>
 
                 <Link to='/' style={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar alt='logo' src={logo} sx={{ ml: 1.5 }} />
+                    <Avatar alt='logo' src={logo} sx={{ mr: 1.5 }} />
                     <Typography color="secondary" variant='h4' component='h1'>فروشـگاه راشـــا</Typography>
                 </Link>
 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-
-
                     <Link to='/management' >
                         <LightTooltip title="مدیریت">
-                            <ManageAccountsIcon color="secondary" sx={{ ml: 1, fontWeight: 300 }} />
+                            <ManageAccountsIcon color="secondary" sx={{ mr: 1, fontWeight: 300 }} />
                         </LightTooltip >
                     </Link>
 
@@ -32,7 +30,7 @@ function NavbarLayout() {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <LightTooltip title="سبد خرید">
-                            <ShoppingCartRoundedIcon color="secondary" sx={{ mr: 2, fontWeight: 300 }} />
+                            <ShoppingCartRoundedIcon color="secondary" sx={{ ml: 2, fontWeight: 300 }} />
                         </LightTooltip>
                     </Link>
                 </Box>

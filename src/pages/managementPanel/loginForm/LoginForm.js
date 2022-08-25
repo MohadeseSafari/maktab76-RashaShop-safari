@@ -70,7 +70,7 @@ function LoginForm() {
                                     value={props.values.username}
                                     onChange={props.handleChange}
                                     endAdornment={
-                                        <InputAdornment sx={{ position: 'absolute', left: 5 }}>
+                                        <InputAdornment sx={{ position: 'absolute', right: 5 }}>
                                             <IconButton><PersonIcon sx={{ fontSize: 22 }} /></IconButton>
                                         </InputAdornment>
                                     }
@@ -89,7 +89,7 @@ function LoginForm() {
                                     value={props.values.password}
                                     onChange={props.handleChange}
                                     endAdornment={
-                                        <InputAdornment sx={{ position: 'absolute', left: 5 }}>
+                                        <InputAdornment sx={{ position: 'absolute', right: 5 }}>
                                             <IconButton onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword} >
                                                 {showPassword ? (<VisibilityOffOutlinedIcon sx={{ fontSize: 22 }} />) : <VisibilityOutlinedIcon sx={{ fontSize: 22 }} />}
                                             </IconButton>

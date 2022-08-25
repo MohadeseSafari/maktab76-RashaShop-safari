@@ -1,32 +1,54 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { BASE_URL } from 'api/index';
-import { Typography, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TableRow, Paper } from '@mui/material';
-import { StyledTableCell, tableStyle } from 'components/management/table/quantity/style';
-import OrdersPagination from 'components/management/pagination/OrdersPagination';
+import { useSelector, useDispatch } from 'react-redux';
+import { Radio, RadioGroup, FormControlLabel, Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper } from '@mui/material';
+import { StyledTableCell, tableStyle, StyledTableRow } from 'components/management/table/style';
+import { fetchOrders } from 'redux/feature/orders/OrdersSlice';
 
 export default function QuantityTable() {
-    const [orders, setOrders] = useState([]);
+    const dispatch = useDispatch();
+    const { orders, loading, currentPage, totalCount } = useSelector((state) => state.orders)
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
+    const [status, setStatus] = useState('false');
 
 
     useEffect(() => {
-        fetchOrders(0, 5, 0);
-    }, [])
+        dispatch(fetchOrders({ delivered: status, currentPage: currentPage, limitPages: rowsPerPage }))
+    }, [rowsPerPage])
 
-    const fetchOrders = async (start, end, increase) => {
-        return await axios.get(`${BASE_URL}/orders?_start=${start}&_end=${end}`)
-            .then(response => {
-                setOrders(response.data)
-                setCurrentPage(currentPage + increase)
-            })
+    useEffect(() => {
+        dispatch(fetchOrders({ delivered: status, currentPage: 1, limitPages: rowsPerPage }))
+    }, [status])
+
+    const handleChangePage = (event, newPage) => {
+        dispatch(fetchOrders({ delivered: status, currentPage: newPage + 1, limitPages: rowsPerPage }))
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+
+        // currentPage = 0;
+    };
+
+    const handelFilterOrders = (event) => {
+        const deliveredStatus = event.target.value;
+        
+    console.log(deliveredStatus)
+        setStatus(deliveredStatus);
     }
+
+    console.log(status)
 
     return (
         <div style={tableStyle}>
-            <Typography color="#537d97" variant='h4' sx={{ mb: 3, ml: 130 }}>مدیریت سفارشات</Typography>
-            <TableContainer component={Paper} sx={{ width: "50%" }}>
+
+            <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت سفارشات</Typography>
+
+            <RadioGroup row >
+                <FormControlLabel sx={{ color: '#537d97' }} value='true' control={<Radio color='primary' sx={{ '& .MuiSvgIcon-root': { fontSize: 14 } }} onClick={handelFilterOrders} />} label="سفارش های تحویل شده" />
+                <FormControlLabel sx={{ color: '#537d97' }} value='false' control={<Radio color='error' sx={{ '& .MuiSvgIcon-root': { fontSize: 14 } }} onClick={handelFilterOrders} />} label="سفارش های در انتظار ارسال" />
+            </RadioGroup>
+
+            <TableContainer component={Paper} sx={{ width: "50%" }} align='center'>
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -39,30 +61,30 @@ export default function QuantityTable() {
 
                     <TableBody>
                         {orders.map((order) => {
-                            const { username, lastname, prices, expectAt } = order;
-                           
+                            const { id, username, lastname, prices, expectAt } = order;
                             return (
-                                <TableRow key={order.id}>
-                                    <TableCell style={{ width: 80, fontSize: 20 }} align="center">{username} {lastname}</TableCell>
-                                    <TableCell style={{ width: 50, fontSize: 20 }} align="center">{prices}</TableCell>
-                                    <TableCell style={{ width: 80, fontSize: 20 }} align="center">{(new Date(expectAt)).toLocaleDateString('fa')}</TableCell>
-                                    <TableCell style={{ width: 50, fontSize: 20 }} align="center">بررسی سفارشات</TableCell>
-                                </TableRow>
+                                <StyledTableRow key={id}>
+                                    <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{username} {lastname}</StyledTableCell >
+                                    <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center">{prices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</StyledTableCell >
+                                    <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{(new Date(expectAt)).toLocaleDateString('fa')}</StyledTableCell >
+                                    <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center">بررسی سفارشات</StyledTableCell >
+                                </StyledTableRow>
                             )
                         })}
                     </TableBody>
-
-                    <TableFooter>
-                        <OrdersPagination
-                            colSpan={3}
-                            count={orders.length}
-                            rowsPerPage={rowsPerPage}
-                            orders={orders}
-                            currentPage={currentPage}
-                            fetchOrders={fetchOrders} ActionsComponent={OrdersPagination} />
-                    </TableFooter>
-
                 </Table>
+                <TablePagination
+                    sx={{ border: 'unset' }}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} از ${count}`}
+                    count={totalCount}
+                    rowsPerPage={rowsPerPage}
+                    page={currentPage - 1}
+                    showFirstButton
+                    showLastButton
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </div>
     );

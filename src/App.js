@@ -7,17 +7,21 @@ import { ThemeProvider } from '@mui/system';
 import { theme } from 'common/theme';
 //import store redux
 import { Provider } from 'react-redux';
+import { CacheProvider } from '@emotion/react';
+import { cacheRtl } from 'common/RTL';
 import { store } from 'redux/store'
 
 
 function App() {
   return (
-    <Provider store={store}>
-      <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <MainRoutes />
-      </ThemeProvider>
-    </Provider>
+    <CacheProvider value={cacheRtl}>
+      <Provider store={store}>
+        <CssBaseline />
+        <ThemeProvider theme={theme}>
+          <MainRoutes />
+        </ThemeProvider>
+      </Provider>
+    </CacheProvider>
 
   );
 }

@@ -5,22 +5,26 @@ const initialState = {
     products: [],
     loading: false,
     error: '',
-    currentPage: 0,
-    pageLimit: 5
+    currentPage: 1,
+    totalCount: 0
 }
-export const fetchProducts = createAsyncThunk('products/fetchProducts', loadProductsApi(start, end))
+export const fetchProducts = createAsyncThunk('products/fetchProducts', loadProductsApi)
 
 export const ProductsSlice = createSlice({
     name: 'products',
     initialState,
+    reducer: {
+       
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.pending, (state, action) => {
             state.loading = true;
         });
-
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = action.payload;
+            state.products = action.payload.data;
+            state.totalCount = action.payload.count;
+            state.currentPage = action.meta.arg.currentPage;
         });
 
         builder.addCase(fetchProducts.rejected, (state, action) => {

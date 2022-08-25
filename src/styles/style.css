@@ -14,6 +14,7 @@
   font-display: swap;
 }
 
+
 *,
 *:before,
 *:after {
@@ -114,4 +115,9 @@ h1 {
   100% {
     max-width: 0;
   }
+}
+
+.MuiTablePagination-actions{
+  display: flex;
+  flex-direction: row-reverse;
 }

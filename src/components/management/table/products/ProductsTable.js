@@ -1,66 +1,81 @@
 //import Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import Material UI components
-import { Typography, Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TableRow, Paper } from '@mui/material';
-
-import { StyledTableCell, tableStyle } from 'components/management/table/quantity/style';
-import PaginationActions from 'components/management/pagination/PaginationActions';
-
+import { Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination } from '@mui/material';
+import { StyledTableCell, tableStyle, StyledTableRow } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+import { BASE_URL_IMAGE } from 'api/index';
+
 
 export default function QuantityTable() {
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.products)
     const [rowsPerPage, setRowsPerPage] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
-
-
+    const { products, currentPage, loading, totalCount } = useSelector((state) => state.products)
 
     useEffect(() => {
-        dispatch(fetchProducts({ start: 0, end: 5, currentPage: 0 }))
-    }, [])
+        dispatch(fetchProducts({ currentPage: 1, limitPages: rowsPerPage }))
+    }, [rowsPerPage])
+
+
+    const handleChangePage = (event, newPage) => {
+        console.log(event)
+        console.log(newPage)
+        dispatch(fetchProducts({ currentPage: newPage + 1, limitPages: rowsPerPage }))
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+
+        // currentPage = 0;
+    };
 
     return (
         <div style={tableStyle}>
-
-            <Typography color="#537d97" variant='h4' sx={{ mb: 3, ml: 130 }}>مدیریت کالاها</Typography>
-            <TableContainer component={Paper} sx={{ width: "60%" }}>
+            <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت کالاها</Typography>
+            <TableContainer component={Paper} sx={{ width: '55%', mb: 10 }} align='center'  >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell style={{ width: 30 }} align="center">تصویر</StyledTableCell>
-                            <StyledTableCell style={{ width: 100 }} align="right">نام کالا</StyledTableCell>
-                            <StyledTableCell style={{ width: 100 }} align="center">دسته بندی</StyledTableCell>
-                            <StyledTableCell style={{ width: 60 }} align="center"></StyledTableCell>
+                            <StyledTableCell sx={{ width: '5%' }} align="right">ردیف</StyledTableCell>
+                            <StyledTableCell sx={{ width: '10%' }} align="right">تصویر</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="center">نام کالا</StyledTableCell>
+                            <StyledTableCell sx={{ width: '35%' }} align="center">دسته بندی</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="center">بررسی محصولات</StyledTableCell>
                         </TableRow>
                     </TableHead>
 
                     <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.id}>
-                                <TableCell style={{ width: 30, fontSize: 20 }} align="center"></TableCell>
-                                <TableCell style={{ width: 120, fontSize: 20 }} align="right">{product.name}</TableCell>
-                                <TableCell style={{ width: 50, fontSize: 20 }} align="center">{(product.genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</TableCell>
-                                <TableCell style={{ width: 50, fontSize: 20 }} align="center">حذف / ویرایش</TableCell>
-                            </TableRow>
-                        ))}
+                        {products.length ? (products.map(({ id, name, genre, image }) => (
+                            <StyledTableRow key={id} >
+                                <StyledTableCell sx={{ width: '5%' }} align="center" size='small'>{id + 1}</StyledTableCell>
+                                <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
+                                <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
+                                <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
+                                <StyledTableCell sx={{ width: '30%' }} align="center">حذف / ویرایش</StyledTableCell>
+                            </StyledTableRow>
+                        ))) : null}
                     </TableBody>
-
-                    {/* <TableFooter>
-                        <PaginationActions
-                            colSpan={3}
-                            count={products.length}
-                            rowsPerPage={rowsPerPage}
-                            products={products}
-                            currentPage={currentPage}
-                            fetchProducts={fetchProducts} ActionsComponent={PaginationActions} />
-                    </TableFooter> */}
-
                 </Table>
+                <TablePagination
+                    sx={{ border: 'unset' }}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} از ${count}`}
+                    count={totalCount}
+                    rowsPerPage={rowsPerPage}
+                    page={currentPage - 1}
+                    showFirstButton
+                    showLastButton
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </div>
     );
 }
+
+
+
+
 
 
