@@ -2,8 +2,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 // import Material UI components
-import { Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination } from '@mui/material';
-import { StyledTableCell, tableStyle, StyledTableRow } from 'components/management/table/style';
+import { Button, Box, Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination } from '@mui/material';
+import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { BASE_URL_IMAGE } from 'api/index';
 
@@ -32,7 +32,10 @@ export default function QuantityTable() {
 
     return (
         <div style={tableStyle}>
-            <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت کالاها</Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
+                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت کالاها</Typography>
+                <SaveButton>افزودن کالا</SaveButton>
+            </Box>
             <TableContainer component={Paper} sx={{ width: '55%', mb: 10 }} align='center'  >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
@@ -40,8 +43,8 @@ export default function QuantityTable() {
                             <StyledTableCell sx={{ width: '5%' }} align="right">ردیف</StyledTableCell>
                             <StyledTableCell sx={{ width: '10%' }} align="right">تصویر</StyledTableCell>
                             <StyledTableCell sx={{ width: '30%' }} align="center">نام کالا</StyledTableCell>
-                            <StyledTableCell sx={{ width: '35%' }} align="center">دسته بندی</StyledTableCell>
-                            <StyledTableCell sx={{ width: '30%' }} align="center">بررسی محصولات</StyledTableCell>
+                            <StyledTableCell sx={{ width: '30%' }} align="center">دسته بندی</StyledTableCell>
+                            <StyledTableCell sx={{ width: '40%' }} align="center">بررسی محصولات</StyledTableCell>
                         </TableRow>
                     </TableHead>
 
@@ -52,7 +55,7 @@ export default function QuantityTable() {
                                 <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
                                 <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
                                 <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
-                                <StyledTableCell sx={{ width: '30%' }} align="center">حذف / ویرایش</StyledTableCell>
+                                <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex',alignItems:'center' }}><Button variant='text'>ویرایش</Button>/<Button variant='text'>حذف</Button></div></StyledTableCell>
                             </StyledTableRow>
                         ))) : null}
                     </TableBody>

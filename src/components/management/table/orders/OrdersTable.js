@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Radio, RadioGroup, FormControlLabel, Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper } from '@mui/material';
+import { Box, Button, Radio, RadioGroup, FormControlLabel, Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow } from 'components/management/table/style';
 import { fetchOrders } from 'redux/feature/orders/OrdersSlice';
 
@@ -31,8 +31,8 @@ export default function QuantityTable() {
 
     const handelFilterOrders = (event) => {
         const deliveredStatus = event.target.value;
-        
-    console.log(deliveredStatus)
+
+        console.log(deliveredStatus)
         setStatus(deliveredStatus);
     }
 
@@ -40,15 +40,14 @@ export default function QuantityTable() {
 
     return (
         <div style={tableStyle}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
+                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 80 }}>مدیریت سفارشات</Typography>
 
-            <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت سفارشات</Typography>
-
-            <RadioGroup row >
                 <FormControlLabel sx={{ color: '#537d97' }} value='true' control={<Radio color='primary' sx={{ '& .MuiSvgIcon-root': { fontSize: 14 } }} onClick={handelFilterOrders} />} label="سفارش های تحویل شده" />
                 <FormControlLabel sx={{ color: '#537d97' }} value='false' control={<Radio color='error' sx={{ '& .MuiSvgIcon-root': { fontSize: 14 } }} onClick={handelFilterOrders} />} label="سفارش های در انتظار ارسال" />
-            </RadioGroup>
 
-            <TableContainer component={Paper} sx={{ width: "50%" }} align='center'>
+            </Box>
+            <TableContainer component={Paper} sx={{ width: "50%", mb: 5 }} align='center'>
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -67,7 +66,7 @@ export default function QuantityTable() {
                                     <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{username} {lastname}</StyledTableCell >
                                     <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center">{prices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</StyledTableCell >
                                     <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{(new Date(expectAt)).toLocaleDateString('fa')}</StyledTableCell >
-                                    <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center">بررسی سفارشات</StyledTableCell >
+                                    <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center"><Button variant='text'>بررسی سفارشات</Button></StyledTableCell >
                                 </StyledTableRow>
                             )
                         })}
@@ -86,7 +85,7 @@ export default function QuantityTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
-        </div>
+        </div >
     );
 }
 
