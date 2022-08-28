@@ -121,3 +121,7 @@ h1 {
   display: flex;
   flex-direction: row-reverse;
 }
+.muirtl-16l2o10-MuiPaper-root-MuiAlert-root{
+  direction: ltr !important;
+  
+}

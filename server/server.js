@@ -11,8 +11,8 @@ const jwt = require("jsonwebtoken");
 const AUTH_JWT_SECRET = "TOP-SECRET";
 const AUTH_JWT_REFRESH_TOKEN_SECRET = "REFRESH_TOKEN_TOP-SECRET";
 const AUTH_JWT_OPTIONS = { expiresIn: 60 * 60 };
-const refreshTokenExpire = "1d";
-const accessTokenExpire = "1h";
+const refreshTokenExpire = "2min";
+const accessTokenExpire = "1min";
 
 // TODO: vaghti token nis, 200 mide
 // TODO: vaghti token nist, invalid nade (login api)
@@ -146,7 +146,7 @@ server.post("/auth/login", async function (req, res, next) {
   req.user = (DB.users || {}).find(
     (u) => u.username == username && u.password == password
   );
-  if (!req.user) return res.status(401).send("No user with those credentials!");
+  if (!req.user) return res.status(401).send("کاربری با این نام کاربری وجود ندارد!");
   const { username: dbUsername, role, name } = req.user;
   const accessToken = await jwt.sign(
     { dbUsername, role, name },

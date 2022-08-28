@@ -9,6 +9,7 @@ import NoMatched from 'pages/errors/NoMatched';
 import Products from 'pages/managementPanel/main/Products';
 import Quantity from 'pages/managementPanel/main/Quantity'
 import Orders from 'pages/managementPanel/main/Orders';
+import PrivateRoutes from './PrivateRoutes';
 
 
 function MainRoutes() {
@@ -18,7 +19,7 @@ function MainRoutes() {
                 <Route path='/' element={<Home />} />
                 <Route path='cart' element={<Cart />} />
                 <Route path='management' element={<LoginForm />} />
-                <Route path='management' element={<ManagementPanel />} >
+                <Route path='management' element={<PrivateRoutes><ManagementPanel /></PrivateRoutes>} >
                     <Route path='products' element={<Products />} />
                     <Route path='quantity' element={<Quantity />} />
                     <Route path='orders' element={<Orders />} />

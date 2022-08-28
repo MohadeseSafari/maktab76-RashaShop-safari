@@ -1,8 +1,10 @@
+import * as React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { Box, Container, InputLabel, Stack, Typography, FormHelperText } from '@mui/material';
+import { Box, Container, InputLabel, Stack, Typography, FormHelperText, Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 //import common components
 import { CustomInput, InputAdornment, IconButton } from 'pages/managementPanel/loginForm/TextFieldLogin';
 import { CustomButton } from 'pages/managementPanel/loginForm/ButtonLogin';
@@ -15,6 +17,8 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import LoginBackground from 'assets/image/background/Login-Background.jpg';
 import 'styles/style.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from 'redux/feature/user/UsersSlice';
 
 const initialValues = {
     username: '',
@@ -22,17 +26,22 @@ const initialValues = {
 }
 
 const SignupSchema = Yup.object().shape({
-    username: Yup.string().min(3, 'نام کاربری نمی تواند کمتر از 3 کارکتر باشد.')
-        .required('نام کاربری نمی تواند خالی باشد!'),
-
-    password: Yup.string().min(4, 'رمز عبور نمی تواند کمتر از 4 کاراکتر باشد.')
-        .matches(/^(?=.*[a-z])(?=.*[0-9])/, 'رمز عبور معتبر را وارد کنید')
-        .required('رمز عبور نمی تواند خالی باشد')
+    username: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
+    password: Yup.string().required('رمز عبور نمی تواند خالی باشد')
 })
 
 function LoginForm() {
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
     let navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false)
+    const dispatch = useDispatch();
+    const { error, isLoggedIn } = useSelector(state => state.users);
+    const [showPassword, setShowPassword] = useState(false);
+    const [openToast, setOpenToast] = useState(false);
+
+    console.log(error)
 
     const handleClickShowPassword = () => {
         if (showPassword) {
@@ -46,16 +55,43 @@ function LoginForm() {
         event.preventDefault();
     };
 
-    const handelSubmit = (values, props) => {
-        props.resetForm()
+    const handelSubmit = async (values, props) => {
+        dispatch(login(values))
+        props.resetForm();
     }
 
+    const handleClick = () => {
+        if (error) {
+            setOpenToast(true);
+        }
 
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenToast(false);
+    };
+
+    if (isLoggedIn) {
+        navigate('products')
+    }
+    console.log(isLoggedIn)
     return (
         <Container maxWidth='xl' sx={{ backgroundImage: `url(${LoginBackground})`, height: '100vh' }}>
             <LoginNavbar />
-            <Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handelSubmit} validateOnMount>
+            <Stack spacing={2} sx={{ width: '100%' }}>
+                {error && <Snackbar open={openToast} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                        <Typography sx={{ ml: 1 }}>{error}</Typography>
+                    </Alert>
+                </Snackbar>}
+            </Stack>
+            <Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handelSubmit} >
                 {(props) => (
+
                     <Form className="loginForm" autoComplete='false' >
                         <h1 className="start">
                             <span className="end1"></span><span className="middle1">مدیریت</span>
@@ -67,6 +103,7 @@ function LoginForm() {
                                 <CustomInput
                                     name='username'
                                     type='text'
+                                    autocomplete='false'
                                     value={props.values.username}
                                     onChange={props.handleChange}
                                     endAdornment={
@@ -75,7 +112,7 @@ function LoginForm() {
                                         </InputAdornment>
                                     }
                                 />
-                                {props.errors.username ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'right', mr: 2, fontSize: 18 }} >{props.errors.username}</FormHelperText>) : null}
+                                {props.errors.username ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.username}</FormHelperText>) : null}
 
                             </Stack>
                         </Box>
@@ -96,10 +133,10 @@ function LoginForm() {
                                         </InputAdornment>
                                     }
                                 />
-                                {props.errors.password ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'right', mr: 2, fontSize: 18 }} >{props.errors.password}</FormHelperText>) : null}
+                                {props.errors.password ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.password}</FormHelperText>) : null}
                             </Stack>
                         </Box>
-                        <CustomButton type='submit' disabled={!props.isValid} onClick={() => navigate('products')}>ورود</CustomButton>
+                        <CustomButton type='submit' disabled={!props.isValid} onClick={handleClick}>ورود</CustomButton>
                         <Typography sx={{ mt: 2, cursor: 'pointer' }}>پسورد خود را فراموش کردید؟</Typography>
                     </Form>
                 )}
@@ -107,5 +144,7 @@ function LoginForm() {
         </Container>
     );
 }
+
+
 
 export default LoginForm;
