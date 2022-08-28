@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { Button, Box, Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+<<<<<<< Updated upstream
 import { BASE_URL_IMAGE } from 'api/index';
+=======
+import { BASE_URL_IMAGE } from 'config/api';
+>>>>>>> Stashed changes
 
 
 export default function QuantityTable() {
