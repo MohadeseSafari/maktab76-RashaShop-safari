@@ -10,6 +10,8 @@ import { Provider } from 'react-redux';
 import { CacheProvider } from '@emotion/react';
 import { cacheRtl } from 'common/RTL';
 import { store } from 'redux/store'
+import { injectStore } from "./api/http";
+injectStore(store);
 
 
 function App() {
