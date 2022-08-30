@@ -14,7 +14,7 @@ export const login = createAsyncThunk('users/login', async (user) => {
         localStorage.setItem(REFRESH_TOKEN, response.refreshToken);
         localStorage.setItem(IS_LOGGED_IN, true);
         return response;
-    }).catch((error) => Promise.reject(error))
+    }).catch((error) => console.log(error))
 })
 
 export const refreshToken = createAsyncThunk('users/refreshToken ',  (user) => {

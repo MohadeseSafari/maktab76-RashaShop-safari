@@ -34,8 +34,7 @@ export default function ManagementPanelLayout() {
     const navigate = useNavigate()
     return (
         <Container maxWidth='xl' sx={{ display: 'flex' }}>
-
-            <AppBar position="absolute" elevation={0} sx={{ background: 'transparent' }}>
+            <AppBar  elevation={0} sx={{ background: 'transparent' }}>
                 <div role="presentation" onClick={handleClick} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
                     <NavLink to='/' style={{ display: 'flex', alignItems: 'center' }}>
@@ -53,8 +52,8 @@ export default function ManagementPanelLayout() {
                         <HomeRoundedIcon />
                     </IconButton>
 
-                    <Outlet />
-                </div>
+                   
+                </div> <Outlet />
             </AppBar>
         </Container>
 

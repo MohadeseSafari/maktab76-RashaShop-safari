@@ -7,7 +7,7 @@ function CheckProducts({ open, handleClose, checkItem }) {
     const { id, username, lastname, address, phone, expectAt, createdAt, products } = checkItem;
     return (
         <Modal open={open} onClose={handleClose} components={{ Backdrop }}>
-            
+
             <Box sx={style}>
                 <Typography variant='h5'>نمایش سفارش</Typography>
                 <Container>
@@ -41,9 +41,9 @@ function CheckProducts({ open, handleClose, checkItem }) {
                             )
                         })) : null}
                     </TableBody>
-                    
+
                 </Table>
-                <DeliveryButton sx={{mt:2}}>تحویل شد</DeliveryButton>
+                <DeliveryButton sx={{ mt: 2 }}>تحویل شد</DeliveryButton>
             </Box>
         </Modal>
 

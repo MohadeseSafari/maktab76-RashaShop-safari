@@ -11,8 +11,8 @@ const jwt = require("jsonwebtoken");
 const AUTH_JWT_SECRET = "TOP-SECRET";
 const AUTH_JWT_REFRESH_TOKEN_SECRET = "REFRESH_TOKEN_TOP-SECRET";
 const AUTH_JWT_OPTIONS = { expiresIn: 60 * 60 };
-const refreshTokenExpire = "2min";
-const accessTokenExpire = "1min";
+const refreshTokenExpire = "1h";
+const accessTokenExpire = "30min";
 
 // TODO: vaghti token nis, 200 mide
 // TODO: vaghti token nist, invalid nade (login api)

@@ -7,10 +7,23 @@ import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'compone
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { BASE_URL_IMAGE } from 'config/api';
 
+import EditModal from 'components/management/editModal/EditModal';
+import DeleteProducts from 'components/management/deleteProduct/DeleteProduct';
+import CreateModal from 'components/management/createModal/CreateModal';
 
-export default function QuantityTable() {
+export default function ProductsTable() {
+
     const dispatch = useDispatch();
     const [rowsPerPage, setRowsPerPage] = useState(5);
+
+    const [product, setProduct] = useState({});
+    const [open, setOpen] = useState(false);
+
+    const [openDelete, setOpenDelete] = useState(false);
+    const [id, setId] = useState(0);
+
+    const [openCreate, setOpenCreate] = useState(false);
+
     const { products, currentPage, loading, totalCount } = useSelector((state) => state.products)
 
     useEffect(() => {
@@ -19,23 +32,49 @@ export default function QuantityTable() {
 
 
     const handleChangePage = (event, newPage) => {
-    
+
         dispatch(fetchProducts({ currentPage: newPage + 1, limitPages: rowsPerPage }))
     };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
-
-        // currentPage = 0;
     };
+
+    const handelOpenModal = (product) => {
+        setProduct(product);
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    const handelOpenDelete = (id) => {
+        setId(id);
+        setOpenDelete(true);
+    }
+
+    const handleCloseDelete = () => {
+        setOpenDelete(false);
+    }
+
+    const handelOpenCreate = () => {
+        setOpenCreate(true)
+    }
+
+    const handelCloseCreate = () => {
+        setOpenCreate(false)
+    }
 
     return (
         <div style={tableStyle}>
+           
             <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
-                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 130 }}>مدیریت کالاها</Typography>
-                <SaveButton>افزودن کالا</SaveButton>
+                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 100 }}>مدیریت کالاها</Typography>
+                <SaveButton onClick={handelOpenCreate}>افزودن کالا</SaveButton>
             </Box>
-            <TableContainer component={Paper} sx={{ width: '55%', mb: 10 }} align='center'  >
+            <TableContainer component={Paper} sx={{ width: '65%', mb: 10 }} align='center'  >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -48,15 +87,21 @@ export default function QuantityTable() {
                     </TableHead>
 
                     <TableBody>
-                        {products.length ? (products.map(({ id, name, genre, image }) => (
-                            <StyledTableRow key={id} >
-                                <StyledTableCell sx={{ width: '5%' }} align="center" size='small'>{id + 1}</StyledTableCell>
-                                <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
-                                <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
-                                <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
-                                <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex',alignItems:'center' }}><Button variant='text'>ویرایش</Button>/<Button variant='text'>حذف</Button></div></StyledTableCell>
-                            </StyledTableRow>
-                        ))) : null}
+                        {products.length ? (products.map((product) => {
+                            const { id, name, genre, image } = product;
+                            return (
+                                <StyledTableRow key={id} >
+                                    <StyledTableCell sx={{ width: '5%' }} align="center" size='small'>{id + 1}</StyledTableCell>
+                                    <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
+                                    <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
+                                    <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
+                                    <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex', alignItems: 'center' }}><Button variant='text' onClick={() => handelOpenModal(product)}>ویرایش</Button>/<Button variant='text' onClick={() => handelOpenDelete(id)}>حذف</Button></div></StyledTableCell>
+                                </StyledTableRow>
+                            )
+                        })) : null}
+                        <EditModal open={open} handleClose={handleClose} product={product} />
+                        <DeleteProducts openDelete={openDelete} handleCloseDelete={handleCloseDelete} id={id} />
+                        <CreateModal openCreate={openCreate} handelCloseCreate={handelCloseCreate} />
                     </TableBody>
                 </Table>
                 <TablePagination

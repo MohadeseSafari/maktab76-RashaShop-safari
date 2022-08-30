@@ -4,10 +4,11 @@ import { REFRESH_TOKEN_URL, LOGIN_URL } from 'config/api';
 export const loginRequest = async (user) => {
     try {
         const response = await axios.post(LOGIN_URL, user);
+        console.log(response)
         return response.data
     } catch (error) {
-        console.log(error.response.data)
-        return Promise.reject(error.response.data);
+        console.log(error)
+     
     }
 }
 

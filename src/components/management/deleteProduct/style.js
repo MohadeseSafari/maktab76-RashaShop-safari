@@ -1,8 +1,9 @@
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled'; 
+import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import clsx from 'clsx';
-import { styled } from '@mui/system';
 import ModalUnstyled from '@mui/base/ModalUnstyled';
-import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+
 
 const BackdropUnstyled = React.forwardRef((props, ref) => {
   const { open, className, ...other } = props;
@@ -49,6 +50,7 @@ export const style = (theme) => ({
   width: 400,
   bgcolor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
   border: '1px solid #3D4C56',
+  borderRadius: '8px',
   padding: '16px 32px 24px 32px',
 });
 
@@ -66,20 +68,47 @@ export const editModalStyle = (theme) => ({
 });
 
 
-export const DeliveryButton = styled(ButtonUnstyled)(({ theme }) => `
-  width: 100px;
-  height: 40px;
+
+export const DeleteButton = styled(ButtonUnstyled)(({ theme }) => `
+  height: 45px;
   font-weight: bold;
   font-size: 1.45rem;
   font-family: ${theme.typography.fontFamily};
-  background-color: #60a3bc ;
-  padding: 0px 15px;
-  border-radius: 10px;
+  background-color: #CE4C4C ;
+  padding: 0px 25px;
+  border-radius: 18px;
   color: white;
   transition: all 150ms ease;
   cursor: pointer;
   border: none;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    background-color:#a83c3c ;
+  }
+
+&.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`);
+
+export const UnDeleteButton = styled(ButtonUnstyled)(({ theme }) => `
+  height: 45px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  font-family: ${theme.typography.fontFamily};
+  background-color:#3c6382 ;
+  padding: 0px 15px;
+  border-radius: 18px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
 
   &:hover {
     background-color:#3c6382 ;

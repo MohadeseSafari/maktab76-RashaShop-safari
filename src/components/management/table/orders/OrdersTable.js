@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Button, Radio, RadioGroup, FormControlLabel, Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, FormControl } from '@mui/material';
+import { Box, Button, Radio, RadioGroup, FormControlLabel, Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, FormControl } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow, headerTable } from 'components/management/table/style';
 import { fetchOrders } from 'redux/feature/orders/OrdersSlice';
 import Spinner from 'common/Spinner';

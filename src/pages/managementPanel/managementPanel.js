@@ -4,6 +4,7 @@ function managementPanel() {
     return (
         <>
         <ManagementPanelLayout />
+        
         </>
     );
 }

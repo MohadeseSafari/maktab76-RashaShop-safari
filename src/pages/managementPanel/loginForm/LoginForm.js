@@ -80,7 +80,7 @@ function LoginForm() {
     }
     console.log(isLoggedIn)
     return (
-        <Container maxWidth='xl' sx={{ backgroundImage: `url(${LoginBackground})`, height: '100vh' }}>
+        <Container maxWidth='xl' sx={{ backgroundImage: `url(${LoginBackground})`, height: '100vh' }}>         
             <LoginNavbar />
             <Stack spacing={2} sx={{ width: '100%' }}>
                 {error && <Snackbar open={openToast} autoHideDuration={6000} onClose={handleClose}>
