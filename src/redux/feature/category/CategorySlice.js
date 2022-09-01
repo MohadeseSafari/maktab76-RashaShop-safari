@@ -18,7 +18,7 @@ export const CategoriesSlice = createSlice({
 
         builder.addCase(fetchCategories.fulfilled, (state, action) => {
             state.loading = false;
-            state.orders = action.payload.data;
+            state.categories = action.payload;
         });
 
         builder.addCase(fetchCategories.rejected, (state, action) => {

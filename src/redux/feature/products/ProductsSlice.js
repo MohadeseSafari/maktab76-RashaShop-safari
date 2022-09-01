@@ -59,10 +59,7 @@ export const ProductsSlice = createSlice({
 
         builder.addCase(deleteProduct.fulfilled, (state, action) => {
             state.loading = false;
-            let DeleteProduct = state.products.filter((id) => id === action.payload.id);
-            console.log(DeleteProduct) 
-            // state.products = action.payload.data;
-                       // state.products[indexDeleteProduct]
+            state.products = state.products.filter((product) => +product.id !== action.payload.id);
         })
 
         builder.addCase(deleteProduct.rejected, (state, action) => {
@@ -90,7 +87,7 @@ export const ProductsSlice = createSlice({
         });
         builder.addCase(createProduct.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = action.payload.data;
+            state.products.push(action.payload);
         });
 
         builder.addCase(createProduct.rejected, (state, action) => {

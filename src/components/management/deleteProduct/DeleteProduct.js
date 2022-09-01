@@ -17,11 +17,6 @@ function DeleteProducts({ openDelete, handleCloseDelete, id }) {
     return (
         <Modal open={openDelete} components={{ Backdrop }}>
             <Box sx={style}>
-                {/* 
-                <IconButton component="label" onClick={handleCloseDelete} sx={{ ml: 42 }}>
-                    <HighlightOffOutlinedIcon sx={{ fontSize: 17 }} />
-                </IconButton> */}
-
                 <Typography variant='h5'>آیا مایل به حذف کردن این کالا هستید؟</Typography>
 
                 <Box sx={{ mt: 2 }}>

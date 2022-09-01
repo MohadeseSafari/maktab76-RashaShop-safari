@@ -14,7 +14,6 @@
   font-display: swap;
 }
 
-
 *,
 *:before,
 *:after {
@@ -36,9 +35,8 @@ h1 {
   align-items: center;
   font-size: 45px;
   color: #cf4d4d;
- 
 }
-.start{
+.start {
   margin-top: 2rem;
   line-height: 5rem;
 }
@@ -56,7 +54,6 @@ h1 {
 .end2 {
   position: absolute;
   color: #cf4d4d;
-  
 }
 .middle1,
 .middle2 {
@@ -117,12 +114,13 @@ h1 {
   }
 }
 
-.MuiTablePagination-actions{
+.MuiTablePagination-actions {
   display: flex;
   flex-direction: row-reverse;
 }
-.muirtl-16l2o10-MuiPaper-root-MuiAlert-root{
+.muirtl-16l2o10-MuiPaper-root-MuiAlert-root {
   direction: ltr !important;
-  
 }
-
+.muirtl-6hp17o-MuiList-root-MuiMenu-list {
+  direction: rtl;
+}

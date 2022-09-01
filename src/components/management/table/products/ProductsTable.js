@@ -71,10 +71,10 @@ export default function ProductsTable() {
         <div style={tableStyle}>
            
             <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
-                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 100 }}>مدیریت کالاها</Typography>
+                <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 50 }}>مدیریت کالاها</Typography>
                 <SaveButton onClick={handelOpenCreate}>افزودن کالا</SaveButton>
             </Box>
-            <TableContainer component={Paper} sx={{ width: '65%', mb: 10 }} align='center'  >
+            <TableContainer component={Paper} sx={{ width: '70%', mb: 10 }} align='center'  >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -87,7 +87,7 @@ export default function ProductsTable() {
                     </TableHead>
 
                     <TableBody>
-                        {products.length ? (products.map((product) => {
+                        {products ? (products.map((product) => {
                             const { id, name, genre, image } = product;
                             return (
                                 <StyledTableRow key={id} >

@@ -62,3 +62,12 @@ export const createProductApi = async (product) => {
         return Promise.reject(error);
     }
 }
+
+export const uploadImageApi = async (image) => {
+    try {
+        const response = await axios.post('/upload', image);
+        return response.data.filename;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
