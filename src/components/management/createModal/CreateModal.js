@@ -58,14 +58,14 @@ const initialValues = {
 }
 
 const SignupSchema = Yup.object().shape({
-    name: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
-    publication: Yup.string().required('رمز عبور نمی تواند خالی باشد'),
-    author: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
-    translator: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
-    price: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
-    pages: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
-    quantity: Yup.number().required('نام کاربری نمی تواند خالی باشد!'),
-    description: Yup.string().required('نام کاربری نمی تواند خالی باشد!'),
+    name: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    publication: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    author: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    translator: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    price: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    pages: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
+    quantity: Yup.number().required('این فیلد نمیتواند خالی باشد!'),
+    description: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
 })
 
 const CreateModal = ({ openCreate, handelCloseCreate }) => {
@@ -216,7 +216,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                                 </Grid>
 
                             </Grid>
-                            <DeliveryButton type='submit' sx={{ mt: 2 }}>ذخیره</DeliveryButton>
+                            <DeliveryButton type='submit' sx={{ mt: 2, ml: 40 }}>ذخیره</DeliveryButton>
                         </Form>
                     )}
                 </Formik>

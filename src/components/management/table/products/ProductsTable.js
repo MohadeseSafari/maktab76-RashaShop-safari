@@ -40,8 +40,9 @@ export default function ProductsTable() {
         setRowsPerPage(+event.target.value);
     };
 
-    const handelOpenModal = (product) => {
-        setProduct(product);
+    const handelOpenModal = (id) => {
+        const selectedProduct = products.filter((product) => product.id === parseInt(id));
+        setProduct(selectedProduct[0]);
         setOpen(true);
     };
 
@@ -69,7 +70,7 @@ export default function ProductsTable() {
 
     return (
         <div style={tableStyle}>
-           
+
             <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
                 <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 50 }}>مدیریت کالاها</Typography>
                 <SaveButton onClick={handelOpenCreate}>افزودن کالا</SaveButton>
@@ -95,11 +96,11 @@ export default function ProductsTable() {
                                     <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
                                     <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
                                     <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
-                                    <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex', alignItems: 'center' }}><Button variant='text' onClick={() => handelOpenModal(product)}>ویرایش</Button>/<Button variant='text' onClick={() => handelOpenDelete(id)}>حذف</Button></div></StyledTableCell>
+                                    <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex', alignItems: 'center' }}><Button variant='text' onClick={() => handelOpenModal(id)}>ویرایش</Button>/<Button variant='text' onClick={() => handelOpenDelete(id)}>حذف</Button></div></StyledTableCell>
                                 </StyledTableRow>
                             )
                         })) : null}
-                        <EditModal open={open} handleClose={handleClose} product={product} />
+                        
                         <DeleteProducts openDelete={openDelete} handleCloseDelete={handleCloseDelete} id={id} />
                         <CreateModal openCreate={openCreate} handelCloseCreate={handelCloseCreate} />
                     </TableBody>
@@ -117,6 +118,7 @@ export default function ProductsTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
+            <EditModal open={open} handleClose={handleClose} product={product} />
         </div>
     );
 }

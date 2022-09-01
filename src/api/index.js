@@ -63,10 +63,20 @@ export const createProductApi = async (product) => {
     }
 }
 
+//upload Image
 export const uploadImageApi = async (image) => {
     try {
         const response = await axios.post('/upload', image);
         return response.data.filename;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+export const deleteImageApi = async (code) => {
+    try {
+        const response = await axios.delete(`/products?image=${code}`);
+        return response.data;
     } catch (error) {
         return Promise.reject(error);
     }
