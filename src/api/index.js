@@ -81,3 +81,12 @@ export const deleteImageApi = async (code) => {
         return Promise.reject(error);
     }
 }
+
+export const updateOrdersApi = async (id) => {
+    try {
+        const response = await axios.patch(`/orders/${id}`, { delivered: "true" });
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}

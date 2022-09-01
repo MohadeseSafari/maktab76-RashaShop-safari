@@ -2755,7 +2755,7 @@
       ],
       "createdAt": 1660937400000,
       "prices": 1225000,
-      "delivered": "false",
+      "delivered": "true",
       "id": 0
     },
     {
@@ -2785,7 +2785,7 @@
         }
       ],
       "prices": 1272000,
-      "delivered": "false",
+      "delivered": "true",
       "createdAt": 1659641400000,
       "id": 1
     },
@@ -2901,7 +2901,7 @@
       ],
       "createdAt": 1646158398160,
       "prices": 1086000,
-      "delivered": "false",
+      "delivered": "true",
       "id": 5
     },
     {
@@ -2981,7 +2981,7 @@
       ],
       "createdAt": 1649273400000,
       "prices": 500000,
-      "delivered": "false",
+      "delivered": "true",
       "id": 7
     },
     {

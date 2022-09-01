@@ -1,10 +1,23 @@
 import { Box, Container, Table, TableHead, TableRow, TableBody, Typography } from '@mui/material';
 import { Modal, style, Backdrop, DeliveryButton } from 'components/management/checkProducts/style';
 import { StyledTableCell, StyledTableRow } from 'components/management/table/style';
+import { fetchOrders } from 'redux/feature/orders/OrdersSlice';
 import { BASE_URL_IMAGE } from 'config/api';
+import { useDispatch } from 'react-redux'
+import { updateOrdersApi } from 'api';
 
-function CheckProducts({ open, handleClose, checkItem }) {
+
+
+function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage }) {
+    const dispatch = useDispatch();
     const { id, username, lastname, address, phone, expectAt, createdAt, products } = checkItem;
+
+    const handelDelivery = (id) => {
+        updateOrdersApi(id);
+        handleClose();
+        dispatch(fetchOrders({ delivered: status, currentPage: 1, limitPages: rowsPerPage }))
+    }
+
     return (
         <Modal open={open} onClose={handleClose} components={{ Backdrop }}>
 
@@ -43,7 +56,8 @@ function CheckProducts({ open, handleClose, checkItem }) {
                     </TableBody>
 
                 </Table>
-                <DeliveryButton sx={{ mt: 2 }}>تحویل شد</DeliveryButton>
+                {status === "=false" ? (<DeliveryButton sx={{ mt: 2 }} onClick={() => handelDelivery(id)}>تحویل شد</DeliveryButton>) : status === "=true" ? ((<Typography sx={{ mt: 2 }}>زمان تحویل: {(new Date(expectAt)).toLocaleDateString('fa')}</Typography>)) : (<DeliveryButton onClick={handleClose} sx={{ mt: 2 }}>بستن</DeliveryButton>)}
+
             </Box>
         </Modal>
 

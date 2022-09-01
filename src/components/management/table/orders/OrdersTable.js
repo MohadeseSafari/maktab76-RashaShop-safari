@@ -28,7 +28,6 @@ export default function QuantityTable() {
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
-        // currentPage = 0;
     };
 
     const handelFilterOrders = (event) => {
@@ -84,7 +83,7 @@ export default function QuantityTable() {
                                 )
 
                             }))}
-                            <CheckProducts open={open} handleClose={handleClose} checkItem={checkItem} />
+                            <CheckProducts open={open} handleClose={handleClose} checkItem={checkItem} status={status} rowsPerPage={rowsPerPage} />
                         </TableBody>
                     </Table>
 
