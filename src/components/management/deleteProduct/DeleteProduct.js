@@ -1,17 +1,18 @@
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box,Typography } from '@mui/material';
 import { Modal, style, Backdrop } from 'components/management/deleteProduct/style';
 import { DeleteButton, UnDeleteButton } from 'components/management/deleteProduct/style';
-import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { deleteProduct } from 'redux/feature/products/ProductsSlice';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
 
-function DeleteProducts({ openDelete, handleCloseDelete, id }) {
+
+function DeleteProducts({ openDelete, handleCloseDelete, id , rowsPerPage }) {
     const dispatch = useDispatch();
 
     const handelDeleteItem = () => {
         dispatch(deleteProduct(id));
         handleCloseDelete();
+        dispatch(fetchProducts({ currentPage: 1, limitPages: rowsPerPage }))
     }
 
     return (

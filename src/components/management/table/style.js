@@ -74,4 +74,9 @@ export const SaveButton = styled(ButtonUnstyled)(({ theme }) => `
   }
 `);
 
+export const customTextField ={
+  border: 'none',
+  alignItems: 'center'
+}
+
 

@@ -41,7 +41,7 @@ function LoginForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [openToast, setOpenToast] = useState(false);
 
-    console.log(error)
+    
 
     const handleClickShowPassword = () => {
         if (showPassword) {
@@ -78,7 +78,7 @@ function LoginForm() {
     if (isLoggedIn) {
         navigate('products')
     }
-    console.log(isLoggedIn)
+    
     return (
         <Container maxWidth='xl' sx={{ backgroundImage: `url(${LoginBackground})`, height: '100vh' }}>         
             <LoginNavbar />

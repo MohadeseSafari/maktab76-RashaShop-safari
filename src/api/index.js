@@ -44,9 +44,10 @@ export const deleteProductApi = async (id) => {
 }
 
 //Update Product
-export const updateProductApi = async ({ id, product }) => {
+export const updateProductApi = async (product) => {
     try {
-        const response = await axios.put(`/products/${id}`, product);
+        const response = await axios.put(`/products/${product.id}`, product);
+        console.log(response.data)
         return response.data;
     } catch (error) {
         return Promise.reject(error);
@@ -75,14 +76,14 @@ export const uploadImageApi = async (image) => {
 
 export const deleteImageApi = async (code) => {
     try {
-        const response = await axios.delete(`/products?image=${code}`);
+        const response = await axios.put(`/products?image=${code}`);
         return response.data;
     } catch (error) {
         return Promise.reject(error);
     }
 }
 
-export const updateOrdersApi = async (id) => {
+export const updateOrdersApi = async (id ) => {
     try {
         const response = await axios.patch(`/orders/${id}`, { delivered: "true" });
         return response.data;

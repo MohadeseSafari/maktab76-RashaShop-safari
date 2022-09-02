@@ -17,12 +17,12 @@ export default function ProductsTable() {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [product, setProduct] = useState({});
-    const [open, setOpen] = useState(false);
-
+    const [openEdit, setOpenEdit] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
+    const [openCreate, setOpenCreate] = useState(false);
     const [id, setId] = useState(0);
 
-    const [openCreate, setOpenCreate] = useState(false);
+
 
     const { products, currentPage, loading, totalCount } = useSelector((state) => state.products)
 
@@ -40,16 +40,15 @@ export default function ProductsTable() {
         setRowsPerPage(+event.target.value);
     };
 
-    const handelOpenModal = (id) => {
+    const handelOpenModalEdit = (id) => {
         const selectedProduct = products.filter((product) => product.id === parseInt(id));
         setProduct(selectedProduct[0]);
-        setOpen(true);
+        setOpenEdit(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
     };
-
 
     const handelOpenDelete = (id) => {
         setId(id);
@@ -93,15 +92,15 @@ export default function ProductsTable() {
                             return (
                                 <StyledTableRow key={id} >
                                     <StyledTableCell sx={{ width: '5%' }} align="center" size='small'>{id + 1}</StyledTableCell>
-                                    <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[0]}`} alt="??" /></StyledTableCell>
+                                    <StyledTableCell sx={{ width: '10%', justifyContent: 'center', padding: '8px 0px 0px 0px' }} align="center"><img style={{ width: '60%' }} src={`${BASE_URL_IMAGE}/${image[image.length -1]}`} alt="??" /></StyledTableCell>
                                     <StyledTableCell sx={{ width: '30%' }} align="center">{name}</StyledTableCell>
                                     <StyledTableCell sx={{ width: '35%' }} align="center">{(genre).map((item, index) => (<span key={index}>{item}&nbsp;</span>))}</StyledTableCell>
-                                    <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex', alignItems: 'center' }}><Button variant='text' onClick={() => handelOpenModal(id)}>ویرایش</Button>/<Button variant='text' onClick={() => handelOpenDelete(id)}>حذف</Button></div></StyledTableCell>
+                                    <StyledTableCell sx={{ width: '40%' }} align="center"><div style={{ display: 'flex', alignItems: 'center' }}><Button variant='text' onClick={() => handelOpenModalEdit(id)}>ویرایش</Button>/<Button variant='text' onClick={() => handelOpenDelete(id)}>حذف</Button></div></StyledTableCell>
                                 </StyledTableRow>
                             )
                         })) : null}
-                        
-                        <DeleteProducts openDelete={openDelete} handleCloseDelete={handleCloseDelete} id={id} />
+                        <EditModal openEdit={openEdit} handleCloseEdit={handleCloseEdit} product={product} />
+                        <DeleteProducts openDelete={openDelete} handleCloseDelete={handleCloseDelete} id={id} rowsPerPage={rowsPerPage} />
                         <CreateModal openCreate={openCreate} handelCloseCreate={handelCloseCreate} />
                     </TableBody>
                 </Table>
@@ -118,7 +117,7 @@ export default function ProductsTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
-            <EditModal open={open} handleClose={handleClose} product={product} />
+
         </div>
     );
 }

@@ -57,28 +57,32 @@ const SignupSchema = Yup.object().shape({
     description: Yup.string().required('این فیلد نمیتواند خالی باشد!'),
 })
 
-function EditModal({ open, handleClose, product }) {
+function EditModal({ openEdit, handleCloseEdit, product }) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const [dataInput, setDataInput] = useState(null);
     const [genres, setGenre] = useState([]);
     const categories = useSelector(state => state.categories.categories)
-    const { name, image, publication, author, translator, genre, price, pages, quantity, off, description } = product
+    const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description } = product
     const [previewSrc, setPreviewSrc] = useState([]);
 
     useEffect(() => {
-        console.log("useEffect", previewSrc)
-    }, [previewSrc])
+        if (product.image) {
+            setPreviewSrc([...product.image])
+        }
+    }, [product])
 
     const handleChangeGenre = (event, props) => {
         const { value } = event.target;
         setGenre(typeof value === 'string' ? value.split(',') : value);
         props.setFieldValue("genre", value);
+
+
     };
 
     const handleChangeImage = (e, props) => {
         setDataInput(e.target.files[0]);
-        setPreviewSrc(image);
+        props.setFieldValue("image", previewSrc);
     }
 
     const handelUpload = (event, props) => {
@@ -87,7 +91,6 @@ function EditModal({ open, handleClose, product }) {
         uploadImageApi(img).then((res) => {
             setPreviewSrc([...previewSrc, res]);
         });
-
     }
 
 
@@ -96,31 +99,28 @@ function EditModal({ open, handleClose, product }) {
     }, [dispatch])
 
     const handelDeleteImage = (img) => {
-        deleteImageApi(img);
+
     }
 
+    console.log(previewSrc)
     const handelSubmit = (values, props) => {
-        updateProductApi(values);
-        props.resetForm();
-        setGenre([]);
-        setPreviewSrc([]);
-        handleClose();
-
+        handleCloseEdit()
+        dispatch(updateProductApi(values));
+        console.log(props);
+        
     }
 
 
     return (
-        <Modal open={open} onClose={handleClose} components={{ Backdrop }}>
-
+        <Modal open={openEdit} onClose={handleCloseEdit} components={{ Backdrop }}>
             <Box sx={editModalStyle}>
                 <Typography variant='h5'>ویرایش کالا</Typography>
-
-
                 <Formik
                     initialValues={{
+                        id: id,
                         name: name,
                         publication: publication,
-                        image: image,
+                        image: previewSrc,
                         author: author,
                         translator: translator,
                         genre: genre,
@@ -130,10 +130,10 @@ function EditModal({ open, handleClose, product }) {
                         description: description
                     }}
                     validationSchema={SignupSchema}
-                    onSubmit={handelSubmit} >
+                    onSubmit={handelSubmit}>
                     {(props) => (
-
-                        <Form autoComplete='false' >
+                       
+                        <Form autoComplete='false' > {console.log("nnv",props.values)}
                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                 <Grid item xs={6}>
                                     <Stack direction="row" alignItems="center" sx={{ display: 'flex', justifyContent: "center" }} spacing={2}>
@@ -141,14 +141,13 @@ function EditModal({ open, handleClose, product }) {
                                         {previewSrc.map((img, index) => <><IconButton color='error' variant='text'><img key={index} src={`${BASE_URL_IMAGE}/${img}`} width="30" onClick={() => handelDeleteImage(img)} /><RemoveCircleIcon sx={{ fontSize: 18, position: 'absolute', bottom: 50 }} /></IconButton></>)}
                                         <label htmlFor="contained-button-file" >
                                             <Button>
-                                                <Input type="file" id="fileInput" multiple onChange={(e) => handleChangeImage(e, props)} />
+                                                <Input type="file" id="fileInput" multiple  onChange={(e) => handleChangeImage(e, props)} />
                                                 <AddAPhotoIcon sx={{ fontSize: 25 }} />
                                             </Button>
                                             <Button onClick={(event) => handelUpload(event, props)}>آپلود عکس</Button>
                                         </label>
 
                                     </Stack>
-
                                 </Grid>
 
                                 <Grid item xs={6}>
@@ -222,6 +221,7 @@ function EditModal({ open, handleClose, product }) {
                                 <Grid item xs={12}>
                                     <CKEditor dir='rtl' editor={ClassicEditor} data={description} onChange={(event, editor) => props.setFieldValue("description", editor.getData())} />
                                 </Grid>
+
 
                             </Grid>
 

@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import {uploadImageApi} from 'api';
+import { uploadImageApi } from 'api';
 import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -94,20 +94,19 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
 
     const handelUpload = async (event, props) => {
         const image = new FormData();
-        image.append('image',dataInput, dataInput.name);
-   
-      uploadImageApi(image).then((res)=> props.setFieldValue('image',[res]))
+        image.append('image', dataInput, dataInput.name);
 
-    
+        uploadImageApi(image).then((res) => props.setFieldValue('image', [res]))
+
+
     }
 
     const handelSubmit = (values, props) => {
-        dispatch(createProduct(values))
+        dispatch(createProduct(values));
         props.resetForm();
         setGenreName([]);
         setPreviewSrc(null);
         handelCloseCreate();
-
     }
 
 
@@ -136,7 +135,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                                             <span >
                                                 : انتخاب عکس
                                             </span>
-                                            <Button type='submit' onClick={(event) => handelUpload(event, props)}>آپلود عکس</Button>
+                                            <Button onClick={(event) => handelUpload(event, props)}>آپلود عکس</Button>
                                         </label>
 
                                     </Stack>

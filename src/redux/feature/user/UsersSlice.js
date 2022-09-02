@@ -14,7 +14,7 @@ export const login = createAsyncThunk('users/login', async (user) => {
         localStorage.setItem(REFRESH_TOKEN, response.refreshToken);
         localStorage.setItem(IS_LOGGED_IN, true);
         return response;
-    }).catch((error) => console.log(error))
+    }).catch((error) => Promise.reject(error))
 })
 
 export const refreshToken = createAsyncThunk('users/refreshToken ',  (user) => {
@@ -29,23 +29,19 @@ export const UsersSlice = createSlice({
     initialState,
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
-            console.log('fulfilled', action)
             return { isLoggedIn: true, error: "" }
         });
 
         builder.addCase(login.rejected, (state, action) => {
-            console.log('rejected', action)
             return { isLoggedIn: false, error: action.error.message };
         });
 
 
         builder.addCase(refreshToken.fulfilled, (state, action) => {
-            console.log('fulfilled', action)
             state.isLoggedIn = true;
         });
 
         builder.addCase(refreshToken.rejected, (state, action) => {
-            console.log('rejected', action)
             state.isLoggedIn = false;
             state.error = action.error.message;
         });
