@@ -1,40 +1,45 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadProductsApi, deleteProductApi, updateProductApi, createProductApi } from 'api/index';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+    loadProductsApi,
+    deleteProductApi,
+    updateProductApi,
+    createProductApi,
+} from "api/index";
 
 const initialState = {
     products: [],
     loading: false,
-    error: '',
+    error: "",
     currentPage: 1,
-    totalCount: 0
-}
+    totalCount: 0,
+};
 //Get Products
-export const fetchProducts = createAsyncThunk('products/fetchProducts', loadProductsApi);
+export const fetchProducts = createAsyncThunk("products/fetchProducts", loadProductsApi);
 
 //Delete Product
-export const deleteProduct = createAsyncThunk('products/deleteProducts', async (id) => {
-    await deleteProductApi(id)
-    return { id }
-});
+export const deleteProduct = createAsyncThunk("products/deleteProducts", async (id) => {
+    await deleteProductApi(id);
+    return { id };
+}
+);
 
 //Update Product
 export const updateProduct = createAsyncThunk("products/updateProducts", async(product) => {
-    return await updateProductApi(product)
-});
+    fetchProducts();
+    return await updateProductApi(product);
+}
+);
 
 //Create Product
 export const createProduct = createAsyncThunk("products/createProducts", async (product) => {
-    return await createProductApi(product)
-});
-
-
+    return await createProductApi(product);
+}
+);
 
 export const ProductsSlice = createSlice({
-    name: 'products',
+    name: "products",
     initialState,
-    reducer: {
-
-    },
+    reducer: {},
     extraReducers: (builder) => {
         //get Products
         builder.addCase(fetchProducts.pending, (state, action) => {
@@ -59,8 +64,10 @@ export const ProductsSlice = createSlice({
 
         builder.addCase(deleteProduct.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = state.products.filter((product) => +product.id !== action.payload.id);
-        })
+            state.products = state.products.filter(
+                (product) => +product.id !== action.payload.id
+            );
+        });
 
         builder.addCase(deleteProduct.rejected, (state, action) => {
             state.loading = false;
@@ -73,13 +80,18 @@ export const ProductsSlice = createSlice({
         });
 
         builder.addCase(updateProduct.fulfilled, (state, action) => {
-            console.log(action)
+            // console.log("hggff")
             state.loading = false;
-            state.products = action.payload.data;
-        })
+            return action.payload;
+            // const indexData = state.products.indexOf(action.payload.data);
+            // console.log(indexData)
+            // console.log(state.products[indexData])
+            // console.log(action.payload.data)
+            // return state.products[indexData] = action.payload.data;
+           
+        });
 
         builder.addCase(updateProduct.rejected, (state, action) => {
-            console.log(action)
             state.loading = false;
             state.error = action.payload;
         });
@@ -97,7 +109,7 @@ export const ProductsSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         });
-    }
-})
+    },
+});
 
 export default ProductsSlice.reducer;

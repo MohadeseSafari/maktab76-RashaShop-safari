@@ -56,20 +56,20 @@ export default function QuantityTable() {
                         </RadioGroup>
                     </FormControl>
                 </Box>
-                <TableContainer sx={{ pl: 13, pr: 15, mt: 4, mb: 4 }} >
+                {loading ? (<Spinner />) : <TableContainer sx={{ pl: 13, pr: 15, mt: 4, mb: 4 }} >
                     <Table sx={{ borderColor: '5 px solid #537d97' }} >
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell style={{ width: 20 }} align="center">شماره</StyledTableCell>
                                 <StyledTableCell style={{ width: 80 }} align="center">نام کاربر</StyledTableCell>
-                                <StyledTableCell style={{ width: 50 }} align="right">مجموع سفارشات</StyledTableCell>
+                                <StyledTableCell style={{ width: 50 }} align="center">مجموع سفارشات</StyledTableCell>
                                 <StyledTableCell style={{ width: 80 }} align="center">زمان ثبت سفارشات</StyledTableCell>
                                 <StyledTableCell style={{ width: 60 }} align="center">بررسی سفارشات</StyledTableCell>
                             </TableRow>
                         </TableHead>
 
                         <TableBody align='center'>
-                            {loading ? (<Spinner />) : (orders.map((order) => {
+                            {(orders.map((order) => {
                                 const { id, username, lastname, prices, expectAt } = order;
 
                                 return (
@@ -100,7 +100,7 @@ export default function QuantityTable() {
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />
 
-                </TableContainer>
+                </TableContainer>}
 
             </div >
 

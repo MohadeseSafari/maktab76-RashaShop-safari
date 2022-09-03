@@ -1,11 +1,11 @@
 //import Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, Box, TextField } from '@mui/material';
-import { StyledTableCell, tableStyle, StyledTableRow, SaveButton, customTextField } from 'components/management/table/style';
+import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, Box } from '@mui/material';
+import { StyledTableCell, tableStyle, StyledTableRow, SaveButton} from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { EditText } from "react-edit-text";
-
+import Spinner from 'common/Spinner';
 
 export default function QuantityTable() {
     const dispatch = useDispatch();
@@ -82,7 +82,7 @@ export default function QuantityTable() {
                 <SaveButton >ذخیره</SaveButton>
             </Box>
 
-            <TableContainer component={Paper} sx={{ width: '75%' }} align='center' >
+             {loading ? (<Spinner />) :<TableContainer component={Paper} sx={{ width: '75%' }} align='center' >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -119,7 +119,7 @@ export default function QuantityTable() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
 
-            </TableContainer>
+            </TableContainer>}
 
         </div>
     );

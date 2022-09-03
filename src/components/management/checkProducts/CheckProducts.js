@@ -27,7 +27,6 @@ function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage }) {
                     <Typography>نام مشتری: {username} {lastname} </Typography>
                     <Typography>آدرس: {address}</Typography>
                     <Typography>تلفن: {phone}</Typography>
-                    <Typography>زمان تحویل: {(new Date(expectAt)).toLocaleDateString('fa')}</Typography>
                     <Typography>زمان سفارش: {(new Date(createdAt)).toLocaleDateString('fa')}</Typography>
                 </Container>
 

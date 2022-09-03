@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 //import main routes
 import Cart from 'pages/userPanel/Cart';
+import Categories from 'pages/userPanel/Categories' 
 import Home from 'pages/userPanel/Home';
 import LoginForm from 'pages/managementPanel/loginForm/LoginForm'
 import ManagementPanel from 'pages/managementPanel/managementPanel';
@@ -17,6 +18,7 @@ function MainRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Home />} />
+                <Route path='category' element={<Categories/>} />
                 <Route path='cart' element={<Cart />} />
                 <Route path='management' element={<LoginForm />} />
                 <Route path='management' element={<PrivateRoutes><ManagementPanel /></PrivateRoutes>} >
