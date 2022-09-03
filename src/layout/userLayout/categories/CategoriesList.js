@@ -1,32 +1,8 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories } from 'redux/feature/category/CategorySlice'
-import { emphasize, styled } from '@mui/material/styles';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Chip from '@mui/material/Chip';
-
-
-const StyledBreadcrumb = styled(Chip)(({ theme }) => {
-    const backgroundColor =
-        theme.palette.mode === 'light'
-            ? theme.palette.grey[100]
-            : theme.palette.grey[800];
-    return {
-        backgroundColor,
-        height: theme.spacing(3),
-        color: theme.palette.text.primary,
-        fontSize: 20,
-        fontWeight: 900,
-        '&:hover, &:focus': {
-            backgroundColor: emphasize(backgroundColor, 0.06),
-        },
-        '&:active': {
-            boxShadow: theme.shadows[1],
-            backgroundColor: emphasize(backgroundColor, 0.12),
-        },
-    };
-});
-
+import { Box, CssBaseline, Drawer, Toolbar, List, ListItemButton, ListItem, ListItemText, Typography, Divider } from '@mui/material';
 
 function CategoriesList() {
     const dispatch = useDispatch();
@@ -35,21 +11,53 @@ function CategoriesList() {
     useEffect(() => {
         dispatch(fetchCategories())
     }, [dispatch])
-
     return (
-        <div role="presentation" style={{ marginTop: 20 }}>
-            <Breadcrumbs >
-                <ul style={{ display: 'flex', flexDirection: 'column' }}>
-                    {categories.map((category) => {
-                        const { id, name, icon } = category
-                        return (
-                            <StyledBreadcrumb key={id} label={name} sx={{ mt: 10, mb:20 }} />
-                        )
-                    })}
-                </ul>
-            </Breadcrumbs>
-        </div>
+        <Box sx={{ display: 'flex' }}>
+            <CssBaseline />
+            <Drawer
+                sx={{
+
+                    width: 200,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: 200,
+                        boxSizing: 'border-box',
+                    },
+                }}
+                variant="permanent"
+                anchor="left"
+            >
+
+                <Toolbar />
+                <List>
+                    {categories.map(({ id, name, color }) => (
+                        <>
+                            <ListItem key={id} disablePadding>
+                                <ListItemButton sx={{fontSize: 23}} >
+                                    <ListItemText sx={{ color: { color } }} primary={name} />
+                                </ListItemButton>
+                            </ListItem>
+                            <Divider />
+                        </>
+                    ))}
+                </List>
+            </Drawer>
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 2 }}
+            >
+                <Toolbar />
+
+            </Box>
+        </Box>
     );
 }
 
 export default CategoriesList;
+
+
+
+
+
+
+

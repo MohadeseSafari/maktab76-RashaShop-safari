@@ -8,7 +8,7 @@ import logo from 'assets/image/logo/logo-1.svg';
 
 function NavbarLayout() {
     return (
-        <AppBar position="fixed" elevation={1} sx={{ background: 'white' }}>           
+        <AppBar position="fixed" elevation={1} sx={{ background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1}}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
 
                 <Link to='/' style={{ display: 'flex', alignItems: 'center' }}>

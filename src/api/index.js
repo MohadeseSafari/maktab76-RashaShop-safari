@@ -3,9 +3,7 @@ import axios from "api/http";
 // Products
 export const loadProductsApi = async ({ currentPage, limitPages }) => {
     try {
-        const response = await axios.get(
-            `/products?_page=${currentPage}&_limit=${limitPages}`
-        );
+        const response = await axios.get(`/products?_page=${currentPage}&_limit=${limitPages}`);
         const count = Number(response.headers["x-total-count"]);
         return { data: response.data, count: count };
     } catch (error) {
@@ -85,10 +83,19 @@ export const deleteImageApi = async (code) => {
         return Promise.reject(error);
     }
 };
-
+//update Orders
 export const updateOrdersApi = async (id) => {
     try {
         const response = await axios.patch(`/orders/${id}`, { delivered: "true", expectAt: Date.now() });
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+export const loadProductsCategoriesApi = async (categoryId) => {
+    try {
+        const response = await axios.get(`/products?category=${categoryId}&_limit=4`);
         return response.data;
     } catch (error) {
         return Promise.reject(error);

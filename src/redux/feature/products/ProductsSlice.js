@@ -8,6 +8,7 @@ import {
 
 const initialState = {
     products: [],
+    allProducts: [],
     loading: false,
     error: "",
     currentPage: 1,
@@ -24,7 +25,7 @@ export const deleteProduct = createAsyncThunk("products/deleteProducts", async (
 );
 
 //Update Product
-export const updateProduct = createAsyncThunk("products/updateProducts", async(product) => {
+export const updateProduct = createAsyncThunk("products/updateProducts", async (product) => {
     fetchProducts();
     return await updateProductApi(product);
 }
@@ -88,7 +89,7 @@ export const ProductsSlice = createSlice({
             // console.log(state.products[indexData])
             // console.log(action.payload.data)
             // return state.products[indexData] = action.payload.data;
-           
+
         });
 
         builder.addCase(updateProduct.rejected, (state, action) => {
