@@ -62,8 +62,8 @@ export const ProductsSlice = createSlice({
             state.error = action.payload;
         });
 
-         //get All Products
-         builder.addCase(fetchAllProducts.pending, (state, action) => {
+        //get All Products
+        builder.addCase(fetchAllProducts.pending, (state, action) => {
             state.loading = true;
         });
         builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
@@ -99,15 +99,9 @@ export const ProductsSlice = createSlice({
         });
 
         builder.addCase(updateProduct.fulfilled, (state, action) => {
-            console.log("hggff")
             state.loading = false;
-            state.products.push(action.payload);
-            // const indexData = state.products.indexOf(action.payload.data);
-            // console.log(indexData)
-            // console.log(state.products[indexData])
-            // console.log(action.payload.data)
-            // return state.products[indexData] = action.payload.data;
-
+            state.products = state.products.filter((product) => +product.id !== action.payload.id);
+            state.products.push(action.payload)
         });
 
         builder.addCase(updateProduct.rejected, (state, action) => {

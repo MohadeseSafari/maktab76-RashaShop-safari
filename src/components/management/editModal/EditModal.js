@@ -63,11 +63,10 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     const dispatch = useDispatch();
     const [dataInput, setDataInput] = useState(null);
     const [genres, setGenre] = useState([]);
-    const categories = useSelector((state) => state.categories.categories);
+    const categories = ["عاشقانه", "کلاسیک", "وحشت", "تاریخی", "علمی تخیلی", "جنایی", "معمایی", "کمدی", "روانشناسی", "کمیک", "آموزشی", "فانتزی", "فلسفی", "درام", "داستانی", "اکشن"]
     const { loading, currentPage } = useSelector(state => state.products);
     const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description, } = product;
     const [previewSrc, setPreviewSrc] = useState([]);
-
 
     useEffect(() => {
         if (product.image) {
@@ -102,8 +101,8 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
 
     const handelSubmit = (values, props) => {
         values.image = previewSrc;
-        handleCloseEdit();
         dispatch(updateProduct(values));
+        handleCloseEdit();
 
     };
 
@@ -295,15 +294,18 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                             )}
                                             MenuProps={MenuProps}
                                         >
-                                            {categories.map(({ id, name }) => (
-                                                <MenuItem
-                                                    key={id}
-                                                    value={name}
-                                                    style={getStyles(name, genres, theme)}
-                                                >
-                                                    {name}
-                                                </MenuItem>
-                                            ))}
+                                            {categories.map((name, index) => {
+                                                return (
+
+                                                    <MenuItem
+                                                        key={index}
+                                                        value={name}
+                                                        style={getStyles(name, genres, theme)}
+                                                    >
+                                                        {name}
+                                                    </MenuItem>
+                                                )
+                                            })}
                                         </Select>
                                     </FormControl>
                                     {props.errors.genre ? (

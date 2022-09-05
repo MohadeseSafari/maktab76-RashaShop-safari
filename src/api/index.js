@@ -70,9 +70,9 @@ export const deleteProductApi = async (id) => {
 };
 
 //Update Product
-export const updateProductApi = (product) => {
+export const updateProductApi = async (product) => {
   try {
-    const response = axiosInstance.put(`/products/${product.id}`, product);
+    const response = await axiosInstance.put(`/products/${product.id}`, product);
     return response.data;
   } catch (error) {
     return Promise.reject(error);

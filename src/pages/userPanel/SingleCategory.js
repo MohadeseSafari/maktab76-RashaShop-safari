@@ -12,12 +12,11 @@ function SingleCategory() {
     const dispatch = useDispatch();
     const { nameCategory } = useParams();
     const allProducts = useSelector((state) => state.products.allProducts);
-    console.log(allProducts)
-
+    
     useEffect(() => {
         dispatch(fetchAllProducts());
     }, [])
-    console.log(allProducts.filter(product => product.category === nameCategory))
+ 
     return (
         <>
             <NavbarLayout />

@@ -10,13 +10,7 @@ export const fetchCategories = createAsyncThunk(
   "category/fetchCategories",
   loadCategoriesApi
 );
-// export const fetchCategoriesProducts = createAsyncThunk(`category/fetchCategories/${id}`, loadCategoriesApi)
-export const fetchCategoriesProducts = (id) => {
-  return createAsyncThunk(
-    ` /fetchCategories/${id}`,
-    loadCategoriesProductsApi(id)
-  );
-};
+
 
 export const CategoriesSlice = createSlice({
   name: "categories",
