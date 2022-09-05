@@ -4,6 +4,7 @@ import {
     deleteProductApi,
     updateProductApi,
     createProductApi,
+    loadAllProductsApi
 } from "api/index";
 
 const initialState = {
@@ -16,6 +17,9 @@ const initialState = {
 };
 //Get Products
 export const fetchProducts = createAsyncThunk("products/fetchProducts", loadProductsApi);
+
+//Get All
+export const fetchAllProducts = createAsyncThunk("products/fetchAllProducts", loadAllProductsApi);
 
 //Delete Product
 export const deleteProduct = createAsyncThunk("products/deleteProducts", async (id) => {
@@ -58,6 +62,20 @@ export const ProductsSlice = createSlice({
             state.error = action.payload;
         });
 
+         //get All Products
+         builder.addCase(fetchAllProducts.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchAllProducts.fulfilled, (state, action) => {
+            state.loading = false;
+            state.allProducts = action.payload;
+        });
+
+        builder.addCase(fetchAllProducts.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+
         //delete Product
         builder.addCase(deleteProduct.pending, (state, action) => {
             state.loading = true;
@@ -81,9 +99,9 @@ export const ProductsSlice = createSlice({
         });
 
         builder.addCase(updateProduct.fulfilled, (state, action) => {
-            // console.log("hggff")
+            console.log("hggff")
             state.loading = false;
-            return action.payload;
+            state.products.push(action.payload);
             // const indexData = state.products.indexOf(action.payload.data);
             // console.log(indexData)
             // console.log(state.products[indexData])

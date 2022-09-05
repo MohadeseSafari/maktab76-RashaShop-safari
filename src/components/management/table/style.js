@@ -6,7 +6,7 @@ import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled'
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    fontSize: 25,
+    fontSize: 28,
     backgroundColor: "#537d97",
     color: theme.palette.common.white,
   },

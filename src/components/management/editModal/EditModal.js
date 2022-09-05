@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { uploadImageApi, updateProductApi } from "api";
-import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+import { uploadImageApi } from "api";
 import { Formik, Form } from "formik";
+import { updateProduct } from 'redux/feature/products/ProductsSlice'
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
@@ -56,7 +56,6 @@ const SignupSchema = Yup.object().shape({
     price: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     pages: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     quantity: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
-    description: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
 });
 
 function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
@@ -64,7 +63,6 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     const dispatch = useDispatch();
     const [dataInput, setDataInput] = useState(null);
     const [genres, setGenre] = useState([]);
-    const [flag, setFlag] = useState(false)
     const categories = useSelector((state) => state.categories.categories);
     const { loading, currentPage } = useSelector(state => state.products);
     const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description, } = product;
@@ -97,22 +95,18 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
         });
     };
 
-    useEffect(() => {
-        dispatch(fetchCategories());
-    }, [dispatch]);
-
     const handelDeleteImage = (img) => {
         const filteredImage = previewSrc.filter((imgCode) => imgCode !== img);
-        return filteredImage;
+        return previewSrc.filter((image) => image === filteredImage);
     };
 
     const handelSubmit = (values, props) => {
         values.image = previewSrc;
         handleCloseEdit();
-        dispatch(updateProductApi(values));
-       
+        dispatch(updateProduct(values));
+
     };
- 
+
     return (
         <Modal open={openEdit} onClose={handleCloseEdit} components={{ Backdrop }}>
             {loading ? (<Spinner />) : <Box sx={editModalStyle}>
@@ -230,25 +224,8 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                 </Grid>
 
                                 <Grid item xs={6}>
-                                    <TextField
-                                        fullWidth
-                                        label="مترجم"
-                                        size="small"
-                                        name="translator"
-                                        value={props.values.translator}
-                                        onChange={props.handleChange}
-                                    />
-                                    {props.errors.translator ? (
-                                        <FormHelperText
-                                            sx={{
-                                                color: "#d63031",
-                                                textAlign: "left",
-                                                mr: 2,
-                                                fontSize: 18,
-                                            }}
-                                        >
-                                            {props.errors.translator}
-                                        </FormHelperText>
+                                    <TextField fullWidth label="مترجم" size="small" name="translator" value={props.values.translator} onChange={props.handleChange} />
+                                    {props.errors.translator ? (<FormHelperText sx={{ color: "#d63031", textAlign: "left", mr: 2, fontSize: 18 }}>{props.errors.translator}</FormHelperText>
                                     ) : null}
                                 </Grid>
 

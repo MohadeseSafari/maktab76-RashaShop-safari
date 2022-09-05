@@ -82,7 +82,7 @@ const SignupSchema = Yup.object().shape({
   price: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
   pages: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
   quantity: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
-  description: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
+
 });
 
 const CreateModal = ({ openCreate, handelCloseCreate }) => {
@@ -99,10 +99,6 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
     props.setFieldValue("genre", value);
   };
 
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, []);
-
   const handleChangeImage = (e, props) => {
     setDataInput(e.target.files[0]);
     setPreviewSrc(URL.createObjectURL(e.target.files[0]));
@@ -116,12 +112,12 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
   };
 
   const handelSubmit = (values, props) => {
-    console.log("values are ", values);
     dispatch(createProduct(values));
     props.resetForm();
     setGenreName([]);
     setPreviewSrc(null);
     handelCloseCreate();
+
   };
 
   return (
