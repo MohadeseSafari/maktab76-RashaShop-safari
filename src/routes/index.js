@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 //import main routes
 import Cart from 'pages/userPanel/Cart';
 
@@ -15,13 +16,14 @@ import PrivateRoutes from './PrivateRoutes';
 import SingleCategory from 'pages/userPanel/SingleCategory';
 import SingleProduct from 'pages/userPanel/SingleProduct'
 function MainRoutes() {
-    
+
     return (
         <BrowserRouter>
+            <ToastContainer />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='category/:nameCategory' element={<SingleCategory />} />
-                <Route path='category/:idCategory/idProduct' element={<SingleProduct/>} />
+                <Route path='book/:idProduct' element={<SingleProduct />} />
                 <Route path='cart' element={<Cart />} />
                 <Route path='management' element={<LoginForm />} />
                 <Route path='management' element={<PrivateRoutes><ManagementPanel /></PrivateRoutes>} >

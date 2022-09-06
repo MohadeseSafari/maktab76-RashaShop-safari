@@ -1,3 +1,4 @@
+import 'react-toastify/dist/ReactToastify.css';
 import CssBaseline from '@mui/material/CssBaseline';
 //import Main Routes of project
 import MainRoutes from 'routes/index';

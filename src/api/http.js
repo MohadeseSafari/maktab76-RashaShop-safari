@@ -16,7 +16,7 @@ export const axiosInstance = axios.create({
         },
 })
 
-// axios.defaults.baseURL = BASE_URL;
+
 
 axiosInstance.interceptors.request.use((req) => {
     if (req.url === REFRESH_TOKEN_URL) {

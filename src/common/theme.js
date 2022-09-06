@@ -6,13 +6,13 @@ export const theme = createTheme({
     palette: {
         secondary: {
             light: '#8b3386',
-            main: '#6f0068',
+            main: '#262626',
             dark: '#4d0048'
         },
         warning: {
-            light: '#ffad3a',
-            main: '#ff9909',
-            dark: '#b26b06'
+            light: '#8C8C8C',
+            main: '#404040',
+            dark: '#ff9909'
         },
         Error: {
             light: '#eb5b7a',

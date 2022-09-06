@@ -1,28 +1,31 @@
 import CardList from "common/CardList";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import { fetchAllProducts } from "redux/feature/products/ProductsSlice";
+import { loadCategoryProductsApi } from "api";
 import { Container } from '@mui/material'
 import NavbarLayout from 'layout/userLayout/navbar/NavbarLayout';
 import CategoriesSideBar from 'layout/userLayout/sideBar/CategoriesSideBar';
 
 
 function SingleCategory() {
-    const dispatch = useDispatch();
     const { nameCategory } = useParams();
-    const allProducts = useSelector((state) => state.products.allProducts);
-    
+    const [groupCategory, setGroupCategory] = useState([])
+    const [ categoryFlag , setCategoryFlag] = useState(false)
+
     useEffect(() => {
-        dispatch(fetchAllProducts());
-    }, [])
+        loadCategoryProductsApi(nameCategory).then((result) => {
+            setGroupCategory(result);
+            setCategoryFlag(true);
+        })
+    }, [nameCategory])
+
  
     return (
         <>
             <NavbarLayout />
             <CategoriesSideBar />
             <Container sx={{ ml: 30, mb: 5 }}>
-                <CardList title={nameCategory} data={allProducts.filter(product => product.category === nameCategory)} />
+            {categoryFlag && <CardList title={groupCategory[0].genre[0]} engNameCategory={nameCategory} data={groupCategory} />}
             </Container>
         </>
     );

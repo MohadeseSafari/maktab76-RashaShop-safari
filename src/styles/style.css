@@ -14,6 +14,15 @@
   font-display: swap;
 }
 
+/*----------------------------------------------------*/
+
+@font-face {
+  font-family: "IRAN-SANS";
+  src: url("assets/fonts/IranSANS/IRANSans.ttf");
+  format: ("ttf");
+  font-display: swap;
+}
+
 *,
 *:before,
 *:after {
@@ -26,6 +35,7 @@
 
 h1 {
   font-family: "SNarenj" !important ;
+
 }
 
 .loginForm {
@@ -125,6 +135,10 @@ h1 {
   direction: rtl;
 }
 
-.cke_rtl{
+.cke_rtl {
   direction: rtl;
+}
+
+.muirtl-ohwg9z {
+  width: 240px;
 }

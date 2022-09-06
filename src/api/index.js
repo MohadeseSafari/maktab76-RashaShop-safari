@@ -18,7 +18,7 @@ export const loadProductsApi = async ({ currentPage, limitPages }) => {
 export const loadAllProductsApi = async () => {
   try {
     const response = await axios.get(`/products`);
-    return  response.data;
+    return response.data;
   } catch (error) {
     return Promise.reject(error);
   }
@@ -134,13 +134,20 @@ export const loadProductsCategoriesApi = async (categoryId) => {
 export const loadCategoryProductsApi = async (categoryName) => {
   try {
     const response = await axios.get(`/products?category=${categoryName}`);
-    return response.data ;
+    return response.data;
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-
+export const loadSingleProductsApi = async (id) => {
+  try {
+    const response = await axios.get(`/products/${id}`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 
 
 

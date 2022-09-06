@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LightTooltip from 'common/Tooltip';
 import logo from 'assets/image/logo/logo-1.svg';
 
 function NavbarLayout() {
     return (
-        <AppBar position="fixed" elevation={1} sx={{ background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1}}>
+        <AppBar position="fixed" elevation={1} sx={{ background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
 
                 <Link to='/' style={{ display: 'flex', alignItems: 'center' }}>
@@ -19,7 +19,7 @@ function NavbarLayout() {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Link to='/management' >
                         <LightTooltip title="مدیریت">
-                            <ManageAccountsIcon color="secondary" sx={{ mr: 1, fontWeight: 300 }} />
+                            <ManageAccountsOutlinedIcon color="secondary" sx={{ mr: 1, mt: 1, fontWeight: 100 }} />
                         </LightTooltip >
                     </Link>
 
@@ -30,7 +30,7 @@ function NavbarLayout() {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <LightTooltip title="سبد خرید">
-                            <ShoppingCartRoundedIcon color="secondary" sx={{ ml: 2, fontWeight: 300 }} />
+                            <ShoppingCartOutlinedIcon color="secondary" sx={{ ml: 2, fontWeight: 100 }} />
                         </LightTooltip>
                     </Link>
                 </Box>

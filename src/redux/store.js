@@ -3,12 +3,14 @@ import ProductsReducer from 'redux/feature/products/ProductsSlice';
 import OrdersReducer from 'redux/feature/orders/OrdersSlice';
 import UsersReducer from 'redux/feature/user/UsersSlice';
 import CategoriesReducer from 'redux/feature/category/CategorySlice';
+import CartReducer from 'redux/feature/cart/CartSlice';
 
 export const store = configureStore({
     reducer: {
         products: ProductsReducer,
         orders: OrdersReducer,
         users: UsersReducer,
-        categories: CategoriesReducer
+        categories: CategoriesReducer,
+        cart: CartReducer
     }
 })
