@@ -25,7 +25,7 @@ export const theme = createTheme({
             dark: '#537d97'
         },
         pink: {
-            main: '#d99b77',
+            main: '#F4402F',
 
         },
         yellow: {

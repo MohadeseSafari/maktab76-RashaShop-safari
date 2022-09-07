@@ -1,19 +1,52 @@
-import { Container, Box, Button, Paper, Typography, Divider, Chip, Stack, TextField } from "@mui/material";
+import { Container, Box, Paper, Typography, Divider, Chip, Stack, TextField } from "@mui/material";
 import Carousel from 'react-material-ui-carousel';
+import { increase, addToCart, decrease } from 'redux/feature/cart/CartSlice';
 import { CustomButton, AddButton, DecreaseButton } from 'common/AddButton';
+import { customInput } from 'components/Home/cartTable/style';
 import { BASE_URL_IMAGE } from "config/api";
-import { addToCart } from "redux/feature/cart/CartSlice";
-import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router'
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
 
 function PageCard({ data }) {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        if (localStorage.getItem("cartItems")) {
+            const IndexCartItem = JSON.parse(localStorage.getItem("cartItems")).findIndex((item) => item.id === data.id);
+            if (IndexCartItem === -1) {
+                setCount(0)
+            } else {
+                const cartItem = JSON.parse(localStorage.getItem("cartItems")).filter((item) => item.id === data.id)
+                setCount(cartItem[0].cartQuantity)
+            }
+        }
+
+
+    }, [])
+
     const { id, name, image, author, translator, publication, description, genre, price, off } = data
 
     const handelAddToCart = (data) => {
-        dispatch(addToCart(data));
-        navigate('/cart')
+
+        dispatch(increase({ data, count }));
+        dispatch(decrease({ data, count }))
+        navigate('/cart');
+    }
+
+    const handelIncrease = ({ data, count }) => {
+        setCount(count + 1);
+    }
+
+
+    const handelDecrease = ({ data, count }) => {
+        if (count > 0) {
+            setCount(count - 1)
+        } else {
+            setCount(0)
+        }
     }
     return (
         <Container sx={{ mt: 15, mb: 15 }}>
@@ -57,9 +90,9 @@ function PageCard({ data }) {
                         {off > 0 ? <Chip label={`${off}%`} color="error" sx={{ fontSize: 22, fontWeight: 700 }} /> : ''}
                     </Box>
                     <Box>
-                        <AddButton >+</AddButton>
-                        <TextField sx={{ width: 40, height: 10, m: 2 }} ></TextField>
-                        <DecreaseButton>-</DecreaseButton>
+                        <AddButton onClick={() => handelIncrease({ data, count })}>+</AddButton>
+                        <input value={count} style={customInput} />
+                        <DecreaseButton onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
                     </Box>
                     {off > 0 ? <Typography variant="h6" align="right" color="secondary" sx={{ fontSize: 30 }}>{((price - ((price * off) / 100))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography> : <Typography variant="h6" align="end" color="secondary" sx={{ fontSize: 30 }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography>}
 

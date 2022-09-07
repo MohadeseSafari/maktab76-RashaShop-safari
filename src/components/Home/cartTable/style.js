@@ -1,0 +1,155 @@
+import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+
+export const AddButton = styled(ButtonUnstyled)(({ theme }) => `
+  font-weight: bold;
+  height: 25px;
+  font-size: 1.45rem;
+  font-family: ${theme.typography.fontFamily};
+  background-color: #60a3bc ;
+  padding: 0px 7px;
+  border-radius: 7px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    background-color:#3c6382 ;
+  }
+
+&.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`);
+
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    fontSize: 28,
+    backgroundColor: "#537d97",
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 20,
+
+  },
+}));
+
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+export const tableStyle = {
+  position: 'absolute',
+  top: 50,
+  width: '100vw',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center'
+
+
+}
+
+export const headerTable = {
+  display: 'flex',
+  flexDirection: 'row',
+  marginTop: 2,
+  alignItems: 'center',
+  justifyContent: 'space-between!important'
+}
+
+
+
+export const customTextField = {
+  border: 'none',
+  alignItems: 'center'
+}
+
+export const customInput = {
+  border: 'none',
+  width: '35px',
+  height: '25px',
+  margin: '0px 10px',
+  borderRadius: '5px',
+  textAlign: 'center'
+
+}
+
+export const FinalButton = styled(ButtonUnstyled)(({ theme }) => `
+  font-weight: bold;
+  width: 15rem;
+  height: 40px;
+  font-size: 1.45rem;
+  font-family: ${theme.typography.fontFamily};
+  background-color: #60a3bc ;
+  padding: 0px 7px;
+  border-radius: 7px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    background-color:#3c6382 ;
+  }
+
+&.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`)
+
+export const DeleteAllButton = styled(ButtonUnstyled)(({ theme }) => `
+  font-weight: bold;
+  width: 15rem;
+  height: 40px;
+  font-size: 1.45rem;
+  font-family: ${theme.typography.fontFamily};
+  background-color: #C72945 ;
+  padding: 0px 7px;
+  border-radius: 7px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    background-color:#ad243d ;
+  }
+
+&.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`)
+
+
+

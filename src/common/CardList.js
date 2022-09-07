@@ -4,8 +4,7 @@ import Card from 'common/Card';
 
 
 function CardList({ engNameCategory, title, data }) {
-    console.log(title)
-    console.log(engNameCategory)
+  
     return (
         <>
             <Link to={`/category/${engNameCategory}`} style={{ color: "GrayText",mt:5 }}><Typography variant="h4">{title}</Typography></Link>

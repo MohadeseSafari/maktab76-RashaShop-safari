@@ -12,8 +12,9 @@ import { CacheProvider } from '@emotion/react';
 import { cacheRtl } from 'common/RTL';
 import { store } from 'redux/store'
 import { injectStore } from "./api/http";
+import { getTotals } from 'redux/feature/cart/CartSlice';
 injectStore(store);
-
+store.dispatch(getTotals)
 
 function App() {
   return (

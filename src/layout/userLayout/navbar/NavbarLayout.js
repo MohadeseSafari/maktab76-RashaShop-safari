@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Avatar, Box, Toolbar, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { AppBar, Avatar, Box, Toolbar, Typography, Badge } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import LightTooltip from 'common/Tooltip';
 import logo from 'assets/image/logo/logo-1.svg';
 
 function NavbarLayout() {
+    const { cartItems } = useSelector(state => state.cart);
+
     return (
         <AppBar position="fixed" elevation={1} sx={{ background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -30,7 +33,9 @@ function NavbarLayout() {
                         style={{ display: 'flex', alignItems: 'center' }}
                     >
                         <LightTooltip title="سبد خرید">
-                            <ShoppingCartOutlinedIcon color="secondary" sx={{ ml: 2, fontWeight: 100 }} />
+                            <Badge badgeContent={cartItems.length} color="pink" >
+                                <ShoppingCartOutlinedIcon color="secondary" sx={{ ml: 2, fontWeight: 100 }} />
+                            </Badge>
                         </LightTooltip>
                     </Link>
                 </Box>
