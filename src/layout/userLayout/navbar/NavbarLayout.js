@@ -11,7 +11,7 @@ function NavbarLayout() {
     const { cartItems } = useSelector(state => state.cart);
 
     return (
-        <AppBar position="fixed" elevation={1} sx={{ background: 'transparent', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+        <AppBar position="fixed" elevation={1} sx={{ background: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
 
                 <Link to='/' style={{ display: 'flex', alignItems: 'center' }}>

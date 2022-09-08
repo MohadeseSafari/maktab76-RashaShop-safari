@@ -7,7 +7,7 @@ function CardList({ engNameCategory, title, data }) {
 
     return (
         <>
-            <Link to={`/category/${engNameCategory}`} style={{ color: "GrayText", mt: 5 }}><Typography variant="h4">{title}</Typography></Link>
+            <Link to={`/category/${engNameCategory}`} style={{ color: "GrayText", mt: 5 }}><Typography variant="h4" sx={{ ml: 200 }}>{title}</Typography></Link>
             <Grid container spacing={2} sx={{ mt: 5 }}>
                 {data.map((product) => {
                     return (<Card product={product} categoryName={engNameCategory} />)

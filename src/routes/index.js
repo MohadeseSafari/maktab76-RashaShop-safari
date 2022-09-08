@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 //import main routes
 import Cart from 'pages/userPanel/Cart';
 import Checkout from 'pages/userPanel/Checkout';
+import Payment from 'pages/userPanel/Payment';
 
 import Home from 'pages/userPanel/Home';
 import LoginForm from 'pages/managementPanel/loginForm/LoginForm'
@@ -27,12 +28,15 @@ function MainRoutes() {
                 <Route path='book/:idProduct' element={<SingleProduct />} />
                 <Route path='cart' element={<Cart />} />
                 <Route path='cart/checkout' element={<Checkout />} />
+
                 <Route path='management' element={<LoginForm />} />
                 <Route path='management' element={<PrivateRoutes><ManagementPanel /></PrivateRoutes>} >
                     <Route path='products' element={<Products />} />
                     <Route path='quantity' element={<Quantity />} />
                     <Route path='orders' element={<Orders />} />
                 </Route  >
+
+                <Route path='payment' element={<Payment />} />
                 <Route path='*' element={<NoMatched />} />
             </Routes>
         </BrowserRouter>

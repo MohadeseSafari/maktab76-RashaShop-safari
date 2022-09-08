@@ -6,44 +6,37 @@ import { CustomInput, dateInput } from 'pages/managementPanel/loginForm/TextFiel
 import { CustomButton } from 'pages/managementPanel/loginForm/ButtonLogin';
 import NavbarLayout from 'layout/userLayout/navbar/NavbarLayout';
 import DatePicker from "react-multi-date-picker";
-import opacity from "react-element-popper/animations/opacity"
-import persian from "react-date-object/calendars/persian"
-import persian_fa from "react-date-object/locales/persian_fa";
-import InputIcon from "react-multi-date-picker/components/input_icon"
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import checkoutBackground from 'assets/image/background/Checkout-Background.jpg';
 
 const initialValues = {
-    firstName: '',
+    username: '',
     lastName: '',
     address: '',
-    phoneNumber: '',
-    expectAt: ''
+    phone: '',
+    // expectAt: '',
+    // delivered:'false'
 }
 
 const SignupSchema = Yup.object().shape({
-    firstName: Yup.string().required('این فیلد نمی تواند خالی باشد'),
+    username: Yup.string().required('این فیلد نمی تواند خالی باشد'),
     lastName: Yup.string().required('این فیلد نمی تواند خالی باشد'),
     address: Yup.string().required('این فیلد نمی تواند خالی باشد'),
-    phoneNumber: Yup.string().required('این فیلد نمی تواند خالی باشد')
+    phone: Yup.string().required('این فیلد نمی تواند خالی باشد')
 })
 function Checkout() {
-    const handelSubmit = async (values, props) => {
+    const [value,setValue]= useState('');
 
-        props.resetForm();
+    const handelSubmit =(values, props) => {
+        console.log("dfdfdfd")
+        console.log(values)
+        console.log("time",value)
+        // props.resetForm();
+        // window.open("http://localhost:3001")
     }
 
-    function CustomInputDate({ openCalendar, value, handleValueChange }) {
-        console.log(value, "time")
-        return (
-            <input
-                name='expectAt'
-                style={dateInput}
-                onFocus={openCalendar}
-                value={value}
-                onChange={handleValueChange}
-            />
-        )
-    }
 
     return (
         <Container maxWidth sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundImage: `url(${checkoutBackground})`, height: '100vh' }}>
@@ -60,13 +53,13 @@ function Checkout() {
                                         <Stack direction='column'>
                                             <InputLabel sx={{ marginRight: '17px', marginTop: '10px' }} >نام</InputLabel>
                                             <CustomInput
-                                                name='firstName'
+                                                name='username'
                                                 type='text'
                                                 autocomplete='false'
-                                                value={props.values.firstName}
+                                                value={props.values.username}
                                                 onChange={props.handleChange}
                                             />
-                                            {props.errors.firstName ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.firstName}</FormHelperText>) : null}
+                                            {props.errors.username ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.username}</FormHelperText>) : null}
 
                                         </Stack>
                                     </Box>
@@ -109,13 +102,13 @@ function Checkout() {
                                         <Stack direction='column'>
                                             <InputLabel sx={{ marginRight: '17px', marginTop: '10px' }}>تلفن همراه</InputLabel>
                                             <CustomInput
-                                                name='phoneNumber'
+                                                name='phone'
                                                 type='text'
                                                 autocomplete='false'
-                                                value={props.values.phoneNumber}
+                                                value={props.values.phone}
                                                 onChange={props.handleChange}
                                             />
-                                            {props.errors.phoneNumber ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.phoneNumber}</FormHelperText>) : null}
+                                            {props.errors.phone ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.phone}</FormHelperText>) : null}
                                         </Stack>
                                     </Box>
                                 </Grid>
@@ -124,22 +117,24 @@ function Checkout() {
                                     <Box sx={{ display: 'flex' }}>
                                         <Stack direction='column'>
                                             <InputLabel sx={{ marginRight: '17px', marginTop: '10px' }}>تاریخ تحویل</InputLabel>
-                                            <DatePicker
-                                                animations={[
-                                                    opacity({ from: 0.1, to: 1, duration: 1000 })
-                                                ]}
-                                                render={<CustomInputDate />}
-                                                calendar={persian}
-                                                locale={persian_fa}
-                                                calendarPosition="bottom-center"
-                                            />
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                    label="Basic example"
+                                                    value={value}
+                                                    onChange={(newValue) => {
+                                                        console.log(newValue)
+                                                        setValue(newValue);
+                                                    }}
+                                                    renderInput={(params) => <TextField {...params} />}
+                                                />
+                                            </LocalizationProvider>
                                             {props.errors.date ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.date}</FormHelperText>) : null}
                                         </Stack>
                                     </Box>
                                 </Grid>
 
                             </Grid>
-                            <CustomButton type='submit' sx={{ ml: 45, mt: 7 }} disabled={!props.isValid}>پرداخت</CustomButton>
+                            <CustomButton type='submit' sx={{ ml: 45, mt: 7 }} disabled={!props.isValid} >پرداخت</CustomButton>
                         </Form>
                     )}
                 </Formik>
@@ -149,3 +144,4 @@ function Checkout() {
 }
 
 export default Checkout;
+// localhost:3000/root?result=success

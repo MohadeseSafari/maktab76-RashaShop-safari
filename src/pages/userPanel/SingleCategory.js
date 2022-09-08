@@ -21,11 +21,12 @@ function SingleCategory() {
             setTotalCount(result.count)
             setGroupCategory(result.data);
             setCategoryFlag(true);
+            setSearchParams({ page: 1, limit: perPage })
         })
     }, [nameCategory])
 
     const handleChangePage = (event, newPage) => {
-        console.log(newPage)
+        setSearchParams({ page: newPage, limit: perPage })
         loadCategoryProductsApi({ nameCategory: nameCategory, currentPage: newPage, perPage }).then((result) => {
             setGroupCategory(result.data);
             setCategoryFlag(true);
@@ -37,7 +38,7 @@ function SingleCategory() {
         <>
             <NavbarLayout />
             <CategoriesSideBar />
-            <Container sx={{ mb: 5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Container sx={{ mb: 5, ml: 30, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 {categoryFlag && <CardList title={groupCategory[0].genre[0]} engNameCategory={nameCategory} data={groupCategory} />}
                 <Box sx={{ direction: 'rtl' }}>
                     <Pagination
