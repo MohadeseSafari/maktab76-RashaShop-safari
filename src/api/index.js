@@ -131,10 +131,11 @@ export const loadProductsCategoriesApi = async (categoryId) => {
   }
 };
 
-export const loadCategoryProductsApi = async (categoryName) => {
+export const loadCategoryProductsApi = async ({ nameCategory, currentPage, perPage }) => {
   try {
-    const response = await axios.get(`/products?category=${categoryName}`);
-    return response.data;
+    const response = await axios.get(`/products?category=${nameCategory}&_page=${currentPage}&_limit=${perPage}`);
+    const count = Number(response.headers["x-total-count"]);
+    return { data: response.data, count: count };
   } catch (error) {
     return Promise.reject(error);
   }

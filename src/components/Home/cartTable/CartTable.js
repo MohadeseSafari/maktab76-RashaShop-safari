@@ -88,7 +88,7 @@ function CartTable() {
                         <Paper elevation={3} sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#E4E8E8', p: 4, mr: 50 }}>
                             <Typography color="secondary" variant="h5" sx={{ mb: 2 }}>مجموع قیمت:</Typography>
                             <Typography>{cart.CartTotalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                            <FinalButton>نهایی کردن سبد خرید</FinalButton>
+                            <Link to='/cart/checkout'><FinalButton>نهایی کردن سبد خرید</FinalButton></Link>
                             <Link to="/"><Button sx={{ ml: 18, mt: 2 }} endIcon={<KeyboardBackspaceIcon sizw='small' />}>ادامه خرید</Button></Link>
                         </Paper >
 

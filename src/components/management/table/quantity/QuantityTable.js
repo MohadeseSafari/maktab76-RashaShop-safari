@@ -1,8 +1,8 @@
 //import Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, Box } from '@mui/material';
-import { StyledTableCell, tableStyle, StyledTableRow, SaveButton} from 'components/management/table/style';
+import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { EditText } from "react-edit-text";
 import Spinner from 'common/Spinner';
@@ -13,6 +13,7 @@ export default function QuantityTable() {
     const { products, currentPage, loading, totalCount } = useSelector((state) => state.products);
     const [product, setProduct] = useState([]);
     const [changedItem, setChangedItem] = useState([]);
+    const [textPrice, setTextPrice] = useState(false)
 
     useEffect(() => {
         if (products) {
@@ -34,6 +35,28 @@ export default function QuantityTable() {
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
     };
+
+    const handelEscKey = useCallback((event, id) => {
+        setTextPrice(true)
+        if (event.key === "Escape") {
+            setTextPrice(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        document.addEventListener("keydown", handelEscKey, false);
+    
+        return () => {
+          document.removeEventListener("keydown", handelEscKey, false);
+        };
+      }, []);
+
+    const handelInputPrice = (event, id) => {
+        console.log(id)
+        console.log(event.target)
+        console.log(event.target.getAttribute("data-type"))
+        
+    }
 
     const handelChangePrice = (e, id) => {
         const idItem = product.findIndex((item) => item.id === id);
@@ -82,7 +105,7 @@ export default function QuantityTable() {
                 <SaveButton >ذخیره</SaveButton>
             </Box>
 
-             {loading ? (<Spinner />) :<TableContainer component={Paper} sx={{ width: '75%' }} align='center' >
+            {loading ? (<Spinner />) : <TableContainer component={Paper} sx={{ width: '75%' }} align='center' >
                 <Table sx={{ borderColor: '5 px solid #537d97' }} >
                     <TableHead>
                         <TableRow>
@@ -95,13 +118,20 @@ export default function QuantityTable() {
 
                     <TableBody>
                         {product.map((item) => {
-                            const { id, name, price, quantity } = item
+                            const { id, name, price, quantity } = item;
+
                             return (
                                 <StyledTableRow key={id}>
                                     <StyledTableCell sx={{ width: '10%' }} align="center">{id + 1} </StyledTableCell>
                                     <StyledTableCell sx={{ width: '30%' }} align="left"> {name}</StyledTableCell>
-                                    <StyledTableCell sx={{ width: '30%' }} align="center" ><EditText onChange={(e) => handelChangePrice(e, id)} value={price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} /></StyledTableCell>
-                                    <StyledTableCell sx={{ width: '30%' }} align="center" ><EditText onChange={(e) => handelChangeQuantity(e, id)} value={quantity} /></StyledTableCell>
+
+                                    <StyledTableCell sx={{ width: '30%' }} align="center" onClick={(event) => handelEscKey(event, id)}>
+                                        {textPrice ? <input onChange={(e) => handelChangePrice(e, id)} data-type='price' id={id}  defaultValue={price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} /> : <Typography>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>}
+                                    </StyledTableCell>
+
+                                    <StyledTableCell sx={{ width: '30%' }} align="center" >
+                                        <EditText onChange={(e) => handelChangeQuantity(e, id)} data-type='quantity' defaultValue={quantity} />
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             )
                         })}
