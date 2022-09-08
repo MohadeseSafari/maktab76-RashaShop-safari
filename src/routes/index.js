@@ -36,7 +36,7 @@ function MainRoutes() {
                     <Route path='orders' element={<Orders />} />
                 </Route  >
 
-                <Route path='payment' element={<Payment />} />
+                <Route path='payment/:result' element={<Payment />} />
                 <Route path='*' element={<NoMatched />} />
             </Routes>
         </BrowserRouter>

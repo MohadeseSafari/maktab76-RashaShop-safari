@@ -1,14 +1,20 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 import { Formik, Form } from 'formik';
 import { Box, Container, InputLabel, Stack, Grid, FormHelperText, Typography } from '@mui/material';
-import { CustomInput, dateInput } from 'pages/managementPanel/loginForm/TextFieldLogin';
+import { CustomInput } from 'pages/managementPanel/loginForm/TextFieldLogin';
 import { CustomButton } from 'pages/managementPanel/loginForm/ButtonLogin';
 import NavbarLayout from 'layout/userLayout/navbar/NavbarLayout';
-import DatePicker from "react-multi-date-picker";
+// import DatePicker from "react-multi-date-picker";
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import DatePicker from "react-multi-date-picker"
+// import persian from "react-date-object/calendars/persian"
+// import persian_fa from "react-date-object/locales/persian_fa"
+// import transition from "react-element-popper/animations/transition"
 import checkoutBackground from 'assets/image/background/Checkout-Background.jpg';
 
 const initialValues = {
@@ -16,8 +22,8 @@ const initialValues = {
     lastName: '',
     address: '',
     phone: '',
-    // expectAt: '',
-    // delivered:'false'
+    expectAt: '',
+    delivered:'false'
 }
 
 const SignupSchema = Yup.object().shape({
@@ -27,17 +33,20 @@ const SignupSchema = Yup.object().shape({
     phone: Yup.string().required('این فیلد نمی تواند خالی باشد')
 })
 function Checkout() {
-    const [value,setValue]= useState('');
 
-    const handelSubmit =(values, props) => {
-        console.log("dfdfdfd")
-        console.log(values)
-        console.log("time",value)
-        // props.resetForm();
-        // window.open("http://localhost:3001")
+
+
+    const handelSubmit = (values, props) => {
+        // localStorage.setItem("personInfo", JSON.stringify(values))
+        
+        window.open("http://localhost:3001",'_blank')
+        props.resetForm()
     }
 
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
+    console.log({selectedDate})
+  
     return (
         <Container maxWidth sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundImage: `url(${checkoutBackground})`, height: '100vh' }}>
             <NavbarLayout />
@@ -87,7 +96,7 @@ function Checkout() {
                                             <InputLabel sx={{ marginRight: '17px', marginTop: '10px' }}>آدرس</InputLabel>
                                             <CustomInput
                                                 name='address'
-                                                type='text'
+                                                type='Textarea'
                                                 autocomplete='false'
                                                 value={props.values.address}
                                                 onChange={props.handleChange}
@@ -118,15 +127,14 @@ function Checkout() {
                                         <Stack direction='column'>
                                             <InputLabel sx={{ marginRight: '17px', marginTop: '10px' }}>تاریخ تحویل</InputLabel>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <DatePicker
-                                                    label="Basic example"
-                                                    value={value}
-                                                    onChange={(newValue) => {
-                                                        console.log(newValue)
-                                                        setValue(newValue);
-                                                    }}
-                                                    renderInput={(params) => <TextField {...params} />}
-                                                />
+                                                <Stack spacing={3}>
+                                                    <DesktopDatePicker
+                                                        inputFormat="MM/DD/YYYY"
+                                                        value={selectedDate}
+                                                        onChange={(newValue) => setSelectedDate(newValue)}
+                                                        renderInput={(params) => <TextField sx={{ width: '18rem', borderRadius: '18px' }} {...params} />}
+                                                    />
+                                                </Stack>
                                             </LocalizationProvider>
                                             {props.errors.date ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.date}</FormHelperText>) : null}
                                         </Stack>
