@@ -72,6 +72,7 @@ const initialValues = {
   pages: "",
   quantity: "",
   description: "",
+  category: ""
 };
 
 const SignupSchema = Yup.object().shape({
@@ -93,10 +94,73 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
   const [genreName, setGenreName] = useState([]);
   const categories = useSelector((state) => state.categories.categories);
 
+  useEffect(() => {
+    dispatch(fetchCategories())
+  }, [])
   const handleChangeGenre = (event, props) => {
     const { value } = event.target;
     setGenreName(typeof value === "string" ? value.split(",") : value);
+
     props.setFieldValue("genre", value);
+    
+    switch (genreName[0]) {
+      case "فانتزی":
+        props.setFieldValue("category", "Fantasy");
+        break;
+
+      case "فلسفی":
+        props.setFieldValue("category", "Philosophical");
+        break;
+
+      case "آموزشی":
+        props.setFieldValue("category", "Academic");
+        break;
+
+      case "درام":
+        props.setFieldValue("category", "Drama");
+        break;
+
+      case "داستانی":
+        props.setFieldValue("category", "Fiction");
+        break;
+
+      case "اکشن":
+        props.setFieldValue("category", "Action");
+        break;
+
+      case "کمیک":
+        props.setFieldValue("category", "Comic");
+        break;
+
+      case "عاشقانه":
+        props.setFieldValue("category", "Romance");
+        break;
+
+      case "وحشت":
+        props.setFieldValue("category", "Horror");
+        break;
+
+      case "تاریخی":
+        props.setFieldValue("category", "Historical");
+        break;
+
+      case "علمی تخیلی":
+        props.setFieldValue("category", "ScienceFiction");
+        break;
+
+      case "جنایی":
+        props.setFieldValue("category", "Crime");
+        break;
+
+      case "معمایی":
+        props.setFieldValue("category", "Mystery");
+        break;
+
+      case "کمدی":
+        props.setFieldValue("category", "Comedy");
+        break;
+    }
+    
   };
 
   const handleChangeImage = (e, props) => {
@@ -112,6 +176,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
   };
 
   const handelSubmit = (values, props) => {
+    console.log(values)
     dispatch(createProduct(values));
     props.resetForm();
     setGenreName([]);

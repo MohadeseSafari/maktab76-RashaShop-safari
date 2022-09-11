@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadOrdersApi } from 'api/index';
+import { loadOrdersApi, createOrdersApi } from 'api/index';
 
 const initialState = {
     orders: [],
@@ -8,7 +8,13 @@ const initialState = {
     currentPage: 1,
     totalCount: 0
 }
-export const fetchOrders = createAsyncThunk('products/fetchOrders', loadOrdersApi)
+export const fetchOrders = createAsyncThunk('products/fetchOrders', loadOrdersApi);
+
+//Create Product
+export const createOrder = createAsyncThunk("products/createOrders", async (order) => {
+    return await createOrdersApi (order);
+}
+);
 
 export const OrdersSlice = createSlice({
     name: 'orders',
@@ -26,6 +32,20 @@ export const OrdersSlice = createSlice({
         });
 
         builder.addCase(fetchOrders.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+
+         //create Order
+         builder.addCase(createOrder.pending, (state, action) => {
+            state.loading = true;
+        });
+        builder.addCase(createOrder.fulfilled, (state, action) => {
+            state.loading = false;
+            state.orders.push(action.payload);
+        });
+
+        builder.addCase(createOrder.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

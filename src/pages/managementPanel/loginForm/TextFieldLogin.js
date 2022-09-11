@@ -96,17 +96,3 @@ CustomInput.propTypes = {
 };
 
 
-export const  dateInput ={
-  width: '18rem',
-  fontSize: '1.5rem',
-  fontWeight: 500,
-  lineHeight: 1,
-  flexGrow: 1,
-  background: 'inherit',
-  borderRadius: '18px',
-  margin: '5px',
-  border: '1px solid #A0AAB4',
-  padding: '7px 22px',
-  outline: 0,
-  
-}

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 //import main routes
 import Cart from 'pages/userPanel/Cart';
-import Checkout from 'pages/userPanel/Checkout';
+import Checkout from 'pages/userPanel/checkout/Checkout';
 import Payment from 'pages/userPanel/Payment';
 
 import Home from 'pages/userPanel/Home';

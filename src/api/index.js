@@ -151,8 +151,16 @@ export const loadSingleProductsApi = async (id) => {
 };
 
 
-
-
+//create new orders
+export const createOrdersApi = async (order) => {
+  try {
+    const response = await axiosInstance.post("/orders", order);
+    console.log(response.data)
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 
 
 

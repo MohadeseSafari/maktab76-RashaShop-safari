@@ -79,6 +79,64 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
         const { value } = event.target;
         setGenre(typeof value === "string" ? value.split(",") : value);
         props.setFieldValue("genre", value);
+
+        switch (genres[0]) {
+            case "فانتزی":
+              props.setFieldValue("category", "Fantasy");
+              break;
+      
+            case "فلسفی":
+              props.setFieldValue("category", "Philosophical");
+              break;
+      
+            case "آموزشی":
+              props.setFieldValue("category", "Academic");
+              break;
+      
+            case "درام":
+              props.setFieldValue("category", "Drama");
+              break;
+      
+            case "داستانی":
+              props.setFieldValue("category", "Fiction");
+              break;
+      
+            case "اکشن":
+              props.setFieldValue("category", "Action");
+              break;
+      
+            case "کمیک":
+              props.setFieldValue("category", "Comic");
+              break;
+      
+            case "عاشقانه":
+              props.setFieldValue("category", "Romance");
+              break;
+      
+            case "وحشت":
+              props.setFieldValue("category", "Horror");
+              break;
+      
+            case "تاریخی":
+              props.setFieldValue("category", "Historical");
+              break;
+      
+            case "علمی تخیلی":
+              props.setFieldValue("category", "ScienceFiction");
+              break;
+      
+            case "جنایی":
+              props.setFieldValue("category", "Crime");
+              break;
+      
+            case "معمایی":
+              props.setFieldValue("category", "Mystery");
+              break;
+      
+            case "کمدی":
+              props.setFieldValue("category", "Comedy");
+              break;
+          }
     };
 
     const handleChangeImage = (e, props) => {

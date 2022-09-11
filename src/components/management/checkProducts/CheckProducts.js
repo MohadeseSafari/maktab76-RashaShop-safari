@@ -14,8 +14,8 @@ function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage }) {
 
     const handelDelivery = (id) => {
         updateOrdersApi(id);
+        dispatch(fetchOrders({ delivered: "_", currentPage: 1, limitPages: rowsPerPage }));
         handleClose();
-        dispatch(fetchOrders({ delivered: status, currentPage: 1, limitPages: rowsPerPage }))
     }
 
     return (

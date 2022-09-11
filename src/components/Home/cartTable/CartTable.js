@@ -59,7 +59,8 @@ function CartTable() {
 
                         <TableBody>
                             {cart.cartItems.length ? (cart.cartItems?.map((product) => {
-                                const { id, name, price, off, image, cartQuantity } = product;
+                                const { id, name, price, off, image, count } = product;
+                                console.log(count)
                                 return (
                                     <StyledTableRow key={id} >
                                         <StyledTableCell sx={{ width: '5%' }} align="center" size='small'><Link to={`/book/${id}`}><img style={{ width: 80 }} src={`${BASE_URL_IMAGE}/${image[image.length - 1]}`} alt="??" /></Link></StyledTableCell>
@@ -70,13 +71,13 @@ function CartTable() {
                                             <Container>
                                                 <AddButton onClick={() => handelDecreaseCart(product)} ><RemoveIcon fontSize="5" /></AddButton>
 
-                                                <input value={cartQuantity} style={customInput} />
+                                                <input value={count} style={customInput} />
 
                                                 <AddButton onClick={() => handelIncreaseCart(product)}><AddIcon fontSize="5" /></AddButton>
                                             </Container>
                                         </StyledTableCell>
 
-                                        {off > 0 ? <StyledTableCell sx={{ width: '20%' }} align="center">{((price - ((price * off) / 100)) * cartQuantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</StyledTableCell> : <StyledTableCell sx={{ width: '20%' }} align="center">{(price * cartQuantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</StyledTableCell>}
+                                        {off > 0 ? <StyledTableCell sx={{ width: '20%' }} align="center">{((price - ((price * off) / 100)) * count).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</StyledTableCell> : <StyledTableCell sx={{ width: '20%' }} align="center">{(price * count).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</StyledTableCell>}
                                         <StyledTableCell sx={{ width: '15%' }} align="center"><Button onClick={() => handelOpenDeleteModal(product)}>حذف</Button></StyledTableCell>
                                     </StyledTableRow>
                                 )

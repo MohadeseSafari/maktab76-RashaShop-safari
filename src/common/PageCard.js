@@ -20,7 +20,7 @@ function PageCard({ data }) {
                 setCount(0)
             } else {
                 const cartItem = JSON.parse(localStorage.getItem("cartItems")).filter((item) => item.id === data.id)
-                setCount(cartItem[0].cartQuantity)
+                setCount(cartItem[0].count)
             }
         }
 
