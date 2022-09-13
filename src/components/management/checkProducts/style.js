@@ -95,3 +95,33 @@ export const DeliveryButton = styled(ButtonUnstyled)(({ theme }) => `
     cursor: not-allowed;
   }
 `);
+
+export const SaveEditButton = styled(ButtonUnstyled)(({ theme }) => `
+  width: 90px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 1.45rem;
+  font-family: ${theme.typography.fontFamily};
+  background-color: #60a3bc ;
+  padding: 0px 15px;
+  border-radius: 10px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    background-color:#3c6382 ;
+  }
+
+&.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`);

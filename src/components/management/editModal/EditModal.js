@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { uploadImageApi } from "api";
+import 'styles/style.css'
 import { Formik, Form } from "formik";
 import { updateProduct } from 'redux/feature/products/ProductsSlice'
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Spinner from 'common/Spinner';
 import { Box, Button, Chip, Grid, FormHelperText, FormControl, TextField, Typography, Stack, Select, InputLabel, MenuItem, OutlinedInput, IconButton, } from "@mui/material";
-import { Backdrop, DeliveryButton, editModalStyle, Modal } from "components/management/checkProducts/style";
+import { Backdrop, SaveEditButton, editModalStyle, Modal } from "components/management/checkProducts/style";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -82,61 +83,61 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
 
         switch (genres[0]) {
             case "فانتزی":
-              props.setFieldValue("category", "Fantasy");
-              break;
-      
+                props.setFieldValue("category", "Fantasy");
+                break;
+
             case "فلسفی":
-              props.setFieldValue("category", "Philosophical");
-              break;
-      
+                props.setFieldValue("category", "Philosophical");
+                break;
+
             case "آموزشی":
-              props.setFieldValue("category", "Academic");
-              break;
-      
+                props.setFieldValue("category", "Academic");
+                break;
+
             case "درام":
-              props.setFieldValue("category", "Drama");
-              break;
-      
+                props.setFieldValue("category", "Drama");
+                break;
+
             case "داستانی":
-              props.setFieldValue("category", "Fiction");
-              break;
-      
+                props.setFieldValue("category", "Fiction");
+                break;
+
             case "اکشن":
-              props.setFieldValue("category", "Action");
-              break;
-      
+                props.setFieldValue("category", "Action");
+                break;
+
             case "کمیک":
-              props.setFieldValue("category", "Comic");
-              break;
-      
+                props.setFieldValue("category", "Comic");
+                break;
+
             case "عاشقانه":
-              props.setFieldValue("category", "Romance");
-              break;
-      
+                props.setFieldValue("category", "Romance");
+                break;
+
             case "وحشت":
-              props.setFieldValue("category", "Horror");
-              break;
-      
+                props.setFieldValue("category", "Horror");
+                break;
+
             case "تاریخی":
-              props.setFieldValue("category", "Historical");
-              break;
-      
+                props.setFieldValue("category", "Historical");
+                break;
+
             case "علمی تخیلی":
-              props.setFieldValue("category", "ScienceFiction");
-              break;
-      
+                props.setFieldValue("category", "ScienceFiction");
+                break;
+
             case "جنایی":
-              props.setFieldValue("category", "Crime");
-              break;
-      
+                props.setFieldValue("category", "Crime");
+                break;
+
             case "معمایی":
-              props.setFieldValue("category", "Mystery");
-              break;
-      
+                props.setFieldValue("category", "Mystery");
+                break;
+
             case "کمدی":
-              props.setFieldValue("category", "Comedy");
-              break;
-          }
+                props.setFieldValue("category", "Comedy");
+                break;
+        }
     };
 
     const handleChangeImage = (e, props) => {
@@ -154,10 +155,11 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
 
     const handelDeleteImage = (img) => {
         const filteredImage = previewSrc.filter((imgCode) => imgCode !== img);
-        return previewSrc.filter((image) => image === filteredImage);
+        setPreviewSrc(filteredImage);
     };
 
     const handelSubmit = (values, props) => {
+        console.log(previewSrc)
         values.image = previewSrc;
         dispatch(updateProduct(values));
         handleCloseEdit();
@@ -167,7 +169,7 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     return (
         <Modal open={openEdit} onClose={handleCloseEdit} components={{ Backdrop }}>
             {loading ? (<Spinner />) : <Box sx={editModalStyle}>
-                <Typography variant="h5">ویرایش کالا</Typography>
+                <Typography variant="h5" >ویرایش کالا</Typography>
                 <Formik
                     initialValues={{
                         id: id,
@@ -189,7 +191,7 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                         <Form autoComplete="false">
                             <Grid
                                 container
-                                rowSpacing={1}
+                                rowSpacing={2}
                                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                             >
                                 <Grid item xs={6}>
@@ -427,10 +429,9 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                     ) : null}
                                 </Grid>
 
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sx={{ maxHeight: 100, mb: 5 }}>
                                     <CKEditor
-                                        sx={{ height: 300 }}
-
+                                        class="ck-editor__editable_inline "
                                         editor={ClassicEditor}
                                         data={description}
                                         onChange={(event, editor) =>
@@ -439,9 +440,9 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                     />
                                 </Grid>
                             </Grid>
-                            <DeliveryButton type="submit" sx={{ mt: 2, ml: 35 }}>
+                            <SaveEditButton type="submit" sx={{ mt: 3, ml: 35 }}>
                                 ذخیره
-                            </DeliveryButton>
+                            </SaveEditButton>
                         </Form>
                     )}
                 </Formik>

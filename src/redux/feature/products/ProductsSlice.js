@@ -100,8 +100,8 @@ export const ProductsSlice = createSlice({
 
         builder.addCase(updateProduct.fulfilled, (state, action) => {
             state.loading = false;
-            state.products = state.products.filter((product) => +product.id !== action.payload.id);
-            state.products.push(action.payload)
+            const indexProduct = state.products.findIndex((product) => product.id == action.payload.id)
+            state.products[indexProduct] = action.payload
         });
 
         builder.addCase(updateProduct.rejected, (state, action) => {

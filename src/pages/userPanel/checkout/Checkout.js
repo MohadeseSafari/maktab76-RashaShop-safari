@@ -7,11 +7,6 @@ import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { CustomInput, PaymentButton, containerCheckoutForm } from 'pages/userPanel/checkout/style';
 import { Box, Container, InputLabel, Stack, Grid, FormHelperText, Typography, TextField } from '@mui/material';
 
-
-
-
-
-
 const initialValues = {
     username: '',
     lastName: '',
@@ -23,7 +18,7 @@ const initialValues = {
 }
 
 const SignupSchema = Yup.object().shape({
-    username: Yup.string().required('این فیلد نمی تواند خالی باشد'),
+    username: Yup.string().min(2, 'فیلد نام نمی تواند کمتر از 2 حرف باشد').required('این فیلد نمی تواند خالی باشد'),
     lastName: Yup.string().required('این فیلد نمی تواند خالی باشد'),
     address: Yup.string().required('این فیلد نمی تواند خالی باشد'),
     phone: Yup.string().required('این فیلد نمی تواند خالی باشد'),

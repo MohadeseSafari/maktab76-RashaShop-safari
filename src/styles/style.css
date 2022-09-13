@@ -139,3 +139,12 @@ h1 {
 .muirtl-ohwg9z {
   width: 240px;
 }
+
+.ck-editor__editable_inline {
+  max-height: 100px !important;
+  direction: rtl !important;
+}
+.ck-editor__main{
+  max-height: 100px !important;
+  direction: rtl !important;
+}
