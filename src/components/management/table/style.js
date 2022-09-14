@@ -1,8 +1,23 @@
+import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import InputUnstyled from '@mui/base/InputUnstyled';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
 
+const grey = {
+  20: '#ffffffd0',
+  50: '#f7f8fa',
+  100: '#dfe3e9',
+  200: '#95a4b9',
+  300: '#7c8fa8',
+  400: '#697f9b',
+  500: '#A0AAB4',
+  600: '#8b9cb2',
+  700: '#445367',
+  800: '#596575',
+  900: '#3b4859',
+};
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -74,9 +89,48 @@ export const SaveButton = styled(ButtonUnstyled)(({ theme }) => `
   }
 `);
 
-export const customTextField ={
-  border: 'none',
-  alignItems: 'center'
-}
+
+const StyledInputRoot = styled('div')(
+  ({ theme }) => `
+  display: flex;
+  font-weight: 500;
+  font-family: ${theme.typography.fontFamily};
+  border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[500]};
+  margin: 5px;
+  align-items: center;
+  justify-content: center;
+`,
+);
+
+const StyledInputElement = styled('input')(
+  ({ theme }) => `
+  width: 10rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: ${theme.typography.fontFamily};
+  line-height: 0.25;
+  flex-grow: 1;
+  color: ${theme.palette.mode === 'dark' ? grey[20] : grey[900]};
+  background: inherit;
+  border: none;
+  padding: 5px 22px;
+  outline: 0;
+`,
+);
+
+export const CustomInput = React.forwardRef(function CustomInput(props, ref) {
+  const { components, ...other } = props;
+  return (
+    <InputUnstyled
+      components={{
+        Root: StyledInputRoot,
+        Input: StyledInputElement,
+        ...components,
+      }}
+      {...other}
+      ref={ref}
+    />
+  );
+});
 
 

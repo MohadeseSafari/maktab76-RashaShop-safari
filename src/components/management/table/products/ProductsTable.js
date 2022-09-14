@@ -42,6 +42,7 @@ export default function ProductsTable() {
 
     const handelOpenModalEdit = (id) => {
         const selectedProduct = products.filter((product) => product.id === parseInt(id));
+        console.log(selectedProduct[0])
         setProduct(selectedProduct[0]);
         setOpenEdit(true);
     };

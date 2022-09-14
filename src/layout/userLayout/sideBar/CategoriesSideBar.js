@@ -1,37 +1,30 @@
 import { useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories } from 'redux/feature/category/CategorySlice'
-import { Box, CssBaseline, Drawer, Toolbar, List, ListItemButton, ListItem, ListItemText, Typography, Divider } from '@mui/material';
+import { Box, CssBaseline, Drawer, IconButton, Toolbar, List, ListItemButton, ListItem, ListItemText, Divider, SwipeableDrawer } from '@mui/material';
 
-
-function CategoriesSideBar() {
+const CategoriesSideBar = (props) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const categories = useSelector(state => state.categories.categories)
-    const id = useParams()
+    const { open, handelCloseMenu } = props
+    const categories = useSelector(state => state.categories.categories);
+    const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
     useEffect(() => {
         dispatch(fetchCategories())
     }, [dispatch])
+
     return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <Drawer
-                sx={{
-
-                    width: 200,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: 200,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                variant="permanent"
+        <>
+            <SwipeableDrawer
+                disableBackdropTransition={!iOS}
+                disableDiscovery={iOS}
                 anchor="left"
+                open={open}
+                onClose={handelCloseMenu}
+                onOpen={() => { }}
             >
-
-                <Toolbar />
-                <List>
+                <List sx={{ width: 250 }}>
                     {categories.map(({ id, name, engName, color }) => (
                         <>
                             <Link to={`/category/${engName}`}>
@@ -45,15 +38,44 @@ function CategoriesSideBar() {
                         </>
                     ))}
                 </List>
-            </Drawer>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 2 }}
-            >
-                <Toolbar />
 
-            </Box>
-        </Box>
+            </SwipeableDrawer>
+            {/* // <Box sx={{ display: 'flex' }}>
+        //     <CssBaseline />
+        //     <Drawer
+        //         sx={{
+        //             width: 200,
+        //             flexShrink: 0,
+        //             '& .MuiDrawer-paper': {
+        //                 width: 200,
+        //                 boxSizing: 'border-box',
+        //             },
+        //         }}
+
+        //         open={open}
+        //         variant="permanent"
+        //         anchor="left"
+        //     >
+        //         <DrawerHeader>
+        //             <IconButton onClick={handleDrawerClose}>
+        //                 {theme.direction === 'ltr' ? <ChevronLeftIcon color="secondary" /> : <ChevronRightIcon color="secondary" />}
+        //             </IconButton>
+        //         </DrawerHeader>
+        //         <Divider />
+
+        //         <Toolbar />
+        //        
+        //     </Drawer>
+        //     <Box
+        //         component="main"
+        //         sx={{ flexGrow: 1, bgcolor: 'background.default', p: 2 }}
+        //     >
+        //         <Toolbar />
+
+        //     </Box>
+        // </Box> */}
+
+        </>
     );
 }
 

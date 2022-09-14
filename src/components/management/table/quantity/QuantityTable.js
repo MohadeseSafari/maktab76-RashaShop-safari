@@ -1,19 +1,21 @@
 //import Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useCallback } from 'react';
-import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, Paper, Box } from '@mui/material';
+import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, TextField, Paper, Box } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
-import { EditText } from "react-edit-text";
+import { CustomInput } from 'components/management/table/style'
 import Spinner from 'common/Spinner';
+
 
 export default function QuantityTable() {
     const dispatch = useDispatch();
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const { products, currentPage, loading, totalCount } = useSelector((state) => state.products);
     const [product, setProduct] = useState([]);
+    const [newState, setNewState] = useState([]);
     const [changedItem, setChangedItem] = useState([]);
-    const [textPrice, setTextPrice] = useState(false)
+    const [showInput, setShowInput] = useState('')
 
     useEffect(() => {
         if (products) {
@@ -37,64 +39,35 @@ export default function QuantityTable() {
     };
 
     const handelEscKey = useCallback((event, id) => {
-        setTextPrice(true)
         if (event.key === "Escape") {
-            setTextPrice(false)
+            console.log(event)
+            
         }
+
     }, [])
 
     useEffect(() => {
         document.addEventListener("keydown", handelEscKey, false);
-    
+
         return () => {
-          document.removeEventListener("keydown", handelEscKey, false);
+            document.removeEventListener("keydown", handelEscKey, false);
         };
-      }, []);
+    }, []);
 
-    const handelInputPrice = (event, id) => {
-        console.log(id)
-        console.log(event.target)
-        console.log(event.target.getAttribute("data-type"))
-        
-    }
 
-    const handelChangePrice = (e, id) => {
+    const handelChange = (event, id) => {
+        const { name, value } = event.target
         const idItem = product.findIndex((item) => item.id === id);
-        const newChangeItem = [...product];
-        console.log(newChangeItem[idItem])
-        newChangeItem[idItem].price = e.target.value
-        setProduct(newChangeItem);
-        const newPriceList = [...changedItem];
-        const newIdItem = changedItem.findIndex((item) => item.id === id);
+        const newState = [...product];
+        newState[idItem] = { ...newState[idItem], [name]: +value }
 
-        if (newIdItem === -1) {
-            const newObject = { id: id, newValuePrice: e.target.value, newValueQuantity: newChangeItem[idItem].quantity };
-            newPriceList.push(newObject);
-        } else {
-            newPriceList[newIdItem].newValuePrice = e.target.value;
-        }
-        setChangedItem(newPriceList);
+        const sendData = newState.filter((newState, index) => newState.price !== product[index].price || newState.quantity !== product[index].quantity)
+        setNewState(sendData);
+        setProduct(newState);
+
 
     }
 
-    const handelChangeQuantity = (e, id) => {
-        const idItem = product.findIndex((item) => item.id === id);
-        const newChangeItem = [...product];
-        const obj = { ...newChangeItem[idItem] };
-        obj.quantity = e.target.value
-        setProduct(newChangeItem);
-        const newQuantityList = [...changedItem];
-        const newIdItem = changedItem.findIndex((item) => item.id === id);
-
-        if (newIdItem === -1) {
-            const newObject = { id: id, newValueQuantity: e.target.value, newValuePrice: newChangeItem[idItem].price };
-            newQuantityList.push(newObject);
-        } else {
-            newQuantityList[newIdItem].newValueQuantity = e.target.value;
-        }
-        console.log(newQuantityList)
-        setChangedItem(newQuantityList);
-    }
 
 
     return (
@@ -125,12 +98,12 @@ export default function QuantityTable() {
                                     <StyledTableCell sx={{ width: '10%' }} align="center">{id + 1} </StyledTableCell>
                                     <StyledTableCell sx={{ width: '30%' }} align="left"> {name}</StyledTableCell>
 
-                                    <StyledTableCell sx={{ width: '30%' }} align="center" onClick={(event) => handelEscKey(event, id)}>
-                                        {textPrice ? <input onChange={(e) => handelChangePrice(e, id)} data-type='price' id={id}  defaultValue={price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} /> : <Typography>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>}
+                                    <StyledTableCell sx={{ width: '30%' }} align="center" >
+                                        <CustomInput onClick={(event) => handelEscKey(event, id)} onChange={(event) => handelChange(event, id)} name="price" data-type='price' id={id} defaultValue={price} />
                                     </StyledTableCell>
 
                                     <StyledTableCell sx={{ width: '30%' }} align="center" >
-                                        <EditText onChange={(e) => handelChangeQuantity(e, id)} data-type='quantity' defaultValue={quantity} />
+                                        <CustomInput type="number" sx={{ border: showInput }} onChange={(event) => handelChange(event, id)} name="quantity" data-type='quantity' id={id} defaultValue={quantity} />
                                     </StyledTableCell>
                                 </StyledTableRow>
                             )
@@ -154,5 +127,5 @@ export default function QuantityTable() {
         </div>
     );
 }
-
+// price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 

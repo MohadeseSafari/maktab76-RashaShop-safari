@@ -70,7 +70,8 @@ const initialValues = {
   genre: [],
   price: "",
   pages: "",
-  quantity: "",
+  off: 0,
+  quantity: 0,
   description: "",
   category: ""
 };
@@ -81,7 +82,8 @@ const SignupSchema = Yup.object().shape({
   author: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
   translator: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
   price: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
-  pages: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
+  pages: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
+  off: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
   quantity: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
 
 });
@@ -89,7 +91,7 @@ const SignupSchema = Yup.object().shape({
 const CreateModal = ({ openCreate, handelCloseCreate }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [previewSrc, setPreviewSrc] = useState(null);
+  const [previewSrc, setPreviewSrc] = useState([]);
   const [dataInput, setDataInput] = useState(null);
   const [genreName, setGenreName] = useState([]);
   const categories = useSelector((state) => state.categories.categories);
@@ -97,12 +99,14 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
   useEffect(() => {
     dispatch(fetchCategories())
   }, [])
+
+
   const handleChangeGenre = (event, props) => {
     const { value } = event.target;
     setGenreName(typeof value === "string" ? value.split(",") : value);
 
     props.setFieldValue("genre", value);
-    
+
     switch (genreName[0]) {
       case "فانتزی":
         props.setFieldValue("category", "Fantasy");
@@ -160,7 +164,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
         props.setFieldValue("category", "Comedy");
         break;
     }
-    
+
   };
 
   const handleChangeImage = (e, props) => {
@@ -176,7 +180,6 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
   };
 
   const handelSubmit = (values, props) => {
-    console.log(values)
     dispatch(createProduct(values));
     props.resetForm();
     setGenreName([]);
@@ -203,7 +206,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
             <Form autoComplete="false">
               <Grid
                 container
-                rowSpacing={1}
+                rowSpacing={2}
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <Grid item xs={6}>
@@ -231,6 +234,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                       </Button>
                     </label>
                   </Stack>
+                  {previewSrc.length === 0 ? (<FormHelperText sx={{ color: "#d63031", textAlign: "left", mr: 2, fontSize: 18 }}>لطفا یک عکس آپلود کنید</FormHelperText>) : null}
                 </Grid>
 
                 <Grid item xs={6}>
@@ -350,7 +354,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
 
                 <Grid item xs={12}>
                   <FormControl sx={{ width: "100%", height: "45px" }}>
-                    <InputLabel>ژانر</InputLabel>
+                    <InputLabel sx={{ mb: 1 }}>ژانر</InputLabel>
                     <Select
                       sx={{ height: "45px" }}
                       multiple
@@ -440,6 +444,30 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                   ) : null}
                 </Grid>
 
+                <Grid item xs={6}>
+                  <TextField
+                    fullWidth
+                    label="تخفیف"
+                    type="number"
+                    name="off"
+                    value={props.values.off}
+                    size="small"
+                    onChange={props.handleChange}
+                  />
+                  {props.errors.off ? (
+                    <FormHelperText
+                      sx={{
+                        color: "#d63031",
+                        textAlign: "left",
+                        mr: 2,
+                        fontSize: 18,
+                      }}
+                    >
+                      {props.errors.off}
+                    </FormHelperText>
+                  ) : null}
+                </Grid>
+
                 <Grid item xs={12}>
                   <CKEditor
                     editor={ClassicEditor}
@@ -448,8 +476,10 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                     }
                   />
                 </Grid>
+
+
               </Grid>
-              <DeliveryButton type="submit" sx={{ mt: 2, ml: 40 }}>
+              <DeliveryButton type="submit" sx={{ mt: 2, ml: 35 }}>
                 ذخیره
               </DeliveryButton>
             </Form>

@@ -1,15 +1,25 @@
-import CategoriesSideBar from 'layout/userLayout/sideBar/CategoriesSideBar';
 import NavbarLayout from "layout/userLayout/navbar/NavbarLayout";
-import CategoriesGroup from 'components/Home/category/CategoriesGroup'
-import { Container } from '@mui/material';
+import CategoriesGroup from 'components/Home/category/CategoriesGroup';
+import CategoriesSideBar from 'layout/userLayout/sideBar/CategoriesSideBar';
+import { useState } from 'react';
 
-function Home() {
+const Home = () => {
+    const [open, setOpen] = useState(false);
+
+    const handelOpenMenu = () => {
+        setOpen(true);
+    }
+
+    const handelCloseMenu = () => {
+        setOpen(false);
+    }
+
     return (
-        <Container>
-            <NavbarLayout />
-            <CategoriesSideBar />
+        <>
+            <NavbarLayout handelOpenMenu={handelOpenMenu} />
+            <CategoriesSideBar open={open} handelCloseMenu={handelCloseMenu} />
             <CategoriesGroup />
-        </Container>
+        </>
 
     );
 }

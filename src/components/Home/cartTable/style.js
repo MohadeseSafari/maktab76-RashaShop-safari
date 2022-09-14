@@ -1,7 +1,10 @@
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
+import { Chip } from '@mui/material';
 import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import { emphasize } from '@mui/material/styles';
+
 
 export const AddButton = styled(ButtonUnstyled)(({ theme }) => `
   font-weight: bold;
@@ -150,6 +153,27 @@ export const DeleteAllButton = styled(ButtonUnstyled)(({ theme }) => `
     cursor: not-allowed;
   }
 `)
+
+export const StyledBreadcrumb = styled(Chip)(({ theme }) => {
+  const backgroundColor = '#F0F0F1';
+  const color = theme.palette.mode === 'light' ? '#A12C34' : '#142633e0';
+  return {
+    backgroundColor,
+    color,
+    height: theme.spacing(3),
+    fontWeight: 700,
+    fontSize: '20px',
+    marginLeft: 10,
+    '&:hover, &:focus': {
+      backgroundColor: emphasize(backgroundColor, 0.06),
+    },
+    '&:active': {
+      boxShadow: theme.shadows[1],
+      backgroundColor: emphasize(backgroundColor, 0.12),
+    },
+  };
+});
+
 
 
 

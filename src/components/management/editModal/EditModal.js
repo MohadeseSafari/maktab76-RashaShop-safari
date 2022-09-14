@@ -56,6 +56,7 @@ const SignupSchema = Yup.object().shape({
     translator: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     price: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     pages: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
+    off: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
     quantity: Yup.number().required("این فیلد نمیتواند خالی باشد!"),
 });
 
@@ -66,8 +67,10 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     const [genres, setGenre] = useState([]);
     const categories = ["عاشقانه", "کلاسیک", "وحشت", "تاریخی", "علمی تخیلی", "جنایی", "معمایی", "کمدی", "روانشناسی", "کمیک", "آموزشی", "فانتزی", "فلسفی", "درام", "داستانی", "اکشن"]
     const { loading, currentPage } = useSelector(state => state.products);
-    const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description, } = product;
+    const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description, category } = product;
     const [previewSrc, setPreviewSrc] = useState([]);
+
+    console.log(category)
 
     useEffect(() => {
         if (product.image) {
@@ -159,7 +162,6 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     };
 
     const handelSubmit = (values, props) => {
-        console.log(previewSrc)
         values.image = previewSrc;
         dispatch(updateProduct(values));
         handleCloseEdit();
@@ -181,6 +183,8 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                         genre: genre,
                         price: price,
                         pages: pages,
+                        off: off,
+                        category: category,
                         quantity: quantity,
                         description: description,
                     }}
@@ -234,6 +238,8 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                             </Button>
                                         </label>
                                     </Stack>
+
+                                    {previewSrc.length === 0 ? (<FormHelperText sx={{ color: "#d63031", textAlign: "left", mr: 2, fontSize: 18 }}>فیلدعکس نمیتواند خالی باشد</FormHelperText>) : null}
                                 </Grid>
 
                                 <Grid item xs={6}>
@@ -262,6 +268,7 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                 <Grid item xs={6}>
                                     <TextField
                                         fullWidth
+                                        sx={{ px: 2 }}
                                         label="نویسنده"
                                         size="small"
                                         name="author"
@@ -425,6 +432,30 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                             }}
                                         >
                                             {props.errors.quantity}
+                                        </FormHelperText>
+                                    ) : null}
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <TextField
+                                        fullWidth
+                                        label="تخفیف"
+                                        type="number"
+                                        name="off"
+                                        value={props.values.off}
+                                        size="small"
+                                        onChange={props.handleChange}
+                                    />
+                                    {props.errors.off ? (
+                                        <FormHelperText
+                                            sx={{
+                                                color: "#d63031",
+                                                textAlign: "left",
+                                                mr: 2,
+                                                fontSize: 18,
+                                            }}
+                                        >
+                                            {props.errors.off}
                                         </FormHelperText>
                                     ) : null}
                                 </Grid>

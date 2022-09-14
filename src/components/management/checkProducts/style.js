@@ -53,6 +53,8 @@ export const style = (theme) => ({
 });
 
 export const editModalStyle = (theme) => ({
+  maxHeight: 600,
+  overflow: 'auto',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'right',

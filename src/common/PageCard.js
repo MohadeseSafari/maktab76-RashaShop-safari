@@ -1,10 +1,14 @@
+import { BASE_URL_IMAGE } from "config/api";
 import { Container, Box, Paper, Typography, Divider, Chip, Stack, TextField } from "@mui/material";
 import Carousel from 'react-material-ui-carousel';
 import { increase, addToCart, decrease } from 'redux/feature/cart/CartSlice';
 import { CustomButton, AddButton, DecreaseButton } from 'common/AddButton';
-import { customInput } from 'components/Home/cartTable/style';
-import { BASE_URL_IMAGE } from "config/api";
-import { useDispatch, useSelector } from "react-redux";
+import { customInput, StyledBreadcrumb } from 'components/Home/cartTable/style';
+import delivery from 'assets/image/background/delivery.jpg';
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import Logo from "assets/image/logo/logo-1.png";
+import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router';
 import { useState, useEffect } from 'react';
 
@@ -79,11 +83,46 @@ function PageCard({ data }) {
                         </li>
                     </ul>
 
-                    <Divider sx={{ mt: 2 }} />
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', borderRadius: 2 }}>
+                        <Box>
+                            <Typography variant="h6" sx={{ fontWeight: 900 }} >ارسال رایگان</Typography>
+                            <Typography>برای سفارش بالای 500 هزار تومان</Typography>
+                        </Box>
+                        <img width="100px" src={delivery} />
+                    </Paper>
                 </Box>
 
-                <Paper elevation={3} sx={{ p: 3, backgroundColor: "#F7F7F8" }} >
-                    <Typography variant="h6" color="secondary" sx={{ fontSize: 27 }}>فروشنده</Typography>
+                <Paper elevation={3} sx={{ p: 2, backgroundColor: "#F7F7F8" }} >
+                    <Typography variant="h5" color="secondary" sx={{ fontSize: 32 }}>فروشنده</Typography>
+                    <Divider />
+
+                    <Box sx={{ mb: 2 }} >
+                        <Box sx={{ display: 'flex', p: 1, alignItems: 'center' }}>
+                            <img width="30px" src={Logo} alt="" />
+                            <Typography variant="h5" color="secondary">راشـا بووک</Typography>
+                            <StyledBreadcrumb label="منتخب" />
+                        </Box>
+                        <Box sx={{ display: 'flex', ml: 3 }}>
+                            <Typography>عملکرد </Typography>
+                            <Typography color="#A12C34" sx={{ ml: 1 }}>عالی</Typography>
+                        </Box>
+
+                    </Box>
+                    <Divider />
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2 , mb:1 }}>
+                        <GppGoodIcon sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }} />
+                        <Typography sx={{ fontSize: 20 }}>گارانتی اصالت و سلامت فیزیکی کالا</Typography>
+                    </Box>
+                    <Divider />
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2 , mb:1 }}>
+                        <StorefrontIcon  sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }}/>
+                        <Typography sx={{ fontSize: 25 }}>موجود در انبار فروشگاه راشـا</Typography>
+                    </Box>
+                    <Divider />
+
                     <Typography color="#A5A8AD" sx={{ fontSize: 20 }}>قیمت مصرف کننده</Typography>
                     <Box sx={{ display: 'flex', ml: 25 }}>
                         {off > 0 ? <Typography color="#A5A8AD" sx={{ fontSize: 20, mr: 1, textDecoration: "line-through" }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</Typography> : ''}
