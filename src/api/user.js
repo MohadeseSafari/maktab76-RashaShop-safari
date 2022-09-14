@@ -6,7 +6,7 @@ export const loginRequest = async (user) => {
         const response = await axios.post(LOGIN_URL, user);
         return response.data
     } catch (error) {
-        console.log(error)
+        return Promise.reject(error.response.data)
      
     }
 }

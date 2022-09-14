@@ -70,7 +70,6 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
     const { id, name, image, publication, author, translator, genre, price, pages, quantity, off, description, category } = product;
     const [previewSrc, setPreviewSrc] = useState([]);
 
-    console.log(category)
 
     useEffect(() => {
         if (product.image) {

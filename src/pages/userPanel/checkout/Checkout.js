@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Formik, Form } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import NavbarLayout from 'layout/userLayout/navbar/NavbarLayout';
+import { getTotals } from 'redux/feature/cart/CartSlice';
 import DatePicker from '@hassanmojab/react-modern-calendar-datepicker';
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import { CustomInput, PaymentButton, containerCheckoutForm } from 'pages/userPanel/checkout/style';
@@ -9,22 +11,28 @@ import { Box, Container, InputLabel, Stack, Grid, FormHelperText, Typography, Te
 
 const initialValues = {
     username: '',
-    lastName: '',
+    lastname: '',
     address: '',
     phone: '',
-    expectAt: 0,
-    createAt: 0,
+    expectAt: "",
+    createdAt: "",
+    prices: 0,
     delivered: 'false'
 }
 
 const SignupSchema = Yup.object().shape({
     username: Yup.string().min(2, 'فیلد نام نمی تواند کمتر از 2 حرف باشد').required('این فیلد نمی تواند خالی باشد'),
-    lastName: Yup.string().required('این فیلد نمی تواند خالی باشد'),
+    lastname: Yup.string().required('این فیلد نمی تواند خالی باشد'),
     address: Yup.string().required('این فیلد نمی تواند خالی باشد'),
-    phone: Yup.string().required('این فیلد نمی تواند خالی باشد'),
-    expectAt: Yup.string().required('این فیلد نمی تواند خالی باشد')
+    phone: Yup.string().required('این فیلد نمی تواند خالی باشد')
 })
 function Checkout() {
+    const dispatch = useDispatch();
+    const CartTotalAmount = useSelector(state => state.cart.CartTotalAmount);
+    useEffect(() => {
+        dispatch(getTotals())
+    }, [])
+
 
     const [selectedDay, setSelectedDay] = useState(null);
 
@@ -51,7 +59,9 @@ function Checkout() {
     )
 
     const handelSubmit = (values, props) => {
-        values.expectAt = `${selectedDay.year}/${selectedDay.month}/${selectedDay.day}`
+        values.expectAt = `${selectedDay.year}/${selectedDay.month}/${selectedDay.day}`;
+        values.prices = CartTotalAmount;
+        console.log(values)
         localStorage.setItem("personInfo", JSON.stringify(values))
         window.open("http://localhost:3001", '_blank')
         props.resetForm();
@@ -71,7 +81,7 @@ function Checkout() {
                         {(props) => (
 
                             <Form autoComplete='false' >
-                               
+
                                 <Grid container rowSpacing={1} columnSpacing={1} >
                                     <Grid item xs={12} md={6} sx={{ maxHeight: 125 }}>
                                         <Box sx={{ display: 'flex' }}>
@@ -113,13 +123,13 @@ function Checkout() {
                                             <Stack direction='column' >
                                                 <InputLabel sx={{ marginRight: '17px' }}>نام خانوادگی</InputLabel>
                                                 <CustomInput
-                                                    name='lastName'
+                                                    name='lastname'
                                                     type='text'
                                                     autoComplete='false'
-                                                    value={props.values.lastName}
+                                                    value={props.values.lastname}
                                                     onChange={props.handleChange}
                                                 />
-                                                {props.errors.lastName ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.lastName}</FormHelperText>) : null}
+                                                {props.errors.lastname ? (<FormHelperText sx={{ color: '#d63031', textAlign: 'left', mr: 2, fontSize: 18 }} >{props.errors.lastname}</FormHelperText>) : null}
                                             </Stack>
                                         </Box>
                                     </Grid>

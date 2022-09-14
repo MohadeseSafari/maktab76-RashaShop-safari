@@ -77,7 +77,7 @@ export default function QuantityTable() {
                                         <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{id + 1}</StyledTableCell >
                                         <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{username} {lastname}</StyledTableCell >
                                         <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center">{prices.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</StyledTableCell >
-                                        <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{(new Date(expectAt)).toLocaleDateString('fa')}</StyledTableCell >
+                                        <StyledTableCell style={{ width: 80, fontSize: 20 }} align="center">{expectAt}</StyledTableCell >
                                         <StyledTableCell style={{ width: 50, fontSize: 20 }} align="center"><Button variant='text' onClick={() => handelOpen(order)}>بررسی سفارشات</Button></StyledTableCell >
                                     </StyledTableRow>
                                 )

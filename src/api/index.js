@@ -112,7 +112,7 @@ export const updateOrdersApi = async (id) => {
   try {
     const response = await axiosInstance.patch(`/orders/${id}`, {
       delivered: "true",
-      expectAt: Date.now(),
+      createdAt: new Date().toLocaleDateString('fa-IR'),
     });
     return response.data;
   } catch (error) {

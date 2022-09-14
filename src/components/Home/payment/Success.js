@@ -14,10 +14,8 @@ function Success() {
         const products = JSON.parse(localStorage.getItem("cartItems"));
         const order = JSON.parse(localStorage.getItem("personInfo"));
         order.products = products;
-        dispatch(createOrder(order))
-        dispatch(clearCart())
-
-
+        dispatch(createOrder(order));
+        dispatch(clearCart());
     }, [])
 
     
