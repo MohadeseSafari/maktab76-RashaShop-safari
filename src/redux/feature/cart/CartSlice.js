@@ -52,7 +52,6 @@ export const CartSlice = createSlice({
 
         clearCart(state, action) {
             state.cartItems = [];
-            toast.error('سبد خرید با موفقیت خالی شد', { position: 'bottom-right' })
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
 
@@ -96,7 +95,6 @@ export const CartSlice = createSlice({
            
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         },
-
         decrease(state, action) {
             const { data, count } = action.payload;
             const ItemIndex = state.cartItems.findIndex((item) => item.id === data.id);
@@ -112,6 +110,7 @@ export const CartSlice = createSlice({
             }
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         }
+       
 
     }
 })

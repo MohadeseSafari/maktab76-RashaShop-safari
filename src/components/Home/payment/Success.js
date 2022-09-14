@@ -2,6 +2,7 @@ import { Container, Typography, Box } from '@mui/material';
 import { useEffect } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useDispatch } from 'react-redux';
+import {clearCart} from 'redux/feature/cart/CartSlice'
 import { createOrder } from 'redux/feature/orders/OrdersSlice';
 import SuccessPayment from 'assets/image/background/success-Payment.png'
 
@@ -12,14 +13,16 @@ function Success() {
     useEffect(() => {
         const products = JSON.parse(localStorage.getItem("cartItems"));
         const order = JSON.parse(localStorage.getItem("personInfo"));
+        order.products = products;
+        dispatch(createOrder(order))
+        dispatch(clearCart())
 
-        // order.products = products;
-        // dispatch(createOrder(order))
 
-        // localStorage.clear();
     }, [])
+
+    
     return (
-        <Container sx={{ mt: 10, display: 'flex', flexDirection: 'column' }}>
+        <Container sx={{ mt: 15, display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h4">نتیجه پرداخت</Typography>
             <Box sx={{ display: 'flex' }}>
                 <CheckCircleOutlineIcon sx={{ fontSize: 50, color: "#3EC158", mx: 2 }} />

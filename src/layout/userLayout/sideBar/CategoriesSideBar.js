@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories } from 'redux/feature/category/CategorySlice'
-import { Box, CssBaseline, Drawer, IconButton, Toolbar, List, ListItemButton, ListItem, ListItemText, Divider, SwipeableDrawer } from '@mui/material';
+import { List, ListItemButton, ListItem, ListItemText, Divider, SwipeableDrawer } from '@mui/material';
 
 const CategoriesSideBar = (props) => {
     const dispatch = useDispatch();

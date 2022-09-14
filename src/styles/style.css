@@ -148,3 +148,7 @@ h1 {
   max-height: 100px !important;
   direction: rtl !important;
 }
+
+.directionPagination{
+  direction:'rtl'!important;
+}

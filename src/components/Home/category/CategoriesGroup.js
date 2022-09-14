@@ -18,7 +18,7 @@ const CategoriesGroup = (props) => {
   return (
     !loading && categories.slice(0, 4).map((category) => {
       return (
-        <Container>
+        <Container sx={{ mt: 15, width: '100%' }}>
           <CardList key={category.id} engNameCategory={category.engName} title={category.name} data={allProducts.filter(product => product.category === category.engName).slice(0, 8)} />
         </Container>
       );

@@ -10,7 +10,7 @@ import { BASE_URL_IMAGE } from 'config/api';
 import EditModal from 'components/management/editModal/EditModal';
 import DeleteProducts from 'components/management/deleteProduct/DeleteProduct';
 import CreateModal from 'components/management/createModal/CreateModal';
-
+import 'styles/style.css';
 import Spinner from 'common/Spinner';
 
 export default function ProductsTable() {
@@ -69,7 +69,7 @@ export default function ProductsTable() {
     }
 
     return (
-        <div style={tableStyle}>
+        <div className="directionPagination" style={tableStyle}>
 
             <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
                 <Typography color="#537d97" variant='h4' sx={{ mb: 3, mr: 50 }}>مدیریت کالاها</Typography>

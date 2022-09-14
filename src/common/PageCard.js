@@ -31,7 +31,7 @@ function PageCard({ data }) {
 
     }, [])
 
-    const { id, name, image, author, translator, publication, description, genre, price, off } = data
+    const { id, name, image, author, translator, publication, description, genre, price, off, quantity } = data
 
     const handelAddToCart = (data) => {
 
@@ -111,14 +111,14 @@ function PageCard({ data }) {
                     </Box>
                     <Divider />
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2 , mb:1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2, mb: 1 }}>
                         <GppGoodIcon sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }} />
                         <Typography sx={{ fontSize: 20 }}>گارانتی اصالت و سلامت فیزیکی کالا</Typography>
                     </Box>
                     <Divider />
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2 , mb:1 }}>
-                        <StorefrontIcon  sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }}/>
+                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2, mb: 1 }}>
+                        <StorefrontIcon sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }} />
                         <Typography sx={{ fontSize: 25 }}>موجود در انبار فروشگاه راشـا</Typography>
                     </Box>
                     <Divider />
@@ -129,9 +129,20 @@ function PageCard({ data }) {
                         {off > 0 ? <Chip label={`${off}%`} color="error" sx={{ fontSize: 22, fontWeight: 700 }} /> : ''}
                     </Box>
                     <Box>
-                        <AddButton onClick={() => handelIncrease({ data, count })}>+</AddButton>
-                        <input value={count} style={customInput} />
-                        <DecreaseButton onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
+                        {count < quantity ?
+
+                            <Box>
+                                <AddButton onClick={() => handelIncrease({ data, count })}>+</AddButton>
+                                <input value={count} style={customInput} />
+                                <DecreaseButton onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
+                            </Box>
+                            : 
+                                <>
+                                    <AddButton disabled onClick={() => handelIncrease({ data, count })}>+</AddButton>
+                                    <input value={count} style={customInput} />
+                                    <DecreaseButton disabled onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
+                                </>
+                                }
                     </Box>
                     {off > 0 ? <Typography variant="h6" align="right" color="secondary" sx={{ fontSize: 30 }}>{((price - ((price * off) / 100))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography> : <Typography variant="h6" align="end" color="secondary" sx={{ fontSize: 30 }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography>}
 

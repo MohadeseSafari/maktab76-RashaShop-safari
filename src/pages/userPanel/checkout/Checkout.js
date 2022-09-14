@@ -52,21 +52,18 @@ function Checkout() {
 
     const handelSubmit = (values, props) => {
         values.expectAt = `${selectedDay.year}/${selectedDay.month}/${selectedDay.day}`
-        console.log(values)
         localStorage.setItem("personInfo", JSON.stringify(values))
         window.open("http://localhost:3001", '_blank')
-        props.resetForm()
+        props.resetForm();
+        setSelectedDay(null)
     }
-
-
-
 
 
     return (
         <Container maxWidth >
             <NavbarLayout />
 
-            <Container sx={{ mt: 10 }} >
+            <Container sx={{ mt: 15 }} >
                 <Box style={containerCheckoutForm}></Box>
                 <Box sx={{ width: '80%' }} >
                     <Typography variant='h4'>نهایی کردن سبد خرید</Typography>
@@ -74,7 +71,7 @@ function Checkout() {
                         {(props) => (
 
                             <Form autoComplete='false' >
-                                {console.log(props.errors)}
+                               
                                 <Grid container rowSpacing={1} columnSpacing={1} >
                                     <Grid item xs={12} md={6} sx={{ maxHeight: 125 }}>
                                         <Box sx={{ display: 'flex' }}>
