@@ -51,7 +51,6 @@ const Input = styled("input")({
 const SignupSchema = Yup.object().shape({
     name: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     publication: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
-    genre: Yup.array().required("این فیلد نمیتواند خالی باشد!"),
     author: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     translator: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
     price: Yup.string().required("این فیلد نمیتواند خالی باشد!"),
@@ -374,18 +373,7 @@ function EditModal({ openEdit, handleCloseEdit, product, rowsPerPage }) {
                                             })}
                                         </Select>
                                     </FormControl>
-                                    {props.errors.genre ? (
-                                        <FormHelperText
-                                            sx={{
-                                                color: "#d63031",
-                                                textAlign: "left",
-                                                mr: 2,
-                                                fontSize: 18,
-                                            }}
-                                        >
-                                            {props.errors.genre}
-                                        </FormHelperText>
-                                    ) : null}
+                                    {genres.length === 0 ? (<FormHelperText sx={{ color: "#d63031", textAlign: "left", mr: 2, fontSize: 18 }}>لطفا یک ژانرو انتخاب کنید</FormHelperText>) : null}
                                 </Grid>
 
                                 <Grid item xs={6}>

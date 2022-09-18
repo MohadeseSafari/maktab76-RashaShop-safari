@@ -1,11 +1,6 @@
 /* font import */
 /* --------------------------------------------------- */
-@font-face {
-  font-family: "BKamran";
-  src: url("assets/fonts/BKamran/BKamran.ttf");
-  format: ("ttf");
-  font-display: swap;
-}
+
 /* --------------------------------------------------- */
 @font-face {
   font-family: "SNarenj";
@@ -151,4 +146,16 @@ h1 {
 
 .directionPagination{
   direction:'rtl'!important;
+}
+
+/* Slow-motion Zoom Container */
+.img-hover-zoom--slowmo img {
+  transform-origin: 20% 45%;
+  transition: transform 10s, filter 5s ease-in-out;
+}
+
+/* The Transformation */
+.img-hover-zoom--slowmo:hover img {
+  transform: scale(2);
+ 
 }

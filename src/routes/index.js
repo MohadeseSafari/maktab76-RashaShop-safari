@@ -8,7 +8,7 @@ import Payment from 'pages/userPanel/Payment';
 import Home from 'pages/userPanel/Home';
 import LoginForm from 'pages/managementPanel/loginForm/LoginForm'
 import ManagementPanel from 'pages/managementPanel/managementPanel';
-import NoMatched from 'pages/errors/NoMatched';
+import NoMatched from 'pages/errors/404';
 // import sub routes
 import Products from 'pages/managementPanel/main/Products';
 import Quantity from 'pages/managementPanel/main/Quantity'

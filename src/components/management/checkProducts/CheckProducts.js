@@ -8,10 +8,9 @@ import { updateOrdersApi } from 'api';
 
 
 
-function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage }) {
+function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage}) {
     const dispatch = useDispatch();
     const { id, username, lastname, address, phone, expectAt, createdAt, products } = checkItem;
-
     const handelDelivery = (id) => {
         updateOrdersApi(id);
         dispatch(fetchOrders({ delivered: "_", currentPage: 1, limitPages: rowsPerPage }));
@@ -55,7 +54,7 @@ function CheckProducts({ open, handleClose, checkItem, status, rowsPerPage }) {
                     </TableBody>
 
                 </Table>
-                {status === "=false" ? (<DeliveryButton sx={{ mt: 2 }} onClick={() => handelDelivery(id)}>تحویل شد</DeliveryButton>) : status === "=true" ? ((<Typography sx={{ mt: 2 }}>زمان تحویل: {createdAt}</Typography>)) : (<DeliveryButton onClick={handleClose} sx={{ mt: 2 }}>بستن</DeliveryButton>)}
+                {status === "=false" ? (<DeliveryButton sx={{ mt: 2 }} onClick={() => handelDelivery(id)}>تحویل شد</DeliveryButton>) : status === "=true" ? ((<Typography sx={{ mt: 2 }}>زمان تحویل: {new Date(createdAt).toLocaleDateString('fa-IR')}</Typography>)) : (<DeliveryButton onClick={handleClose} sx={{ mt: 2 }}>بستن</DeliveryButton>)}
 
             </Box>
         </Modal>

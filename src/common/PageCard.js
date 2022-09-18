@@ -1,10 +1,11 @@
 import { BASE_URL_IMAGE } from "config/api";
 import { Container, Box, Paper, Typography, Divider, Chip, Stack, TextField } from "@mui/material";
 import Carousel from 'react-material-ui-carousel';
-import { increase, addToCart, decrease } from 'redux/feature/cart/CartSlice';
+import { increase} from 'redux/feature/cart/CartSlice';
 import { CustomButton, AddButton, DecreaseButton } from 'common/AddButton';
 import { customInput, StyledBreadcrumb } from 'components/Home/cartTable/style';
 import delivery from 'assets/image/background/delivery.jpg';
+import Book from 'assets/image/background/Book.gif';
 import GppGoodIcon from '@mui/icons-material/GppGood';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import Logo from "assets/image/logo/logo-1.png";
@@ -34,9 +35,7 @@ function PageCard({ data }) {
     const { id, name, image, author, translator, publication, description, genre, price, off, quantity } = data
 
     const handelAddToCart = (data) => {
-
-        dispatch(increase({ data, count }));
-        dispatch(decrease({ data, count }))
+        dispatch(increase({ data, count }))
         navigate('/cart');
     }
 
@@ -86,11 +85,22 @@ function PageCard({ data }) {
                     <Divider sx={{ mt: 2, mb: 2 }} />
                     <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', borderRadius: 2 }}>
                         <Box>
+                            <Typography variant="h6" sx={{ fontWeight: 900 }} >نسخه الکترونیکی کتاب</Typography>
+                        </Box>
+                        <img width="100px" src={Book} />
+                    </Paper>
+
+                    <Divider sx={{ mt: 2, mb: 2 }} />
+                    <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', borderRadius: 2 }}>
+                        <Box>
                             <Typography variant="h6" sx={{ fontWeight: 900 }} >ارسال رایگان</Typography>
                             <Typography>برای سفارش بالای 500 هزار تومان</Typography>
                         </Box>
                         <img width="100px" src={delivery} />
                     </Paper>
+
+
+
                 </Box>
 
                 <Paper elevation={3} sx={{ p: 2, backgroundColor: "#F7F7F8" }} >
@@ -136,13 +146,13 @@ function PageCard({ data }) {
                                 <input value={count} style={customInput} />
                                 <DecreaseButton onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
                             </Box>
-                            : 
-                                <>
-                                    <AddButton disabled onClick={() => handelIncrease({ data, count })}>+</AddButton>
-                                    <input value={count} style={customInput} />
-                                    <DecreaseButton disabled onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
-                                </>
-                                }
+                            :
+                            <>
+                                <AddButton disabled onClick={() => handelIncrease({ data, count })}>+</AddButton>
+                                <input value={count} style={customInput} />
+                                <DecreaseButton disabled onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
+                            </>
+                        }
                     </Box>
                     {off > 0 ? <Typography variant="h6" align="right" color="secondary" sx={{ fontSize: 30 }}>{((price - ((price * off) / 100))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography> : <Typography variant="h6" align="end" color="secondary" sx={{ fontSize: 30 }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography>}
 

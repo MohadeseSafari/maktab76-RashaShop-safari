@@ -55,7 +55,7 @@ const NavbarLayout = (props) => {
 
                 </Box>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
+                {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', width: '100%' }}>
                     <IconButton
                         color="secondary"
                         onClick={handelOpenMenu}
@@ -65,7 +65,7 @@ const NavbarLayout = (props) => {
                     </IconButton>
                     <Typography color="secondary">دسته بندی کالا</Typography>
 
-                </Box>
+                </Box> */}
             </Toolbar>
         </AppBar>
 

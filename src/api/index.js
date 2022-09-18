@@ -52,7 +52,6 @@ export const loadCategoriesApi = async () => {
 export const loadCategoriesProductsApi = async (id) => {
   try {
     const response = await axios.get(`/category/${id}`);
-    console.log("response products ", response);
     return response.data;
   } catch (error) {
     return Promise.reject(error);
@@ -99,20 +98,13 @@ export const uploadImageApi = async (image) => {
   }
 };
 
-export const deleteImageApi = async (code) => {
-  try {
-    const response = await axiosInstance.put(`/products?image=${code}`);
-    return response.data;
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
+
 //update Orders
 export const updateOrdersApi = async (id) => {
   try {
     const response = await axiosInstance.patch(`/orders/${id}`, {
       delivered: "true",
-      createdAt: new Date().toLocaleDateString('fa-IR'),
+      createdAt: new Date(),
     });
     return response.data;
   } catch (error) {
@@ -160,6 +152,26 @@ export const createOrdersApi = async (order) => {
     return Promise.reject(error);
   }
 };
+
+//Update Quantity & Price Product
+export const updateQuantityPriceProductApi = async (products) => {
+  try {
+    const response = await axiosInstance.patch(`/products/${products.id}`, products);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+// Get Comment 
+export const loadCommentsClientApi = async () => {
+  try {
+    const response = await axios.get(`/clientSay`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
 
 

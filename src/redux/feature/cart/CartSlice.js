@@ -83,7 +83,6 @@ export const CartSlice = createSlice({
         increase(state, action) {
             const { data, count } = action.payload
             const ItemIndex = state.cartItems.findIndex((item) => item.id === data.id);
-            console.log(ItemIndex)
             if (ItemIndex >= 0) {
                 state.cartItems[ItemIndex].count = count;
                 toast.info(`تعداد محصول ${state.cartItems[ItemIndex].name} افزایش یافت`, { position: 'bottom-right' })
@@ -94,23 +93,8 @@ export const CartSlice = createSlice({
             }
            
             localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
-        },
-        decrease(state, action) {
-            const { data, count } = action.payload;
-            const ItemIndex = state.cartItems.findIndex((item) => item.id === data.id);
-            
-            if (state.cartItems[ItemIndex].count > 1) {
-                state.cartItems[data.id].count = count;
-                toast.info(`محصول ${data.name} با موفقیت کم شد `, { position: 'bottom-right' })
-
-            } else if (state.cartItems[ItemIndex].count === 1) {
-                const newCartItems = state.cartItems.filter((cartItem) => cartItem.id !== data.id);
-                state.cartItems = newCartItems;
-                toast.error(`${data.name} با موفقیت حذف شد `, { position: 'bottom-right' })
-            }
-            localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
         }
-       
+    
 
     }
 })

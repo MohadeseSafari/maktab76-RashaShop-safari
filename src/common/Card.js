@@ -50,7 +50,7 @@ function CardProduct({ product, categoryName }) {
   const { nameCategory } = useParams()
 
   return (
-    <Grid item  >
+    <Grid item xs={3}  >
       <Card sx={{ maxWidth: 235 }}>
         <CardActionArea>
           <Link to={`/book/${id}`}>

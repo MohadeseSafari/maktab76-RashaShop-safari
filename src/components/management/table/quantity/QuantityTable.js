@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useCallback } from 'react';
 import { Typography, Table, TableHead, TableBody, TableContainer, TablePagination, TableRow, TextField, Paper, Box } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
-import { fetchProducts } from 'redux/feature/products/ProductsSlice';
+import { fetchProducts, updateQuantityPriceProduct } from 'redux/feature/products/ProductsSlice';
 import { CustomInput } from 'components/management/table/style'
 import Spinner from 'common/Spinner';
 
@@ -14,7 +14,6 @@ export default function QuantityTable() {
     const { products, currentPage, loading, totalCount } = useSelector((state) => state.products);
     const [product, setProduct] = useState([]);
     const [newState, setNewState] = useState([]);
-    const [changedItem, setChangedItem] = useState([]);
     const [showInput, setShowInput] = useState('')
 
     useEffect(() => {
@@ -41,7 +40,7 @@ export default function QuantityTable() {
     const handelEscKey = useCallback((event, id) => {
         if (event.key === "Escape") {
             console.log(event)
-            
+
         }
 
     }, [])
@@ -61,13 +60,17 @@ export default function QuantityTable() {
         const newState = [...product];
         newState[idItem] = { ...newState[idItem], [name]: +value }
 
-        const sendData = newState.filter((newState, index) => newState.price !== product[index].price || newState.quantity !== product[index].quantity)
+        const sendData = newState.filter((newState, index) => newState.price !== products[index].price || newState.quantity !== products[index].quantity)
         setNewState(sendData);
         setProduct(newState);
 
-
     }
 
+    const handelSaveChange = () => {
+        newState.forEach((element) => {
+            dispatch(updateQuantityPriceProduct(element))
+        })
+    }
 
 
     return (
@@ -75,7 +78,7 @@ export default function QuantityTable() {
 
             <Box sx={{ display: 'flex', flexDirection: 'row', mb: 2 }}>
                 <Typography color="#537d97" variant='h4' sx={{ mr: 50 }}>مدیریت موجودی و کالاها</Typography>
-                <SaveButton >ذخیره</SaveButton>
+                <SaveButton onClick={handelSaveChange} >ذخیره</SaveButton>
             </Box>
 
             {loading ? (<Spinner />) : <TableContainer component={Paper} sx={{ width: '75%' }} align='center' >

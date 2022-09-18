@@ -2,7 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 // import Material UI components
-import { Button, Box, Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination } from '@mui/material';
+import { Button, Box, Typography, Table, TableHead, TableBody, TableContainer, TableRow, Paper, TablePagination, PaginationItem } from '@mui/material';
 import { StyledTableCell, tableStyle, StyledTableRow, SaveButton } from 'components/management/table/style';
 import { fetchProducts } from 'redux/feature/products/ProductsSlice';
 import { BASE_URL_IMAGE } from 'config/api';
@@ -12,6 +12,9 @@ import DeleteProducts from 'components/management/deleteProduct/DeleteProduct';
 import CreateModal from 'components/management/createModal/CreateModal';
 import 'styles/style.css';
 import Spinner from 'common/Spinner';
+
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export default function ProductsTable() {
 
@@ -105,18 +108,25 @@ export default function ProductsTable() {
                         <CreateModal openCreate={openCreate} handelCloseCreate={handelCloseCreate} />
                     </TableBody>
                 </Table>
-                <TablePagination
-                    sx={{ border: 'unset' }}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} از ${count}`}
-                    count={totalCount}
-                    rowsPerPage={rowsPerPage}
-                    page={currentPage - 1}
-                    showFirstButton
-                    showLastButton
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
+                    <TablePagination
+                        sx={{ border: 'unset' }}
+                        rowsPerPageOptions={[5, 10, 25]}
+                        labelDisplayedRows={({ from, to, count }) => `${from}-${to} از ${count}`}
+                        count={totalCount}
+                        rowsPerPage={rowsPerPage}
+                        page={currentPage - 1}
+                        showFirstButton
+                        showLastButton
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        renderItem={(item) => (
+                            <PaginationItem
+                                components={{ next: ArrowForwardIosIcon, previous: ArrowBackIos }}
+                                {...item}
+                            />
+                        )}
+                    />
+            
             </TableContainer>}
 
         </div>

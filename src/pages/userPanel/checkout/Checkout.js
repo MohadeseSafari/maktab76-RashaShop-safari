@@ -61,7 +61,6 @@ function Checkout() {
     const handelSubmit = (values, props) => {
         values.expectAt = `${selectedDay.year}/${selectedDay.month}/${selectedDay.day}`;
         values.prices = CartTotalAmount;
-        console.log(values)
         localStorage.setItem("personInfo", JSON.stringify(values))
         window.open("http://localhost:3001", '_blank')
         props.resetForm();

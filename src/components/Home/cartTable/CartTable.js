@@ -60,7 +60,6 @@ function CartTable() {
                         <TableBody>
                             {cart.cartItems.length ? (cart.cartItems?.map((product) => {
                                 const { id, name, price, off, image, count } = product;
-                                console.log(count)
                                 return (
                                     <StyledTableRow key={id} >
                                         <StyledTableCell sx={{ width: '5%' }} align="center" size='small'><Link to={`/book/${id}`}><img style={{ width: 80 }} src={`${BASE_URL_IMAGE}/${image[image.length - 1]}`} alt="??" /></Link></StyledTableCell>

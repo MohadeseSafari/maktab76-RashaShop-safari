@@ -383,18 +383,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
                       ))}
                     </Select>
                   </FormControl>
-                  {props.errors.genre ? (
-                    <FormHelperText
-                      sx={{
-                        color: "#d63031",
-                        textAlign: "left",
-                        mr: 2,
-                        fontSize: 18,
-                      }}
-                    >
-                      {props.errors.genre}
-                    </FormHelperText>
-                  ) : null}
+                  {genreName.length === 0 ? (<FormHelperText sx={{ color: "#d63031", textAlign: "left", mr: 2, fontSize: 18 }}>لطفا یک ژانرو انتخاب کنید</FormHelperText>) : null}
                 </Grid>
 
                 <Grid item xs={6}>

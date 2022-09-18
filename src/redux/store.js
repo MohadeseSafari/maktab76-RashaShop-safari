@@ -4,6 +4,7 @@ import OrdersReducer from 'redux/feature/orders/OrdersSlice';
 import UsersReducer from 'redux/feature/user/UsersSlice';
 import CategoriesReducer from 'redux/feature/category/CategorySlice';
 import CartReducer from 'redux/feature/cart/CartSlice';
+import CommentsClientReducer from 'redux/feature/comment/CommentSlice';
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         orders: OrdersReducer,
         users: UsersReducer,
         categories: CategoriesReducer,
-        cart: CartReducer
+        cart: CartReducer,
+        commentsClient: CommentsClientReducer
     }
 })

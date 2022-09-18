@@ -4,7 +4,8 @@ import {
     deleteProductApi,
     updateProductApi,
     createProductApi,
-    loadAllProductsApi
+    loadAllProductsApi,
+    updateQuantityPriceProductApi
 } from "api/index";
 
 const initialState = {
@@ -32,6 +33,12 @@ export const deleteProduct = createAsyncThunk("products/deleteProducts", async (
 export const updateProduct = createAsyncThunk("products/updateProducts", async (product) => {
     fetchProducts();
     return await updateProductApi(product);
+}
+);
+
+//Update Quantity & Price Product
+export const updateQuantityPriceProduct = createAsyncThunk("products/updateQuantityPriceProducts", async (products) => {
+    return await updateQuantityPriceProductApi(products);
 }
 );
 
@@ -119,6 +126,22 @@ export const ProductsSlice = createSlice({
         });
 
         builder.addCase(createProduct.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        });
+
+          //update Quantity Price Product
+          builder.addCase(updateQuantityPriceProduct.pending, (state, action) => {
+            state.loading = true;
+        });
+
+        builder.addCase(updateQuantityPriceProduct.fulfilled, (state, action) => {
+            state.loading = false;
+            const indexProduct = state.products.findIndex((product) => +product.id === action.payload.id);
+            state.products[indexProduct] = action.payload
+        });
+
+        builder.addCase(updateQuantityPriceProduct.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
         });

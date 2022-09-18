@@ -83,7 +83,7 @@ export default function QuantityTable() {
                                 )
 
                             }))}
-                            <CheckProducts open={open} handleClose={handleClose} checkItem={checkItem} status={status} rowsPerPage={rowsPerPage} />
+                            <CheckProducts open={open} handleClose={handleClose} checkItem={checkItem} status={status} rowsPerPage={rowsPerPage}  />
                         </TableBody>
                     </Table>
 
