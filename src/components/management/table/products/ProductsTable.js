@@ -41,6 +41,7 @@ export default function ProductsTable() {
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
+    
     };
 
     const handelOpenModalEdit = (id) => {

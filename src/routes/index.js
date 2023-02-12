@@ -16,7 +16,11 @@ import Orders from 'pages/managementPanel/main/Orders';
 import PrivateRoutes from './PrivateRoutes';
 
 import SingleCategory from 'pages/userPanel/SingleCategory';
-import SingleProduct from 'pages/userPanel/SingleProduct'
+import SingleProduct from 'pages/userPanel/SingleProduct';
+import BookDescription from 'pages/userPanel/book/BookDescription';
+import AdditionalInformation from 'pages/userPanel/book/AdditionalInformation';
+import Review from 'pages/userPanel/book/Review';
+
 function MainRoutes() {
 
     return (
@@ -25,7 +29,11 @@ function MainRoutes() {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='category/:nameCategory' element={<SingleCategory />} />
-                <Route path='book/:idProduct' element={<SingleProduct />} />
+                <Route path='book/:idProduct' element={<SingleProduct />}>
+                    <Route index path='BookDescription' element={<BookDescription />}/>
+                    <Route path='AdditionalInformation' element={<AdditionalInformation />}/>
+                    <Route path='Review' element={<Review />}/>
+                </Route>
                 <Route path='cart' element={<Cart />} />
                 <Route path='cart/checkout' element={<Checkout />} />
 

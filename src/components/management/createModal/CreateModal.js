@@ -204,6 +204,7 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
         >
           {(props) => (
             <Form autoComplete="false">
+                {console.log(props)}
               <Grid
                 container
                 rowSpacing={2}
@@ -468,11 +469,12 @@ const CreateModal = ({ openCreate, handelCloseCreate }) => {
 
 
               </Grid>
-              <DeliveryButton type="submit" sx={{ mt: 2, ml: 35 }}>
+              <DeliveryButton type="submit" sx={{ mt: 2, ml: 35 }} disabled={!props.isValid}>
                 ذخیره
               </DeliveryButton>
-            </Form>
-          )}
+            
+            </Form> 
+          )}  
         </Formik>
       </Box>
     </Modal>

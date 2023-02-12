@@ -1,188 +1,517 @@
 import { BASE_URL_IMAGE } from "config/api";
-import { Container, Box, Paper, Typography, Divider, Chip, Stack, TextField } from "@mui/material";
-import Carousel from 'react-material-ui-carousel';
-import { increase} from 'redux/feature/cart/CartSlice';
-import { CustomButton, AddButton, DecreaseButton } from 'common/AddButton';
-import { customInput, StyledBreadcrumb } from 'components/Home/cartTable/style';
-import delivery from 'assets/image/background/delivery.jpg';
-import Book from 'assets/image/background/Book.gif';
-import GppGoodIcon from '@mui/icons-material/GppGood';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import Logo from "assets/image/logo/logo-1.png";
+import {
+  Box,
+  Breadcrumbs,
+  Typography,
+  Divider,
+  Chip,
+  Rating,
+  Stack,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Grid,
+  Button,
+} from "@mui/material";
+import { increase } from "redux/feature/cart/CartSlice";
+import {
+  CustomButton,
+  AddButton,
+  DecreaseButton,
+  FavoriteButton,
+} from "common/AddButton";
+import {
+  customInput,
+  BoxQuantity,
+  Item,
+} from "components/Home/cartTable/style";
+import delivery from "assets/image/background/delivery.jpg";
+import { NavLink, Outlet } from "react-router-dom";
+import Book from "assets/image/background/Book.gif";
 import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router";
+import { useState, useEffect, useRef } from "react";
+import "styles/style.css";
+import ReactImageZoom from "react-image-zoom";
 
 function PageCard({ data }) {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const refs = useRef([]);
+  refs.current = [];
+  const [count, setCount] = useState(0);
+  const [firstImage, setFirstImage] = useState("");
+  const [showMore, setShowMore] = useState(false);
 
-    useEffect(() => {
-        if (localStorage.getItem("cartItems")) {
-            const IndexCartItem = JSON.parse(localStorage.getItem("cartItems")).findIndex((item) => item.id === data.id);
-            if (IndexCartItem === -1) {
-                setCount(0)
-            } else {
-                const cartItem = JSON.parse(localStorage.getItem("cartItems")).filter((item) => item.id === data.id)
-                setCount(cartItem[0].count)
-            }
-        }
+  const addRefs = (el) => {
+    if (el && !refs.current.includes(el)) {
+      refs.current.push(el);
+    }
+  };
 
-
-    }, [])
-
-    const { id, name, image, author, translator, publication, description, genre, price, off, quantity } = data
-
-    const handelAddToCart = (data) => {
-        dispatch(increase({ data, count }))
-        navigate('/cart');
+  useEffect(() => {
+    if (localStorage.getItem("cartItems")) {
+      const IndexCartItem = JSON.parse(
+        localStorage.getItem("cartItems")
+      ).findIndex((item) => item.id === data.id);
+      if (IndexCartItem === -1) {
+        setCount(0);
+      } else {
+        const cartItem = JSON.parse(localStorage.getItem("cartItems")).filter(
+          (item) => item.id === data.id
+        );
+        setCount(cartItem[0].count);
+      }
     }
 
-    const handelIncrease = ({ data, count }) => {
-        setCount(count + 1);
+    setFirstImage(image[0]);
+  }, [data.id]);
+
+  const {
+    id,
+    name,
+    image,
+    author,
+    translator,
+    publication,
+    description,
+    genre,
+    price,
+    off,
+    quantity,
+  } = data;
+
+  const handelAddToCart = (data) => {
+    dispatch(increase({ data, count }));
+    navigate("/cart");
+  };
+
+  const handelIncrease = ({ data, count }) => {
+    setCount(count + 1);
+  };
+
+  const handelDecrease = ({ data, count }) => {
+    if (count > 0) {
+      setCount(count - 1);
+    } else {
+      setCount(0);
     }
+  };
 
-
-    const handelDecrease = ({ data, count }) => {
-        if (count > 0) {
-            setCount(count - 1)
-        } else {
-            setCount(0)
-        }
+  const hoverHandler = (picture, index) => {
+    setFirstImage(picture);
+    refs.current[index].classList.add("activeImage");
+    for (var j = 0; j < picture.length; j++) {
+      if (index !== j) {
+        refs.current[j].classList.remove("activeImage");
+      }
     }
-    return (
-        <Container sx={{ mt: 15, mb: 15 }}>
+  };
+  return (
+    <Grid
+      container
+      rowSpacing={12}
+      columnSpacing={4}
+      sx={{ marginTop: "30px", justifyContent: "center", alignItems: "center" }}
+    >
+      <Grid item xs={5} md={5}>
+        <Item elevation={2}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <ReactImageZoom
+              {...{
+                img: `${BASE_URL_IMAGE}/${firstImage}`,
+                width: 550,
+                height: 760,
+                zoomPosition: "original",
+              }}
+            />
+            <List sx={{ display: "flex", mx: 5, justifyContent: "center" }}>
+              {image.map((picture, index) => (
+                <ListItem sx={{ width: "14%" }}>
+                  <ListItemAvatar
+                    className={index == 0 ? "activeImage" : ""}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      p: 1,
+                    }}
+                    onMouseOver={() => hoverHandler(picture, index)}
+                    ref={addRefs}
+                  >
+                    <img
+                      alt="Book Cover"
+                      key={index}
+                      src={`${BASE_URL_IMAGE}/${picture}`}
+                      style={{ maxWidth: "50px" }}
+                    />
+                  </ListItemAvatar>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Item>
+      </Grid>
 
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+      <Grid item xs={12} md={6}>
+        <Item
+          elevation={3}
+          sx={{ p: 4, backgroundColor: "#F7F7F8", mx: 5, textAlign: "left" }}
+        >
+          <Typography
+            variant="h5"
+            color="secondary"
+            sx={{ mb: 1, fontSize: 35 }}
+          >
+            کتاب {name}
+          </Typography>
 
-                <Carousel style={{ width: '240px' }}>{image.map((item, i) => <Item key={i} item={item} />)}</Carousel>
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            sx={{ display: "flex" }}
+          >
+            <Grid  >
+              <Item item xs={3} elevation={0}>
+                <Typography sx={{ lineHeight: 1 }}>
+                  نویسنده : {author}
+                </Typography>
+              </Item>
+            </Grid>
 
-                <Box sx={{ ml: 5, mr: 5 }}>
-                    <Typography variant="h5" color="secondary" sx={{ mb: 1, fontSize: 35 }}>کتاب {name} اثر {author} نشر {publication}</Typography>
-                    <Divider />
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{ height: "20px" }}
+            />
 
-                    <Typography variant="h6" color="secondary" sx={{ mt: 1, fontSize: 30, fontWeight: 900 }}>ویژگی ها</Typography>
-                    <ul>
-                        <li>
-                            <Typography variant="h6" color="#A5A8AD" sx={{ fontSize: 22 }}>قطع : <span style={{ color: 'black' }}>رقعی</span> </Typography>
-                        </li>
+            <Grid >
+              <Item item xs={3} elevation={0}>
+                <Rating
+                  defaultValue={4}
+                  precision={0.25}
+                  readOnly
+                  sx={{ fontSize: "17px", textAlign: "start"}}
+                />
+              </Item>
+            </Grid>
 
-                        <li>
-                            <Typography variant="h6" color="#A5A8AD" sx={{ fontSize: 22 }}>نوع جلد : <span style={{ color: 'black' }}>شومیز</span> </Typography>
-                        </li>
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{ height: "20px" }}
+            />
 
-                        <li>
-                            <Stack direction="row" spacing={1} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'baseline' }}>
+            <Grid >
+              <Item item xs={3} elevation={0}>
+                <Typography sx={{ lineHeight: 1 }}>
+                  ناشر: {publication}
+                </Typography>
+              </Item>
+            </Grid>
 
-                                <Typography variant="h6" color="#A5A8AD" sx={{ fontSize: 22 }}>دسته بندی :</Typography>
-                                {genre.map((item) => <Chip label={item} sx={{ fontSize: 17, fontWeight: 700 }} />)}
+            {translator ? (
+              <>
+                <Divider
+                  orientation="vertical"
+                  variant="middle"
+                  flexItem
+                  sx={{ height: "20px" }}
+                />
 
-                            </Stack>
-                        </li>
-                    </ul>
+                <Grid>
+                  <Item item xs={3} elevation={0}>
+                    <Typography sx={{ lineHeight: 1 }}>
+                      مترجم: {translator}
+                    </Typography>
+                  </Item>
+                </Grid>
+              </>
+            ) : (
+              ""
+            )}
+          </Grid>
+          <Divider />
 
-                    <Divider sx={{ mt: 2, mb: 2 }} />
-                    <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', borderRadius: 2 }}>
-                        <Box>
-                            <Typography variant="h6" sx={{ fontWeight: 900 }} >نسخه الکترونیکی کتاب</Typography>
-                        </Box>
-                        <img width="100px" src={Book} />
-                    </Paper>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
+          >
+            {off > 0 ? (
+              <Typography
+                color="#A5A8AD"
+                sx={{
+                  fontSize: 25,
+                  mr: 1,
+                  mt: 1,
+                  textDecoration: "line-through",
+                }}
+              >
+                {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </Typography>
+            ) : (
+              ""
+            )}
+            {off > 0 ? (
+              <Typography
+                variant="h6"
+                align="right"
+                color="pink.main"
+                sx={{ fontSize: 30, fontWeight: "bold" }}
+              >
+                {(price - (price * off) / 100)
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <Typography variant="caption" sx={{ fontSize: 15 }}>
+                  تومان{" "}
+                </Typography>
+              </Typography>
+            ) : (
+              <Typography
+                variant="h6"
+                align="end"
+                color="pink.main"
+                sx={{ fontSize: 30, fontWeight: "bold" }}
+              >
+                {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                <Typography variant="caption" sx={{ fontSize: 15 }}>
+                  تومان{" "}
+                </Typography>
+              </Typography>
+            )}
 
-                    <Divider sx={{ mt: 2, mb: 2 }} />
-                    <Paper sx={{ p: 2, display: 'flex', justifyContent: 'space-between', borderRadius: 2 }}>
-                        <Box>
-                            <Typography variant="h6" sx={{ fontWeight: 900 }} >ارسال رایگان</Typography>
-                            <Typography>برای سفارش بالای 500 هزار تومان</Typography>
-                        </Box>
-                        <img width="100px" src={delivery} />
-                    </Paper>
+            {/* {off > 0 ? (
+              <Chip
+                label={`${off}%`}
+                color="error"
+                sx={{ fontSize: 22, fontWeight: 700 }}
+              />
+            ) : (
+              ""
+            )} */}
+          </Box>
 
+          <Typography
+            variant="h6"
+            color="secondary"
+            sx={{
+              mb: 1,
+              fontSize: 20,
+              fontWeight: 700,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {showMore ? (
+              <div dangerouslySetInnerHTML={{ __html: description }} />
+            ) : (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `${description.substring(0, 270)}`,
+                }}
+              />
+            )}
+            {description.length > 270 ? (
+              <Button onClick={() => setShowMore(!showMore)}>
+                {showMore ? `بستن` : `نمایش بیشتر`}
+              </Button>
+            ) : (
+              ""
+            )}
+          </Typography>
 
+          <Divider />
 
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              my: 1,
+            }}
+          >
+            <Typography>موجودی کالا</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                mx: 4,
+              }}
+            >
+              <FavoriteButton>افزودن به علاقمندی</FavoriteButton>
+              <CustomButton
+                variant="contained"
+                onClick={() => handelAddToCart(data)}
+              >
+                افزودن به سبد
+              </CustomButton>
+
+              {count < quantity ? (
+                <Box style={BoxQuantity}>
+                  <AddButton onClick={() => handelIncrease({ data, count })}>
+                    +
+                  </AddButton>
+                  <input value={count} style={customInput} />
+                  <DecreaseButton
+                    onClick={() => handelDecrease({ data, count })}
+                  >
+                    -
+                  </DecreaseButton>
                 </Box>
-
-                <Paper elevation={3} sx={{ p: 2, backgroundColor: "#F7F7F8" }} >
-                    <Typography variant="h5" color="secondary" sx={{ fontSize: 32 }}>فروشنده</Typography>
-                    <Divider />
-
-                    <Box sx={{ mb: 2 }} >
-                        <Box sx={{ display: 'flex', p: 1, alignItems: 'center' }}>
-                            <img width="30px" src={Logo} alt="" />
-                            <Typography variant="h5" color="secondary">راشـا بووک</Typography>
-                            <StyledBreadcrumb label="منتخب" />
-                        </Box>
-                        <Box sx={{ display: 'flex', ml: 3 }}>
-                            <Typography>عملکرد </Typography>
-                            <Typography color="#A12C34" sx={{ ml: 1 }}>عالی</Typography>
-                        </Box>
-
-                    </Box>
-                    <Divider />
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2, mb: 1 }}>
-                        <GppGoodIcon sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }} />
-                        <Typography sx={{ fontSize: 20 }}>گارانتی اصالت و سلامت فیزیکی کالا</Typography>
-                    </Box>
-                    <Divider />
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, px: 2, mb: 1 }}>
-                        <StorefrontIcon sx={{ fontSize: 25, color: "#A5A8AD", mr: 1 }} />
-                        <Typography sx={{ fontSize: 25 }}>موجود در انبار فروشگاه راشـا</Typography>
-                    </Box>
-                    <Divider />
-
-                    <Typography color="#A5A8AD" sx={{ fontSize: 20 }}>قیمت مصرف کننده</Typography>
-                    <Box sx={{ display: 'flex', ml: 25 }}>
-                        {off > 0 ? <Typography color="#A5A8AD" sx={{ fontSize: 20, mr: 1, textDecoration: "line-through" }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} تومان</Typography> : ''}
-                        {off > 0 ? <Chip label={`${off}%`} color="error" sx={{ fontSize: 22, fontWeight: 700 }} /> : ''}
-                    </Box>
-                    <Box>
-                        {count < quantity ?
-
-                            <Box>
-                                <AddButton onClick={() => handelIncrease({ data, count })}>+</AddButton>
-                                <input value={count} style={customInput} />
-                                <DecreaseButton onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
-                            </Box>
-                            :
-                            <>
-                                <AddButton disabled onClick={() => handelIncrease({ data, count })}>+</AddButton>
-                                <input value={count} style={customInput} />
-                                <DecreaseButton disabled onClick={() => handelDecrease({ data, count })}>-</DecreaseButton>
-                            </>
-                        }
-                    </Box>
-                    {off > 0 ? <Typography variant="h6" align="right" color="secondary" sx={{ fontSize: 30 }}>{((price - ((price * off) / 100))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography> : <Typography variant="h6" align="end" color="secondary" sx={{ fontSize: 30 }}>{price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}<Typography variant="caption" sx={{ fontSize: 15 }}>تومان </Typography></Typography>}
-
-                    <CustomButton variant="contained" onClick={() => handelAddToCart(data)} >افزودن به سبد</CustomButton>
-                </Paper >
+              ) : (
+                <>
+                  <AddButton
+                    disabled
+                    onClick={() => handelIncrease({ data, count })}
+                  >
+                    +
+                  </AddButton>
+                  <input value={count} style={customInput} />
+                  <DecreaseButton
+                    disabled
+                    onClick={() => handelDecrease({ data, count })}
+                  >
+                    -
+                  </DecreaseButton>
+                </>
+              )}
             </Box>
+          </Box>
 
+          <Divider />
 
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="h6" color="secondary" sx={{ mt: 1, fontSize: 25, fontWeight: 900, borderBottom: '2px solid #f65d4e', width: 120 }}>قسمتی از کتاب</Typography>
-                <Typography variant="h6" color="secondary" sx={{ mt: 1, fontSize: 20, fontWeight: 700 }}><div dangerouslySetInnerHTML={{ __html: description }} /></Typography>
-            </Box>
-        </Container>
-    );
-}
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "baseline",
+              my: 1,
+            }}
+          >
+            <Typography variant="h6" color="#A5A8AD" sx={{ fontSize: 22 }}>
+              دسته بندی :
+            </Typography>
+            {genre.map((item, index) => (
+              <Chip
+                key={index}
+                label={item}
+                sx={{ fontSize: 17, fontWeight: 700 }}
+              />
+            ))}
+          </Stack>
 
-function Item({ item }) {
-    return (
-        <Paper style={{ width: 240 }}>
+          <Divider />
 
-            <img style={{ width: 240 }} src={`${BASE_URL_IMAGE}/${item}`} />
+          <Grid container columnSpacing={3} sx={{ my: 2 }}>
+            <Grid item xs={6}>
+              <Item
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box sx={{ mx: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 900 }}>
+                    نسخه الکترونیکی کتاب
+                  </Typography>
+                </Box>
+                <img width="100px" src={Book} alt="Book" />
+              </Item>
+            </Grid>
 
-        </Paper>
-    )
+            <Grid item xs={6}>
+              <Item
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    mx: 2,
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 900 }}>
+                    ارسال رایگان
+                  </Typography>
+                  <Typography sx={{ fontSize: "17px" }}>
+                    برای سفارش بالای 500 هزار تومان
+                  </Typography>
+                </Box>
+                <img width="100px" src={delivery} alt="delivery" />
+              </Item>
+            </Grid>
+          </Grid>
+        </Item>
+      </Grid>
+
+      <Grid item xs={10} sx={{ mb: 4 }}>
+        <Item
+          elevation={0}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            p: 0,
+          }}
+        >
+          <div role="presentation" className="singleBookLink">
+            <Breadcrumbs sx={{ fontSize: 28 }}>
+              <NavLink
+                to="BookDescription"
+                style={({ isActive }) => ({
+                  color: isActive ? "#000000" : "#999999",
+                  borderBottom: isActive ? "2px solid #F65D4E" : "none",
+                })}
+              >
+                توضیحات
+              </NavLink>
+
+              <NavLink
+                to="AdditionalInformation"
+                style={({ isActive }) => ({
+                  color: isActive ? "#000000" : "#999999",
+                  borderBottom: isActive ? "2px solid #F65D4E" : "none",
+                })}
+              >
+                مشخصات کتاب
+              </NavLink>
+              <NavLink
+                to="Review"
+                style={({ isActive }) => ({
+                  color: isActive ? "#000000" : "#999999",
+                  borderBottom: isActive ? "2px solid #F65D4E" : "none",
+                })}
+              >
+                نظرات
+              </NavLink>
+            </Breadcrumbs>
+          </div>
+        </Item>
+        <Outlet />
+      </Grid>
+    </Grid>
+  );
 }
 
 export default PageCard;
-
-
-
-
-
-

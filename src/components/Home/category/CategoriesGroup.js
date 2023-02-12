@@ -2,7 +2,6 @@ import CardList from "common/CardList";
 import { useEffect } from "react";
 import { Container } from '@mui/material'
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCategories } from 'redux/feature/category/CategorySlice';
 import { fetchAllProducts } from "redux/feature/products/ProductsSlice";
 
 

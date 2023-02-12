@@ -46,17 +46,16 @@ function IconContainer(props) {
 function CardProduct({ product, categoryName }) {
   const navigate = useNavigate();
   const { id, name, image, price, off, author, publication } = product;
-  let offPrice = price - ((price * off) / 100)
-  const { nameCategory } = useParams()
+  const { nameCategory } = useParams();
 
   return (
     <Grid item xs={3}  >
-      <Card sx={{ maxWidth: 235 }}>
+      <Card sx={{ maxWidth: 350 }}>
         <CardActionArea>
           <Link to={`/book/${id}`}>
           <CardMedia
             component="img"
-            height="340"
+            height="440"
             sx={{ p: 1, borderRadius: 5 }}
             image={`${BASE_URL_IMAGE}/${image[image.length - 1]}`}
             alt="Book"
@@ -67,7 +66,6 @@ function CardProduct({ product, categoryName }) {
             <Typography variant="body1" color="secondary" fontSize="25">نویسنده: {author}</Typography>
             <Typography variant="body1" color="primary" fontSize="19">نشر: {publication}</Typography>
             <Typography variant="caption" color="#F65D4E" sx={{ fontSize: 22 }}>قیمت: {price}تومان</Typography>
-            <StyledRating sx={{ direction: 'rtl' }} defaultValue={5} IconContainerComponent={IconContainer} getLabelText={(value) => customIcons[value].label} highlightSelectedOnly />
           </CardContent>
         </CardActionArea>
       </Card>

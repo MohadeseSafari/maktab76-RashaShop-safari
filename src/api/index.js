@@ -173,5 +173,15 @@ export const loadCommentsClientApi = async () => {
   }
 }
 
+//Get Description
+export const loadDescriptionProductApi = async (idProduct) => {
+  try {
+    const response = await axios.get(`/products/${idProduct}`);
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
 
 
