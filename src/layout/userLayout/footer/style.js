@@ -1,5 +1,8 @@
 import * as React from "react";
 import InputUnstyled from "@mui/base/InputUnstyled";
+import ButtonUnstyled, {
+  buttonUnstyledClasses,
+} from "@mui/base/ButtonUnstyled";
 import { styled } from "@mui/system";
 
 const red = {
@@ -22,8 +25,7 @@ const grey = {
   900: "#1A2027",
 };
 
-const StyledInputRoot = styled("div")(
-  ({ theme }) => `
+const StyledInputRoot = styled("div")`
   display: flex;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -31,27 +33,66 @@ const StyledInputRoot = styled("div")(
   border-radius: 12px;
   align-items: center;
   justify-content: center;
-`
-);
+  position: relative;
+`;
 
 export const StyledInputElement = styled("input")(
   ({ theme }) => `
-  width: 320px;
-  font-size: 0.875rem;
-  font-weight: 400;
+  width: 70%;
+  font-size: 1.15rem;
+  font-weight: 500;
   line-height: 1.5;
-  padding: 12px;
+  padding: 12px 90px 12px 25px;
   border-radius: 50px;
-  font-family:${theme.typography.fontFamily}
+  font-family:${theme.typography.fontFamily};
   color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
   background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
   border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
 
   &:focus {
-    outline: 2px solid ${theme.palette.mode === "dark" ? red[400] : red[200]};
+    outline: 1px solid ${theme.palette.mode === "dark" ? red[400] : red[200]};
   }
 `
 );
+
+export const CustomButton = styled(ButtonUnstyled)(
+  ({ theme }) => `
+  font-family:${theme.typography.fontFamily};
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  background-color: ${red[400]};
+  padding: 13px 50px;
+  border-radius: 50px;
+  color: white;
+  transition: all 150ms ease;
+  cursor: pointer;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 20px;
+
+  &:hover {
+    background-color: ${red[500]};
+  }
+
+  &.${buttonUnstyledClasses.active} {
+    background-color: ${red[500]};
+  }
+
+  &.${buttonUnstyledClasses.focusVisible} {
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1),
+      0 0 0 5px rgba(0, 127, 255, 0.5);
+    outline: none;
+  }
+
+  &.${buttonUnstyledClasses.disabled} {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`
+);
+
 
 export const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   const { components, ...other } = props;
